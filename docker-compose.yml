@@ -1,0 +1,14 @@
+version: '3.8'
+
+# Services
+services:
+  # node service
+  node:
+    image: node:lts-alpine
+    working_dir: /var/www/caesium-app
+    tty: true
+    user: "node:node"
+    volumes:
+      - ./:/var/www/caesium-app
+    ports:
+      - "3000:3000"

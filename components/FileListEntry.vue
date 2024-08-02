@@ -1,0 +1,71 @@
+<script setup lang="ts">
+
+import type {CImage} from "~/utils/utils";
+import prettyBytes from "pretty-bytes";
+import {Eye, Trash2, Download} from 'lucide-vue-next';
+
+import {useCompressorStore} from '@/stores/compressor'
+
+const compressorStore = useCompressorStore()
+
+function getDownloadURL(cImage: CImage) {
+  if (cImage && cImage.outputImageArray) {
+    return URL.createObjectURL(new Blob([cImage.outputImageArray]))
+  }
+}
+
+const props = defineProps<{
+  cImage: CImage
+}>()
+
+</script>
+
+<template>
+  <div class="flex border-b border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 gap-4">
+    <div class="flex whitespace-nowrap text-sm text-neutral-800 dark:text-neutral-200 items-center pl-4">
+      <div class="rounded-full size-8 bg-center bg-cover" :style="['background-image: url(\''+cImage.thumbnailUrl+'\')']">&nbsp;</div>
+    </div>
+    <div class="flex flex-col py-2 text-sm text-neutral-800 dark:text-neutral-200 flex-1 gap-1 truncate">
+      <span class="font-medium">{{ props.cImage.file.name }}</span>
+      <div>
+        <span :class="{'line-through opacity-50': props.cImage.newSize > 0}">{{ prettyBytes(props.cImage.file.size) }}</span>
+        <span v-if="props.cImage.newSize > 0"> → {{ prettyBytes(props.cImage.newSize) }} <span :class="[cImage.newSize > cImage.file.size ? 'text-red-600 dark:text-red-500' : 'text-emerald-600 dark:text-emerald-500']">[{{ Math.round((cImage.newSize / cImage.file.size) * 100) - 100 }}%]</span></span>
+      </div>
+    </div>
+    <div class="flex py-2 text-end text-sm font-medium align-bottom pr-4 items-center">
+<!--      <button-->
+<!--          v-if="compressorStore.compressionStatus === COMPRESSION_STATUS.FINISHED"-->
+<!--          type="button"-->
+<!--          class="inline-flex items-center px-1 text-sm font-semibold rounded-lg border border-transparent text-neutral-600 hover:text-neutral-800 focus:outline-none focus:text-neutral-800 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-500 dark:hover:text-neutral-400 dark:focus:text-neutral-400">-->
+<!--        <Eye class="size-4"/>-->
+<!--      </button>-->
+      <button
+          v-if="compressorStore.compressionStatus === COMPRESSION_STATUS.WAITING || compressorStore.compressionStatus === COMPRESSION_STATUS.FINISHED_ALL_ERRORS"
+          @click="compressorStore.removeFile(cImage.key)"
+          type="button"
+          class="inline-flex items-center px-1 text-sm font-semibold rounded-lg border border-transparent text-red-600 hover:text-red-800 focus:outline-none focus:text-red-800 disabled:opacity-50 disabled:pointer-events-none dark:text-red-500 dark:hover:text-red-400 dark:focus:text-red-400">
+        <Trash2 class="size-4"/>
+      </button>
+      <div
+          v-if="cImage.status === FILE_STATUS.COMPRESSING"
+          class="animate-spin inline-block size-4 border-[3px] border-current border-t-transparent text-purple-600 rounded-full dark:text-purple-500"
+          role="status"
+          aria-label="loading"
+      >
+        <span class="sr-only">Loading...</span>
+      </div>
+      <a
+          v-if="cImage.status === FILE_STATUS.FINISHED"
+          :download="cImage.file.name"
+          :href="getDownloadURL(cImage)"
+          target="_blank"
+          class="inline-flex items-center px-1 text-sm font-semibold rounded-lg border border-transparent text-purple-600 hover:text-purple-800 focus:outline-none focus:text-purple-800 disabled:opacity-50 disabled:pointer-events-none dark:text-purple-500 dark:hover:text-purple-400 dark:focus:text-purple-400">
+        <Download class="size-4"/>
+      </a>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+
+</style>
