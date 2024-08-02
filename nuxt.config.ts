@@ -1,7 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     devtools: {enabled: true},
-    modules: ["@pinia/nuxt", '@pinia-plugin-persistedstate/nuxt', "@nuxtjs/i18n"],
+    modules: [
+        "@pinia/nuxt",
+        '@pinia-plugin-persistedstate/nuxt',
+        "@nuxtjs/i18n",
+        "@nuxt/eslint"
+    ],
     css: ["~/assets/css/main.css"],
     i18n: {
         vueI18n: "./i18n/i18n.ts",

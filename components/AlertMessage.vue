@@ -34,17 +34,18 @@ const colorClasses = computed(() => {
 </script>
 
 <template>
-  <div class="hs-removing:translate-x-5 hs-removing:opacity-0 transition duration-300 border text-sm rounded-lg p-4" role="alert"
+  <div
+v-if="visible" class="hs-removing:translate-x-5 hs-removing:opacity-0 transition duration-300 border text-sm rounded-lg p-4"
+       role="alert"
        :class="colorClasses.alert"
        tabindex="-1"
-       v-if="visible"
   >
     <div class="flex items-center">
       <div class="shrink-0">
-        <Info class="size-5" v-if="generalMessage.level === MESSAGE_LEVEL.INFO"/>
-        <CircleAlert class="size-5" v-if="generalMessage.level === MESSAGE_LEVEL.WARNING"/>
-        <CircleX class="size-5" v-if="generalMessage.level === MESSAGE_LEVEL.ERROR"/>
-        <CircleCheck class="size-5" v-if="generalMessage.level === MESSAGE_LEVEL.SUCCESS"/>
+        <Info v-if="generalMessage.level === MESSAGE_LEVEL.INFO" class="size-5"/>
+        <CircleAlert v-if="generalMessage.level === MESSAGE_LEVEL.WARNING" class="size-5"/>
+        <CircleX v-if="generalMessage.level === MESSAGE_LEVEL.ERROR" class="size-5"/>
+        <CircleCheck v-if="generalMessage.level === MESSAGE_LEVEL.SUCCESS" class="size-5"/>
       </div>
       <div class="ms-2">
         <h3 id="hs-dismiss-button-label" class="text-sm font-medium">
@@ -54,9 +55,9 @@ const colorClasses = computed(() => {
       <div class="ps-3 ms-auto">
         <div class="-mx-1.5 -my-1.5">
           <button
-              @click="visible = false"
               type="button"
               class="inline-flex bg-teal-50 rounded-lg p-1.5 focus:outline-none dark:bg-transparent"
+              @click="visible = false"
           >
             <X class="size-4"/>
           </button>

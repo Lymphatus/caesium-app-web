@@ -2,7 +2,7 @@
 
 import type {CImage} from "~/utils/utils";
 import prettyBytes from "pretty-bytes";
-import {Eye, Trash2, Download} from 'lucide-vue-next';
+import {Trash2, Download} from 'lucide-vue-next';
 
 import {useCompressorStore} from '@/stores/compressor'
 
@@ -21,11 +21,11 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="flex border-b border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 gap-4">
-    <div class="flex whitespace-nowrap text-sm text-neutral-800 dark:text-neutral-200 items-center pl-4">
+  <div class="flex border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 gap-4">
+    <div class="flex whitespace-nowrap text-sm text-gray-800 dark:text-gray-200 items-center pl-4">
       <div class="rounded-full size-8 bg-center bg-cover" :style="['background-image: url(\''+cImage.thumbnailUrl+'\')']">&nbsp;</div>
     </div>
-    <div class="flex flex-col py-2 text-sm text-neutral-800 dark:text-neutral-200 flex-1 gap-1 truncate">
+    <div class="flex flex-col py-2 text-sm text-gray-800 dark:text-gray-200 flex-1 gap-1 truncate">
       <span class="font-medium">{{ props.cImage.file.name }}</span>
       <div>
         <span :class="{'line-through opacity-50': props.cImage.newSize > 0}">{{ prettyBytes(props.cImage.file.size) }}</span>
@@ -36,14 +36,14 @@ const props = defineProps<{
 <!--      <button-->
 <!--          v-if="compressorStore.compressionStatus === COMPRESSION_STATUS.FINISHED"-->
 <!--          type="button"-->
-<!--          class="inline-flex items-center px-1 text-sm font-semibold rounded-lg border border-transparent text-neutral-600 hover:text-neutral-800 focus:outline-none focus:text-neutral-800 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-500 dark:hover:text-neutral-400 dark:focus:text-neutral-400">-->
+<!--          class="inline-flex items-center px-1 text-sm font-semibold rounded-lg border border-transparent text-gray-600 hover:text-gray-800 focus:outline-none focus:text-gray-800 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-500 dark:hover:text-gray-400 dark:focus:text-gray-400">-->
 <!--        <Eye class="size-4"/>-->
 <!--      </button>-->
       <button
           v-if="compressorStore.compressionStatus === COMPRESSION_STATUS.WAITING || compressorStore.compressionStatus === COMPRESSION_STATUS.FINISHED_ALL_ERRORS"
-          @click="compressorStore.removeFile(cImage.key)"
           type="button"
-          class="inline-flex items-center px-1 text-sm font-semibold rounded-lg border border-transparent text-red-600 hover:text-red-800 focus:outline-none focus:text-red-800 disabled:opacity-50 disabled:pointer-events-none dark:text-red-500 dark:hover:text-red-400 dark:focus:text-red-400">
+          class="inline-flex items-center px-1 text-sm font-semibold rounded-lg border border-transparent text-red-600 hover:text-red-800 focus:outline-none focus:text-red-800 disabled:opacity-50 disabled:pointer-events-none dark:text-red-500 dark:hover:text-red-400 dark:focus:text-red-400"
+          @click="compressorStore.removeFile(cImage.key)">
         <Trash2 class="size-4"/>
       </button>
       <div

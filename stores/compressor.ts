@@ -1,12 +1,13 @@
-import { defineStore } from 'pinia'
+import {defineStore} from 'pinia'
 import {computed, reactive, type Ref, ref} from 'vue'
-import type { CImage, GeneralMessage } from '@/utils/utils'
-import { COMPRESSION_MODE, COMPRESSION_STATUS, FILE_STATUS, MAX_SIZE_UNIT, MESSAGE_LEVEL } from '@/utils/utils'
-import { v4 as uuidv4, v5 as uuidv5 } from 'uuid'
+import type {CImage, GeneralMessage} from '@/utils/utils'
+import {COMPRESSION_MODE, COMPRESSION_STATUS, FILE_STATUS, MAX_SIZE_UNIT, MESSAGE_LEVEL} from '@/utils/utils'
+import {v4 as uuidv4, v5 as uuidv5} from 'uuid'
 import CompressionWorker from '~/assets/workers/compression-worker?worker'
 import JSZip from 'jszip'
 import moment from 'moment'
 import FileSaver from "file-saver";
+import prettyBytes from "pretty-bytes";
 
 const FILES_LIMIT = 5
 const MAX_FILE_SIZE = 20971520
@@ -61,6 +62,29 @@ export const useCompressorStore = defineStore('compressor', () => {
         return COMPRESSION_STATUS.COMPRESSING
     })
 
+    watch(compressionStatus, async (newStatus) => {
+        if (newStatus === COMPRESSION_STATUS.FINISHED) {
+            let totalOriginalSize = 0;
+            let totalCompressedSize = 0;
+
+            files.forEach(f => {
+                totalOriginalSize += f.file.size
+                totalCompressedSize += f.newSize === 0 ? f.file.size : f.newSize
+            })
+            const isBigger = totalCompressedSize > totalOriginalSize;
+            const level = isBigger ? MESSAGE_LEVEL.WARNING : MESSAGE_LEVEL.SUCCESS
+            generalMessage.value = {
+                level,
+                message: useNuxtApp().$i18n.t('compressor.saved_bytes', {
+                    size: prettyBytes(totalOriginalSize - totalCompressedSize),
+                    percentage: (isBigger ? '+' : '') + (Math.round((totalCompressedSize / totalOriginalSize) * 100) - 100)
+                }),
+                visible: true,
+                timeout: 3000
+            }
+        }
+    })
+
     function addFiles() {
         const input = document.createElement('input')
         input.type = 'file'
@@ -87,7 +111,7 @@ export const useCompressorStore = defineStore('compressor', () => {
 
     function importFiles(fileList: FileList) {
         resetGeneralMessage()
-        const supportedFiles = Array.from(fileList).filter(f => ['image/jpeg','image/png','image/webp'].includes(f.type))
+        const supportedFiles = Array.from(fileList).filter(f => ['image/jpeg', 'image/png', 'image/webp'].includes(f.type))
         if (files.length + supportedFiles.length > FILES_LIMIT) {
             generalMessage.value = {
                 level: MESSAGE_LEVEL.ERROR,
@@ -142,6 +166,7 @@ export const useCompressorStore = defineStore('compressor', () => {
     function reset() {
         files.splice(0, files.length)
         groupId.value = uuidv4()
+        resetGeneralMessage()
     }
 
     function recompress() {
@@ -156,6 +181,7 @@ export const useCompressorStore = defineStore('compressor', () => {
     }
 
     function startCompress() {
+        resetGeneralMessage()
         for (const cImage of files.values()) {
             cImage.status = FILE_STATUS.COMPRESSING
             cImage.requestedMaxSize = compressionMode.value === COMPRESSION_MODE.SIZE ? maxSize.value : 0
@@ -192,17 +218,17 @@ export const useCompressorStore = defineStore('compressor', () => {
                             storeCompressionResult(cImage)
                         }
                     }
-                } catch (err: any) {
+                } catch (err: unknown) {
                     setAsError(cImage, err)
                 }
             }
-        } catch (err: any) {
+        } catch (err: unknown) {
             setAsError(cImage, err)
         }
 
     }
 
-    function setAsError(cImage: CImage, e: MessageEvent<any> | string) {
+    function setAsError(cImage: CImage, e: MessageEvent<never> | string | unknown) {
         cImage.status = FILE_STATUS.ERROR
         cImage.errorMessage = useNuxtApp().$i18n.t('errors.generic_error')
 
@@ -213,7 +239,7 @@ export const useCompressorStore = defineStore('compressor', () => {
             },
             body: JSON.stringify({
                 level: 'error',
-                message: e.toString().slice(0, 2048)
+                message: e?.toString().slice(0, 2048)
             })
         }).then()
     }
@@ -251,14 +277,13 @@ export const useCompressorStore = defineStore('compressor', () => {
             }
         })
 
-        zip.generateAsync({ type: 'blob' }).then(function(content) {
+        zip.generateAsync({type: 'blob'}).then(function (content) {
             const timestamp = moment().format('YYYYMMDD_HHmmss')
             FileSaver.saveAs(content, `caesium_${timestamp}.zip`)
         })
     }
 
-    function resetGeneralMessage()
-    {
+    function resetGeneralMessage() {
         generalMessage.value = {
             level: MESSAGE_LEVEL.INFO,
             message: '',

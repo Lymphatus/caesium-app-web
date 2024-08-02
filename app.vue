@@ -1,7 +1,7 @@
 <template>
-  <div class="h-screen flex flex-col bg-white dark:bg-neutral-900">
-    <Header />
+  <div class="h-screen flex flex-col bg-white dark:bg-gray-900">
+    <PageHeader />
     <NuxtPage class="flex-1"/>
-    <Footer />
+    <PageFooter />
   </div>
 </template>
