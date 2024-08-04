@@ -2,7 +2,7 @@
 
 import type {CImage} from "~/utils/utils";
 import prettyBytes from "pretty-bytes";
-import {Trash2, Download} from 'lucide-vue-next';
+import {Trash2, Download, CircleAlert} from 'lucide-vue-next';
 
 import {useCompressorStore} from '@/stores/compressor'
 
@@ -21,7 +21,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="flex border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 gap-4">
+  <div class="flex border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 gap-4 items-center">
     <div class="flex whitespace-nowrap text-sm text-gray-800 dark:text-gray-200 items-center pl-4">
       <div class="rounded-full size-8 bg-center bg-cover" :style="['background-image: url(\''+cImage.thumbnailUrl+'\')']">&nbsp;</div>
     </div>
@@ -32,6 +32,7 @@ const props = defineProps<{
         <span v-if="props.cImage.newSize > 0"> → {{ prettyBytes(props.cImage.newSize) }} <span :class="[cImage.newSize > cImage.file.size ? 'text-red-600 dark:text-red-500' : 'text-emerald-600 dark:text-emerald-500']">[{{ Math.round((cImage.newSize / cImage.file.size) * 100) - 100 }}%]</span></span>
       </div>
     </div>
+    <div v-if="cImage.errorMessage" class="text-sm text-red-600 dark:text-red-500 flex items-center gap-1"><CircleAlert class="size-3" />{{cImage.errorMessage}}</div>
     <div class="flex py-2 text-end text-sm font-medium align-bottom pr-4 items-center">
 <!--      <button-->
 <!--          v-if="compressorStore.compressionStatus === COMPRESSION_STATUS.FINISHED"-->

@@ -3,11 +3,13 @@ import {computed, reactive, type Ref, ref} from 'vue'
 import type {CImage, GeneralMessage} from '@/utils/utils'
 import {COMPRESSION_MODE, COMPRESSION_STATUS, FILE_STATUS, MAX_SIZE_UNIT, MESSAGE_LEVEL} from '@/utils/utils'
 import {v4 as uuidv4, v5 as uuidv5} from 'uuid'
-import CompressionWorker from '~/assets/workers/compression-worker?worker'
+import CompressionWorker from 'assets/workers/compression-worker?worker'
 import JSZip from 'jszip'
 import moment from 'moment'
 import FileSaver from "file-saver";
 import prettyBytes from "pretty-bytes";
+
+// import CaesiumWASM from "~/assets/wasm/libcaesium-wasm";
 
 const FILES_LIMIT = 5
 const MAX_FILE_SIZE = 20971520
@@ -190,42 +192,41 @@ export const useCompressorStore = defineStore('compressor', () => {
     }
 
     function performCompression(cImage: CImage) {
-        try {
-            const compressionWorker = new CompressionWorker()
-            compressionWorker.postMessage('PING')
-            compressionWorker.onmessage = (e) => {
-                try {
-                    if (e.data === 'PONG') {
-                        compressionWorker.postMessage([
-                            cImage.file,
-                            lossless.value ? 0 : quality.value,
-                            keepMetadata.value,
-                            maxSize.value,
-                            compressionMode.value
-                        ])
-                    } else {
-                        const success = e.data[0]
-                        if (!success) {
-                            const errorCode = e.data[3]
-                            const errorString = e.data[4]
-                            setAsError(cImage, `Worker responded false. Code: ${errorCode}. JS error: ${errorString}. File: ${cImage.file.name}. Size: ${cImage.file.size}. Mime: ${cImage.file.type}.`)
-                        } else {
-                            const newSize = e.data[1]
-                            const dataArray = e.data[2]
-                            cImage.status = FILE_STATUS.FINISHED
-                            cImage.newSize = newSize
-                            cImage.outputImageArray = dataArray
-                            storeCompressionResult(cImage)
-                        }
+        const compressionWorker = new CompressionWorker()
+        compressionWorker.postMessage('initLib')
+        compressionWorker.onmessage = (e) => {
+            if (e.data === 'initFinished') {
+                compressionWorker.postMessage([
+                    cImage.file,
+                    lossless.value ? 0 : quality.value,
+                    keepMetadata.value,
+                    maxSize.value,
+                    compressionMode.value
+                ])
+            } else {
+                console.log(e.data)
+                const success = e.data.success;
+                if (!success) {
+                    const errorCode = e.data.errorCode
+                    const errorString = e.data.errorString
+                    const compressionOptions = {
+                        quality: lossless.value ? 0 : quality.value,
+                        metadata: keepMetadata.value,
+                        maxSize: maxSize.value,
+                        mode: compressionMode.value
                     }
-                } catch (err: unknown) {
-                    setAsError(cImage, err)
+                    setAsError(cImage, `Worker responded false. Code: ${errorCode}. JS error: ${errorString}. File: ${cImage.file.name}. Size: ${cImage.file.size}. Mime: ${cImage.file.type}. Options: ${JSON.stringify(compressionOptions)}`)
+                } else {
+                    const newSize = e.data.size
+                    const dataArray = e.data.data
+                    cImage.status = FILE_STATUS.FINISHED
+                    cImage.newSize = newSize
+                    cImage.outputImageArray = dataArray
+                    storeCompressionResult(cImage)
                 }
             }
-        } catch (err: unknown) {
-            setAsError(cImage, err)
-        }
 
+        }
     }
 
     function setAsError(cImage: CImage, e: MessageEvent<never> | string | unknown) {

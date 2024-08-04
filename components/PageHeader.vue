@@ -2,6 +2,14 @@
 import {Languages} from "lucide-vue-next";
 
 const {locales, setLocale} = useI18n()
+
+function toggleCookieConsentTheme(theme: 'light' | 'dark') {
+  if (theme === 'light') {
+    document.documentElement.classList.remove('cc--darkmode')
+  } else {
+    document.documentElement.classList.add('cc--darkmode')
+  }
+}
 </script>
 
 <template>
@@ -35,7 +43,8 @@ const {locales, setLocale} = useI18n()
       </div>
       <div id="navbar-menu" class="hs-collapse hidden overflow-hidden transition-all duration-300 sm:block">
         <div class="flex flex-col gap-4 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:ps-5">
-          <NuxtLink class="font-medium text-gray-600 hover:text-purple-400 dark:text-gray-400 dark:hover:text-purple-500 cursor-pointer" :to="{name: 'about'}">{{ $t('compressor.donate') }}</NuxtLink>
+          <NuxtLink class="font-medium text-gray-600 hover:text-purple-400 dark:text-gray-400 dark:hover:text-purple-500 cursor-pointer" :to="{name: 'donate'}">{{ $t('compressor.donate') }}</NuxtLink>
+<!--          <NuxtLink class="font-medium text-gray-600 hover:text-purple-400 dark:text-gray-400 dark:hover:text-purple-500 cursor-pointer" :to="{name: 'about'}">{{ $t('compressor.about') }}</NuxtLink>-->
 
           <div class="hs-dropdown [--strategy:static] sm:[--strategy:fixed] [--adaptive:none] ">
             <button id="hs-mega-menu-basic-dr" type="button" class="flex items-center w-full text-gray-600 hover:text-purple-400 font-medium dark:text-gray-400 dark:hover:text-purple-500 ">
@@ -47,7 +56,6 @@ const {locales, setLocale} = useI18n()
 
             <div
                 class="hs-dropdown-menu transition-[opacity,margin] duration-[0.1ms] sm:duration-[150ms] hs-dropdown-open:opacity-100 opacity-0 z-10 bg-white sm:shadow-md rounded-lg p-2 dark:bg-gray-800 sm:dark:border dark:border-gray-700 dark:divide-gray-700 before:absolute top-full sm:border before:-top-5 before:start-0 before:w-full before:h-5 hidden">
-
               <a
                   v-for="locale in locales" :key="locale.code" href="#"
                   class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-purple-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-purple-300"
@@ -57,12 +65,16 @@ const {locales, setLocale} = useI18n()
             </div>
           </div>
 
-          <button type="button" class="hs-dark-mode-active:hidden block hs-dark-mode group items-center text-gray-600 hover:text-purple-600 font-medium dark:text-gray-400 dark:hover:text-purple-500" data-hs-theme-click-value="dark">
+          <button
+type="button" class="hs-dark-mode-active:hidden block hs-dark-mode group items-center text-gray-600 hover:text-purple-600 font-medium dark:text-gray-400 dark:hover:text-purple-500" data-hs-theme-click-value="dark"
+                  @click="toggleCookieConsentTheme('dark')">
             <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
             </svg>
           </button>
-          <button type="button" class="hs-dark-mode-active:block hidden hs-dark-mode group items-center text-gray-600 hover:text-purple-600 font-medium dark:text-gray-400 dark:hover:text-purple-500" data-hs-theme-click-value="light">
+          <button
+type="button" class="hs-dark-mode-active:block hidden hs-dark-mode group items-center text-gray-600 hover:text-purple-600 font-medium dark:text-gray-400 dark:hover:text-purple-500" data-hs-theme-click-value="light"
+                  @click="toggleCookieConsentTheme('light')">
             <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="4"/>
               <path d="M12 2v2"/>

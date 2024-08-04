@@ -24,6 +24,7 @@
     "pinia": "^2.2.0",
     "preline": "^2.3.0",
     "uuid": "^10.0.0",
+    "vanilla-cookieconsent": "^3.0.1",
     "vue": "^3.4.27",
     "vue-router": "^4.3.2"
   },
