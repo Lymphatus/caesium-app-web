@@ -18,7 +18,7 @@ function toggleCookieConsentTheme(theme: 'light' | 'dark') {
       <div class="flex items-center justify-between">
         <NuxtLink class="flex items-center gap-2" :to="{name: 'index'}">
           <img class="size-10" src="~/assets/images/logo.png" alt="logo">
-          <h2 class="hidden sm:block text-gray-600 dark:text-gray-400 text-lg"><span class="font-medium">Caesium</span> Image Compressor</h2>
+          <h2 class="hidden sm:block text-gray-900 dark:text-gray-100 text-lg"><span class="font-medium">Caesium</span> Image Compressor</h2>
         </NuxtLink>
         <div class="sm:hidden">
           <button

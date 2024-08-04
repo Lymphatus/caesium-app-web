@@ -19,9 +19,9 @@ const compressorStore = useCompressorStore()
     </div>
 
     <button
-type="button"
-            class="transition py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-purple-500 text-gray-100 hover:bg-purple-600 disabled:opacity-50 disabled:pointer-events-none"
-            @click="compressorStore.addFiles()">
+        type="button"
+        class="transition py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-purple-500 text-gray-100 hover:bg-purple-600 disabled:opacity-50 disabled:pointer-events-none justify-center"
+        @click="compressorStore.addFiles()">
       <FolderOpen class="size-5"/>
       {{ $t('compressor.browse_dots') }}
     </button>

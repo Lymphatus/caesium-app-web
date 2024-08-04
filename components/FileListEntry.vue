@@ -23,7 +23,7 @@ const props = defineProps<{
 <template>
   <div class="flex border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 gap-4 items-center">
     <div class="flex whitespace-nowrap text-sm text-gray-800 dark:text-gray-200 items-center pl-4">
-      <div class="rounded-full size-8 bg-center bg-cover" :style="['background-image: url(\''+cImage.thumbnailUrl+'\')']">&nbsp;</div>
+      <div class="rounded-full size-10 bg-center bg-cover border-2 border-gray-200 dark:border-gray-700" :style="['background-image: url(\''+cImage.thumbnailUrl+'\')']">&nbsp;</div>
     </div>
     <div class="flex flex-col py-2 text-sm text-gray-800 dark:text-gray-200 flex-1 gap-1 truncate">
       <span class="font-medium">{{ props.cImage.file.name }}</span>

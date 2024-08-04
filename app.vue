@@ -16,7 +16,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="h-screen flex flex-col bg-white dark:bg-gray-900">
+  <div class="flex flex-col bg-white dark:bg-gray-900 min-h-screen">
     <PageHeader/>
     <NuxtPage class="flex-1"/>
     <PageFooter/>
