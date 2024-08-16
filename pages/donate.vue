@@ -60,8 +60,9 @@ import {Heart} from "lucide-vue-next";
           </div>
         </a>
       </div>
-      <p>Want another method? <a class="hover:text-purple-600 dark:hover:text-purple-500 underline underline-offset-2" href="/caesium#contacts">Contact
-        me!</a></p>
+      <p>Want another method? <a
+          class="hover:text-purple-600 dark:hover:text-purple-500 underline underline-offset-2"
+          href="//saerasoft.com/caesium#contacts" target="_blank">Contact me!</a></p>
     </div>
   </div>
 </template>

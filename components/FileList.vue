@@ -9,7 +9,7 @@ const compressorStore = useCompressorStore()
 </script>
 
 <template>
-  <div class="flex flex-col justify-between h-full">
+  <div class="flex flex-col justify-between h-full flex-1">
     <div class="">
       <div class=" ">
         <FileListEntry v-for="cImage in compressorStore.files" :key="cImage.key" :c-image="cImage"/>
