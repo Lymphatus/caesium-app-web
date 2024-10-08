@@ -6,8 +6,8 @@
   <footer class="mt-auto w-full bg-gray-100 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
     <div class="w-full py-3 px-4 flex items-center justify-between">
       <div class="flex flex-col gap-2">
-        <NuxtLink class="text-sm text-gray-800 hover:text-purple-400 dark:text-gray-200 dark:hover:text-purple-500" :to="{name: 'cookie-policy'}">{{ $t('compressor.cookie_policy') }}</NuxtLink>
-        <NuxtLink class="text-sm text-gray-800 hover:text-purple-400 dark:text-gray-200 dark:hover:text-purple-500" :to="{name: 'privacy-policy'}">{{ $t('compressor.privacy_policy') }}</NuxtLink>
+        <NuxtLink target="_blank" class="text-sm text-gray-800 hover:text-purple-400 dark:text-gray-200 dark:hover:text-purple-500" :to="{name: 'cookie-policy'}">{{ $t('compressor.cookie_policy') }}</NuxtLink>
+        <NuxtLink target="_blank" class="text-sm text-gray-800 hover:text-purple-400 dark:text-gray-200 dark:hover:text-purple-500" :to="{name: 'privacy-policy'}">{{ $t('compressor.privacy_policy') }}</NuxtLink>
       </div>
       <div class="flex flex-col gap-2 items-end">
         <a

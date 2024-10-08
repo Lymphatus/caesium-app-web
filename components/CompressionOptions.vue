@@ -23,7 +23,7 @@ const compressorStore = useCompressorStore()
       <div class="flex flex-col gap-2">
         <div v-if="compressorStore.compressionMode === COMPRESSION_MODE.QUALITY">
           <div class="flex items-center justify-between">
-            <label for="quality-range-slider">Quality</label>
+            <label for="quality-range-slider">{{ compressorStore.quality }}</label>
             <span>{{ compressorStore.quality }}</span>
           </div>
           <input

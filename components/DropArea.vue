@@ -8,7 +8,7 @@ const compressorStore = useCompressorStore()
 
 <template>
   <div
-      class="min-h-[400px] h-2/3 rounded-md border-dashed flex flex-col flex-1 items-center justify-center gap-4 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700"
+      class="min-h-[400px] h-2/3 rounded-md border-dashed flex flex-col flex-1 items-center justify-center gap-4 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700"
       @drop.prevent="compressorStore.onFilesAdded($event?.dataTransfer?.files)"
       @dragover.prevent>
     <img class="size-36 opacity-30" src="~/assets/images/logo.png" alt="logo">

@@ -30,10 +30,6 @@ export default defineNuxtPlugin(async (_nuxtApp) => {
                         closeIconLabel: 'Close modal',
                         sections: [
                             {
-                                title: 'Somebody said ... cookies?',
-                                description: 'I want one!'
-                            },
-                            {
                                 title: 'Strictly Necessary cookies',
                                 description: 'These cookies are essential for the proper functioning of the website and cannot be disabled.',
 
