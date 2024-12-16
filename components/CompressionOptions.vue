@@ -23,7 +23,7 @@ const compressorStore = useCompressorStore()
       <div class="flex flex-col gap-2">
         <div v-if="compressorStore.compressionMode === COMPRESSION_MODE.QUALITY">
           <div class="flex items-center justify-between">
-            <label for="quality-range-slider">{{ compressorStore.quality }}</label>
+            <label for="quality-range-slider">{{ $t('compressor.quality') }}</label>
             <span>{{ compressorStore.quality }}</span>
           </div>
           <input
@@ -97,7 +97,7 @@ const compressorStore = useCompressorStore()
           </div>
         </div>
 
-        <div class="flex items-center justify-between">
+        <div v-if="compressorStore.compressionMode === COMPRESSION_MODE.QUALITY" class="flex items-center justify-between">
           <div class="text-sm flex items-center gap-2">
             <label for="input-lossless">{{ $t('compressor.lossless_compression') }}</label>
             <div class="hs-tooltip inline-block">

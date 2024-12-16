@@ -204,7 +204,6 @@ export const useCompressorStore = defineStore('compressor', () => {
                     compressionMode.value
                 ])
             } else {
-                console.log(e.data)
                 const success = e.data.success;
                 if (!success) {
                     const errorCode = e.data.errorCode
