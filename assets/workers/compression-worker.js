@@ -1,4 +1,5 @@
 import CaesiumWASM from '~/assets/wasm/libcaesium-wasm';
+import {COMPRESSION_MODE} from '@/utils/utils'
 
 let LibcaesiumWasm = null;
 onmessage = (e) => {

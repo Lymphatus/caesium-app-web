@@ -316,7 +316,7 @@ export const useCompressorStore = defineStore('compressor', () => {
     }
 }, {
     persist: {
-        paths: [
+        pick: [
             'compressionMode',
             'keepMetadata',
             'lossless',
