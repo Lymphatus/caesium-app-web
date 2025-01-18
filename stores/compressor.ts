@@ -9,7 +9,6 @@ import moment from 'moment'
 import FileSaver from "file-saver";
 import prettyBytes from "pretty-bytes";
 
-// import CaesiumWASM from "~/assets/wasm/libcaesium-wasm";
 
 const FILES_LIMIT = 5
 const MAX_FILE_SIZE = 20971520
@@ -232,7 +231,7 @@ export const useCompressorStore = defineStore('compressor', () => {
         cImage.status = FILE_STATUS.ERROR
         cImage.errorMessage = useNuxtApp().$i18n.t('errors.generic_error')
 
-        fetch('/api/log', {
+        fetch(useRuntimeConfig().public.apiHost + '/api/v1/log', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -259,7 +258,7 @@ export const useCompressorStore = defineStore('compressor', () => {
             compression_mode: compressionMode.value
         }
 
-        fetch('/api/compression/store', {
+        fetch(useRuntimeConfig().public.apiHost + '/api/v1/compression/store', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
