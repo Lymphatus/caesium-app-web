@@ -258,7 +258,7 @@ export const useCompressorStore = defineStore('compressor', () => {
             compression_mode: compressionMode.value
         }
 
-        fetch(useRuntimeConfig().public.apiHost + '/api/v1/compression/store', {
+        fetch(useRuntimeConfig().public.apiHost + '/api/v1/compressor/store', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
