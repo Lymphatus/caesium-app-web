@@ -247,15 +247,15 @@ export const useCompressorStore = defineStore('compressor', () => {
         const data = {
             session_id: sessionId,
             group_id: groupId.value,
-            file_id: cImage.id,
+            uuid: cImage.id,
             original_size: cImage.file.size,
             compressed_size: cImage.newSize,
             mime_type: cImage.file.type,
-            quality: quality.value,
-            max_size: maxSize.value,
-            keep_metadata: keepMetadata.value ? 1 : 0,
-            lossless: lossless.value ? 1 : 0,
-            compression_mode: compressionMode.value
+            quality: compressionMode.value === COMPRESSION_MODE.QUALITY && !lossless.value ? quality.value : null,
+            keep_metadata: keepMetadata.value,
+            lossless: lossless.value,
+            max_output_size: compressionMode.value === COMPRESSION_MODE.SIZE ? maxSize.value : null,
+            compression_mode: compressionMode.value === 0 ? 'quality' : 'size'
         }
 
         fetch(useRuntimeConfig().public.apiHost + '/api/v1/compressor/store', {
