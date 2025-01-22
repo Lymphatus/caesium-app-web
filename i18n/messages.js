@@ -29,7 +29,8 @@ const messages = {
             help_translate: 'Help translate',
             max_size: 'Maximum size',
             size: 'Size',
-            mode: 'Mode'
+            mode: 'Mode',
+            back: 'Back'
         },
         errors: {
             file_invalid: 'Provided file is invalid.',
@@ -70,7 +71,8 @@ const messages = {
             help_translate: 'Ayúdanos a traducir',
             max_size: 'Tamaño máximo',
             size: 'Tamaño',
-            mode: 'Mode'
+            mode: 'Mode',
+            back: 'Back'
         },
         errors: {
             file_invalid: 'El archivo enviado es inválido.',
@@ -111,7 +113,8 @@ const messages = {
             help_translate: 'Aiuta a tradurre',
             max_size: 'Dimensione massima',
             size: 'Dimensione',
-            mode: 'Modalità'
+            mode: 'Modalità',
+            back: 'Indietro'
         },
         errors: {
             file_invalid: 'Il file non è valido.',
@@ -153,7 +156,8 @@ const messages = {
             help_translate: 'Pomóż tłumaczyć',
             max_size: 'Największy rozmiar',
             size: 'Rozmiar',
-            mode: 'Mode'
+            mode: 'Mode',
+            back: 'Back'
         },
         errors: {
             file_invalid: 'Plik nie spełnia wymagań',
@@ -194,7 +198,8 @@ const messages = {
             help_translate: '帮助翻译',
             max_size: '最大大小',
             size: '大小',
-            mode: 'Mode'
+            mode: 'Mode',
+            back: 'Back'
         },
         errors: {
             file_invalid: '提供的文件无效。',
@@ -232,7 +237,8 @@ const messages = {
             privacy_policy: 'Правила щодо приватності',
             copyright_note: '© SaeraSoft і Matteo Paonessa, Всі права застережені',
             lossless_help: 'Якщо вибрали цю опцію, якість світлини буде повністю збережена.<br/>Не забувайте, що у форматі PNG не втрачається якість, але інколи його вибір може потягати за собою більший розмір світлини.',
-            help_translate: 'Допоможи перекласти'
+            help_translate: 'Допоможи перекласти',
+            back: 'Back'
         },
         errors: {
             file_invalid: 'Цей файл не підходить.',
