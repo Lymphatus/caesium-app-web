@@ -14,6 +14,26 @@ const FILES_LIMIT = 5
 const MAX_FILE_SIZE = 20971520
 const NAMESPACE = '31e0ba23-9ce1-4c1f-a879-802230c27d63'
 export const useCompressorStore = defineStore('compressor', () => {
+        let compressionWorker: Worker | null = null;
+if (import.meta.client) {
+    compressionWorker = new CompressionWorker()
+    compressionWorker.onmessage = (e) => {
+            if (e.data !== 'initFinished') {
+                const success = e.data.success;
+                if (!success) {
+                    onWorkerError(e.data)
+                } else {
+                    onWorkerSuccess(e.data)
+                }
+            } else {
+                console.log('init')
+            }
+
+        }
+    compressionWorker.postMessage('initLib')
+}
+
+
     const quality: Ref<number> = ref(80)
     const keepMetadata: Ref<boolean> = ref(true)
     const lossless: Ref<boolean> = ref(false)
@@ -191,40 +211,48 @@ export const useCompressorStore = defineStore('compressor', () => {
     }
 
     function performCompression(cImage: CImage) {
-        const compressionWorker = new CompressionWorker()
-        compressionWorker.postMessage('initLib')
-        compressionWorker.onmessage = (e) => {
-            if (e.data === 'initFinished') {
-                compressionWorker.postMessage([
-                    cImage.file,
-                    lossless.value ? 0 : quality.value,
-                    keepMetadata.value,
-                    maxSize.value,
-                    compressionMode.value
-                ])
-            } else {
-                const success = e.data.success;
-                if (!success) {
-                    const errorCode = e.data.errorCode
-                    const errorString = e.data.errorString
-                    const compressionOptions = {
-                        quality: lossless.value ? 0 : quality.value,
-                        metadata: keepMetadata.value,
-                        maxSize: maxSize.value,
-                        mode: compressionMode.value
-                    }
-                    setAsError(cImage, `Worker responded false. Code: ${errorCode}. JS error: ${errorString}. File: ${cImage.file.name}. Size: ${cImage.file.size}. Mime: ${cImage.file.type}. Options: ${JSON.stringify(compressionOptions)}`)
-                } else {
-                    const newSize = e.data.size
-                    const dataArray = e.data.data
-                    cImage.status = FILE_STATUS.FINISHED
-                    cImage.newSize = newSize
-                    cImage.outputImageArray = dataArray
-                    storeCompressionResult(cImage)
-                }
-            }
-
+        if (!compressionWorker) {
+            return;
         }
+        compressionWorker.postMessage([
+            cImage.file,
+            lossless.value ? 0 : quality.value,
+            keepMetadata.value,
+            maxSize.value,
+            compressionMode.value,
+            cImage.id
+        ])
+
+    }
+
+    function onWorkerSuccess(data: any) {
+        const newSize = data.size
+        const dataArray = data.data
+        const cImage = files.values().find(i => i.id === data.uuid);
+        if (!cImage) {
+            return;
+        }
+        cImage.status = FILE_STATUS.FINISHED
+        cImage.newSize = newSize
+        cImage.outputImageArray = dataArray
+
+        storeCompressionResult(cImage)
+    }
+
+    function onWorkerError(data:any) {
+        const errorCode = data.errorCode
+        const errorString = data.errorString
+        const compressionOptions = {
+            quality: lossless.value ? 0 : quality.value,
+            metadata: keepMetadata.value,
+            maxSize: maxSize.value,
+            mode: compressionMode.value
+        }
+        const cImage = files.values().find(i => i.id === data.uuid);
+        if (!cImage) {
+            return;
+        }
+        setAsError(cImage, `Worker responded false. Code: ${errorCode}. JS error: ${errorString}. File: ${cImage.file.name}. Size: ${cImage.file.size}. Mime: ${cImage.file.type}. Options: ${JSON.stringify(compressionOptions)}`)
     }
 
     function setAsError(cImage: CImage, e: MessageEvent<never> | string | unknown) {

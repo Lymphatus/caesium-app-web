@@ -11,7 +11,8 @@ onmessage = (e) => {
         const keepMetadata = e.data[2];
         const maxSize = e.data[3];
         const compressionMode = e.data[4];
-        performCompress(file, quality, keepMetadata, maxSize, compressionMode);
+        const uuid = e.data[5];
+        performCompress(file, quality, keepMetadata, maxSize, compressionMode, uuid);
     }
 };
 
@@ -26,13 +27,13 @@ function initLib() {
             data: null,
             errorCode: 3,
             errorString: e.toString(),
+            uuid: null
         };
         postMessage(result);
     });
 }
 
-function performCompress(
-    file, quality, keepMetadata, maxSize, compressionMode) {
+function performCompress(file, quality, keepMetadata, maxSize, compressionMode, uuid) {
     if (!LibcaesiumWasm) {
         const result = {
             success: false,
@@ -40,6 +41,7 @@ function performCompress(
             data: null,
             errorCode: 1,
             errorString: 'WASM not initialized',
+            uuid
         };
         postMessage(result);
         return;
@@ -55,6 +57,7 @@ function performCompress(
                 data: inputArray,
                 errorCode: 0,
                 errorString: '',
+                uuid
             };
 
             postMessage(result);
@@ -115,6 +118,7 @@ function performCompress(
             data: outputArray,
             errorCode: errorCode,
             errorString: '',
+            uuid
         };
 
         postMessage(result);
@@ -131,6 +135,7 @@ function performCompress(
             data: null,
             errorCode: 2,
             errorString: e.toString(),
+            uuid
         };
 
         postMessage(result);
