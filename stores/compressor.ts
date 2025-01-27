@@ -1,6 +1,6 @@
 import {defineStore} from 'pinia'
 import {computed, reactive, type Ref, ref} from 'vue'
-import type {CImage, GeneralMessage} from '@/utils/utils'
+import type {CImage, CompressionResult, GeneralMessage} from '@/utils/utils'
 import {COMPRESSION_MODE, COMPRESSION_STATUS, FILE_STATUS, MAX_SIZE_UNIT, MESSAGE_LEVEL} from '@/utils/utils'
 import {v4 as uuidv4, v5 as uuidv5} from 'uuid'
 import CompressionWorker from 'assets/workers/compression-worker?worker'
@@ -14,25 +14,22 @@ const FILES_LIMIT = 5
 const MAX_FILE_SIZE = 20971520
 const NAMESPACE = '31e0ba23-9ce1-4c1f-a879-802230c27d63'
 export const useCompressorStore = defineStore('compressor', () => {
-        let compressionWorker: Worker | null = null;
-if (import.meta.client) {
-    compressionWorker = new CompressionWorker()
-    compressionWorker.onmessage = (e) => {
+    let compressionWorker: Worker | null = null;
+    if (import.meta.client) {
+        compressionWorker = new CompressionWorker()
+        compressionWorker.onmessage = (e) => {
             if (e.data !== 'initFinished') {
                 const success = e.data.success;
                 if (!success) {
-                    onWorkerError(e.data)
+                    onWorkerError(e.data as CompressionResult)
                 } else {
-                    onWorkerSuccess(e.data)
+                    onWorkerSuccess(e.data as CompressionResult)
                 }
-            } else {
-                console.log('init')
             }
 
         }
-    compressionWorker.postMessage('initLib')
-}
-
+        compressionWorker.postMessage('initLib')
+    }
 
     const quality: Ref<number> = ref(80)
     const keepMetadata: Ref<boolean> = ref(true)
@@ -225,9 +222,9 @@ if (import.meta.client) {
 
     }
 
-    function onWorkerSuccess(data: any) {
-        const newSize = data.size
-        const dataArray = data.data
+    function onWorkerSuccess(compressionResult: CompressionResult) {
+        const newSize = compressionResult.size
+        const dataArray = compressionResult.data
         const cImage = files.values().find(i => i.id === data.uuid);
         if (!cImage) {
             return;
@@ -239,9 +236,9 @@ if (import.meta.client) {
         storeCompressionResult(cImage)
     }
 
-    function onWorkerError(data:any) {
-        const errorCode = data.errorCode
-        const errorString = data.errorString
+    function onWorkerError(compressionResult: CompressionResult) {
+        const errorCode = compressionResult.errorCode
+        const errorString = compressionResult.errorString
         const compressionOptions = {
             quality: lossless.value ? 0 : quality.value,
             metadata: keepMetadata.value,

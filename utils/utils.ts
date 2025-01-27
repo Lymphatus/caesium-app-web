@@ -48,3 +48,12 @@ export enum MAX_SIZE_UNIT {
     KILOBYTE = 1000,
     MEGABYTE = 1000000,
 }
+
+export interface CompressionResult {
+    success: boolean,
+    size: number,
+    data: Uint8Array | null,
+    errorCode: number,
+    errorString: string,
+    uuid: string
+}

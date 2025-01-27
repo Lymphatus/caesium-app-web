@@ -35,10 +35,10 @@ const colorClasses = computed(() => {
 
 <template>
   <div
-v-if="visible" class="hs-removing:translate-x-5 hs-removing:opacity-0 transition duration-300 border text-sm rounded-lg p-4"
-       role="alert"
-       :class="colorClasses.alert"
-       tabindex="-1"
+      v-if="visible" class="hs-removing:translate-x-5 hs-removing:opacity-0 transition duration-300 border text-sm rounded-lg p-4"
+      role="alert"
+      :class="colorClasses.alert"
+      tabindex="-1"
   >
     <div class="flex items-center">
       <div class="shrink-0">
