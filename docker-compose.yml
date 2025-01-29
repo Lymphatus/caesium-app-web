@@ -5,8 +5,8 @@ services:
     image: node:lts-alpine
     working_dir: /var/www/caesium-app
     tty: true
-    user: "node:node"
+    user: 'node:node'
     volumes:
       - ./:/var/www/caesium-app
     ports:
-      - "3000:3000"
+      - '3000:3000'

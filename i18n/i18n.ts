@@ -1,7 +1,7 @@
-import messages from './messages'
+import messages from './messages';
 
 export default defineI18nConfig(() => ({
-    legacy: false,
-    // globalInjection: true,
-    messages,
-}))
+  legacy: false,
+  // globalInjection: true,
+  messages,
+}));
