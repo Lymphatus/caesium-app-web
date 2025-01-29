@@ -16,10 +16,10 @@ function toggleCookieConsentTheme(theme: 'light' | 'dark') {
   <header class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-gray-100 text-sm py-3 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
     <nav class="w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between" aria-label="global">
       <div class="flex items-center justify-between">
-        <NuxtLink class="flex items-center gap-2" :to="{name: 'index'}">
+        <a href="/" class="flex items-center gap-2">
           <img class="size-10" src="~/assets/images/logo.png" alt="logo">
           <h2 class="hidden sm:block text-gray-900 dark:text-gray-100 text-lg"><span class="font-medium">Caesium</span> Image Compressor</h2>
-        </NuxtLink>
+        </a>
         <div class="sm:hidden">
           <button
               type="button"

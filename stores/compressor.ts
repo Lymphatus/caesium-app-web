@@ -1,6 +1,6 @@
 import {defineStore} from 'pinia'
 import {computed, reactive, type Ref, ref} from 'vue'
-import type {CImage, CompressionResult, GeneralMessage} from '@/utils/utils'
+import type {CImage, GeneralMessage} from '@/utils/utils'
 import {COMPRESSION_MODE, COMPRESSION_STATUS, FILE_STATUS, MAX_SIZE_UNIT, MESSAGE_LEVEL} from '@/utils/utils'
 import {v4 as uuidv4, v5 as uuidv5} from 'uuid'
 import CompressionWorker from 'assets/workers/compression-worker?worker'
@@ -9,27 +9,14 @@ import moment from 'moment'
 import FileSaver from "file-saver";
 import prettyBytes from "pretty-bytes";
 
-
-const FILES_LIMIT = 5
-const MAX_FILE_SIZE = 20971520
 const NAMESPACE = '31e0ba23-9ce1-4c1f-a879-802230c27d63'
 export const useCompressorStore = defineStore('compressor', () => {
-    let compressionWorker: Worker | null = null;
-    if (import.meta.client) {
-        compressionWorker = new CompressionWorker()
-        compressionWorker.onmessage = (e) => {
-            if (e.data !== 'initFinished') {
-                const success = e.data.success;
-                if (!success) {
-                    onWorkerError(e.data as CompressionResult)
-                } else {
-                    onWorkerSuccess(e.data as CompressionResult)
-                }
-            }
-
+        const FILES_LIMIT = useRuntimeConfig().public.compressorMaxFiles;
+        const MAX_FILE_SIZE = useRuntimeConfig().public.compressorMaxFileSize;
+        let pool: TaskPool | null = null;
+        if (import.meta.client) {
+            pool = new TaskPool(() => new CompressionWorker(), 5, onWorkerSuccess, onWorkerError);
         }
-        compressionWorker.postMessage('initLib')
-    }
 
     const quality: Ref<number> = ref(80)
     const keepMetadata: Ref<boolean> = ref(true)
@@ -133,7 +120,7 @@ export const useCompressorStore = defineStore('compressor', () => {
         if (files.length + supportedFiles.length > FILES_LIMIT) {
             generalMessage.value = {
                 level: MESSAGE_LEVEL.ERROR,
-                message: useNuxtApp().$i18n.t('errors.max_files_reached'),
+                message: useNuxtApp().$i18n.t('errors.max_files_reached', {max_files: FILES_LIMIT}),
                 visible: true,
                 timeout: 3000
             }
@@ -200,31 +187,33 @@ export const useCompressorStore = defineStore('compressor', () => {
 
     function startCompress() {
         resetGeneralMessage()
+        if (!pool) {
+            return;
+        }
+
+        const tasks = [];
         for (const cImage of files.values()) {
             cImage.status = FILE_STATUS.COMPRESSING
             cImage.requestedMaxSize = compressionMode.value === COMPRESSION_MODE.SIZE ? maxSize.value : 0
-            performCompression(cImage)
+            tasks.push([
+                cImage.file,
+                lossless.value ? 0 : quality.value,
+                keepMetadata.value,
+                maxSize.value,
+                compressionMode.value,
+                cImage.id
+            ]);
         }
-    }
-
-    function performCompression(cImage: CImage) {
-        if (!compressionWorker) {
-            return;
-        }
-        compressionWorker.postMessage([
-            cImage.file,
-            lossless.value ? 0 : quality.value,
-            keepMetadata.value,
-            maxSize.value,
-            compressionMode.value,
-            cImage.id
-        ])
+        Promise.all(tasks.map((task) => pool.runTask(task)))
+            .then(() => {}) //TODO
+            .catch((e) => console.log(e))
+//            .finally(() => pool.terminate());
 
     }
 
-    function onWorkerSuccess(compressionResult: CompressionResult) {
-        const newSize = compressionResult.size
-        const dataArray = compressionResult.data
+    function onWorkerSuccess(data: any) {
+        const newSize = data.size
+        const dataArray = data.data
         const cImage = files.values().find(i => i.id === data.uuid);
         if (!cImage) {
             return;
@@ -233,12 +222,15 @@ export const useCompressorStore = defineStore('compressor', () => {
         cImage.newSize = newSize
         cImage.outputImageArray = dataArray
 
-        storeCompressionResult(cImage)
+        if (useRuntimeConfig().public.sendUsageReport) {
+            storeCompressionResult(cImage)
+        }
+
     }
 
-    function onWorkerError(compressionResult: CompressionResult) {
-        const errorCode = compressionResult.errorCode
-        const errorString = compressionResult.errorString
+    function onWorkerError(data:any) {
+        const errorCode = data.errorCode
+        const errorString = data.errorString
         const compressionOptions = {
             quality: lossless.value ? 0 : quality.value,
             metadata: keepMetadata.value,

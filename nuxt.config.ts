@@ -1,7 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-    devtools: {enabled: true},
-
     modules: [
         "@pinia/nuxt",
         '@pinia-plugin-persistedstate/nuxt',
@@ -69,6 +67,9 @@ export default defineNuxtConfig({
     runtimeConfig: {
         public: {
             apiHost: '',
+            compressorMaxFileSize: 20971520,
+            compressorMaxFiles: 5,
+            sendUsageReport: true
         }
     },
 });
