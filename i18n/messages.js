@@ -37,7 +37,7 @@ const messages = {
             generic_error: 'An error has occurred.',
             bad_request: 'Bad request.',
             archive_failed: 'Failed to create archive.',
-            max_files_reached: 'You can compress only 5 files at time.',
+            max_files_reached: 'You can compress only {max_files} files at time.',
             files_over_size: 'One or more files exceed the max size allowed.'
         }
     },
@@ -79,7 +79,7 @@ const messages = {
             generic_error: 'Ha ocurrido un error.',
             bad_request: 'Mala solicitud.',
             archive_failed: 'Error al crear el archivo.',
-            max_files_reached: 'Solo puedes comprimir 5 archivos al mismo tiempo.',
+            max_files_reached: 'Solo puedes comprimir {max_files} archivos al mismo tiempo.',
             files_over_size: 'Uno o más archivos han excedido el tamaño máximo permitido.'
         }
     },
@@ -121,7 +121,7 @@ const messages = {
             generic_error: 'Qualcosa è andato storto.',
             bad_request: 'Bad request.',
             archive_failed: 'Creazione archivio fallita.',
-            max_files_reached: 'Puoi comprimere solo 5 files alla volta',
+            max_files_reached: 'Puoi comprimere solo {max_files} files alla volta',
             files_over_size: 'Uno o più file eccedono la dimensione massima'
         }
     },
@@ -140,7 +140,7 @@ const messages = {
             option: 'Opcje',
             lossless_compression: 'Kompresja bezstratna',
             keep_metadata: 'Zachowaj metadane',
-            saved_bytes: 'Zaoszczędzono :size (:percentage%)',
+            saved_bytes: 'Zaoszczędzono {size} ({percentage}%)',
             restriction: 'Wymagania',
             file_types: 'Dozwolone formaty: JPG, PNG i WebP',
             max_files: 'Maksimum 5 plików na raz',
@@ -164,7 +164,7 @@ const messages = {
             generic_error: 'Wystąpił błąd.',
             bad_request: 'Błędne żądanie.',
             archive_failed: 'Nie udało się utworzyć archiwum.',
-            max_files_reached: 'Jednocześnie można kompresować maksymalnie 5 plików.',
+            max_files_reached: 'Jednocześnie można kompresować maksymalnie {max_files} plików.',
             files_over_size: 'Jeden lub więcej plików przekroczyło dopuszczalny rozmiar.'
         }
     },
@@ -206,7 +206,7 @@ const messages = {
             generic_error: '发生了错误。',
             bad_request: '错误的请求。',
             archive_failed: '未能创建档案。',
-            max_files_reached: '您一次只能压缩 5 个文件。',
+            max_files_reached: '您一次只能压缩 {max_files} 个文件。',
             files_over_size: '一个或多个文件超过了允许的最大大小。'
         }
     },
@@ -225,7 +225,7 @@ const messages = {
             option: 'Настройка|Настройки',
             lossless_compression: 'Стиснення без втрати якості',
             keep_metadata: 'Зберегти metadata',
-            saved_bytes: 'Збережено :size (:percentage%)',
+            saved_bytes: 'Збережено {size} ({percentage}%)',
             restriction: 'Обмеження|Обмеження',
             file_types: 'Можна обрати JPG, PNG і WebP ',
             max_files: 'Не більше як 5 файлів зараз',
@@ -245,7 +245,7 @@ const messages = {
             generic_error: 'Сталась якась помилка.',
             bad_request: 'Це я не можу зробити :(',
             archive_failed: 'Не вдалося заархівувати :(',
-            max_files_reached: 'Ви можете стиснути тільки 5 світлин зараз.',
+            max_files_reached: 'Ви можете стиснути тільки {max_files} світлин зараз.',
             files_over_size: 'Один або більше файлів мають більший розмір як 20 мб'
         }
 

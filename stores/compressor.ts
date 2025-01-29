@@ -9,30 +9,14 @@ import moment from 'moment'
 import FileSaver from "file-saver";
 import prettyBytes from "pretty-bytes";
 
-
-const FILES_LIMIT = 5
-const MAX_FILE_SIZE = 20971520
 const NAMESPACE = '31e0ba23-9ce1-4c1f-a879-802230c27d63'
 export const useCompressorStore = defineStore('compressor', () => {
-        let compressionWorker: Worker | null = null;
-if (import.meta.client) {
-    compressionWorker = new CompressionWorker()
-    compressionWorker.onmessage = (e) => {
-            if (e.data !== 'initFinished') {
-                const success = e.data.success;
-                if (!success) {
-                    onWorkerError(e.data)
-                } else {
-                    onWorkerSuccess(e.data)
-                }
-            } else {
-                console.log('init')
-            }
-
+        const FILES_LIMIT = useRuntimeConfig().public.compressorMaxFiles;
+        const MAX_FILE_SIZE = useRuntimeConfig().public.compressorMaxFileSize;
+        let pool: TaskPool | null = null;
+        if (import.meta.client) {
+            pool = new TaskPool(() => new CompressionWorker(), 5, onWorkerSuccess, onWorkerError);
         }
-    compressionWorker.postMessage('initLib')
-}
-
 
     const quality: Ref<number> = ref(80)
     const keepMetadata: Ref<boolean> = ref(true)
@@ -136,7 +120,7 @@ if (import.meta.client) {
         if (files.length + supportedFiles.length > FILES_LIMIT) {
             generalMessage.value = {
                 level: MESSAGE_LEVEL.ERROR,
-                message: useNuxtApp().$i18n.t('errors.max_files_reached'),
+                message: useNuxtApp().$i18n.t('errors.max_files_reached', {max_files: FILES_LIMIT}),
                 visible: true,
                 timeout: 3000
             }
@@ -203,25 +187,27 @@ if (import.meta.client) {
 
     function startCompress() {
         resetGeneralMessage()
+        if (!pool) {
+            return;
+        }
+
+        const tasks = [];
         for (const cImage of files.values()) {
             cImage.status = FILE_STATUS.COMPRESSING
             cImage.requestedMaxSize = compressionMode.value === COMPRESSION_MODE.SIZE ? maxSize.value : 0
-            performCompression(cImage)
+            tasks.push([
+                cImage.file,
+                lossless.value ? 0 : quality.value,
+                keepMetadata.value,
+                maxSize.value,
+                compressionMode.value,
+                cImage.id
+            ]);
         }
-    }
-
-    function performCompression(cImage: CImage) {
-        if (!compressionWorker) {
-            return;
-        }
-        compressionWorker.postMessage([
-            cImage.file,
-            lossless.value ? 0 : quality.value,
-            keepMetadata.value,
-            maxSize.value,
-            compressionMode.value,
-            cImage.id
-        ])
+        Promise.all(tasks.map((task) => pool.runTask(task)))
+            .then(() => {}) //TODO
+            .catch((e) => console.log(e))
+//            .finally(() => pool.terminate());
 
     }
 
@@ -236,7 +222,10 @@ if (import.meta.client) {
         cImage.newSize = newSize
         cImage.outputImageArray = dataArray
 
-        storeCompressionResult(cImage)
+        if (useRuntimeConfig().public.sendUsageReport) {
+            storeCompressionResult(cImage)
+        }
+
     }
 
     function onWorkerError(data:any) {
