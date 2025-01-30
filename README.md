@@ -1,7 +1,7 @@
 # Caesium Web Image Compressor
 
-An image compressor that runs entirely on your browser, completely offline. Powered by (libcaesium-wasm)[https://github.com/Lymphatus/libcaesium-wasm].
-You can try it at (beta.caesium.app)[https://beta.caesium.app].
+An image compressor that runs entirely on your browser, completely offline. Powered by [libcaesium-wasm](https://github.com/Lymphatus/libcaesium-wasm).
+You can try it at [beta.caesium.app](https://beta.caesium.app).
 
 ## Features
 
@@ -61,7 +61,7 @@ docker build -t caesium-web-app .
 docker run -d -p 3000:3000 lymphatus/caesium-app-web:latest
 ```
 
-Then you can visit (localhost:3000)[http://localhost:3000] to start using the app.
+Then you can visit [localhost:3000](http://localhost:3000) to start using the app.
 
 ## Configuration
 
