@@ -4,6 +4,7 @@ import prettyBytes from 'pretty-bytes';
 import { Trash2, Download, CircleAlert, ScanEye } from 'lucide-vue-next';
 
 import { useCompressorStore } from '@/stores/compressor';
+import CompareBox from '~/components/CompareBox.vue';
 
 const compressorStore = useCompressorStore();
 const showPreview = ref(false);
@@ -56,7 +57,7 @@ function onPreviewClose() {
       <a
         v-if="cImage.status === FILE_STATUS.FINISHED"
         :download="cImage.file.name"
-        :href="cImage.outputImageUrl"
+        :href="cImage.outputImageUrl || '#'"
         target="_blank"
         class="inline-flex items-center px-1 text-sm font-semibold rounded-lg border border-transparent text-purple-600 hover:text-purple-800 focus:outline-none focus:text-purple-800 disabled:opacity-50 disabled:pointer-events-none dark:text-purple-500 dark:hover:text-purple-400 dark:focus:text-purple-400"
       >

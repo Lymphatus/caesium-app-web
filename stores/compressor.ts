@@ -16,9 +16,11 @@ export const useCompressorStore = defineStore(
   () => {
     const FILES_LIMIT: number = useRuntimeConfig().public.compressorMaxFiles as number;
     const MAX_FILE_SIZE: number = useRuntimeConfig().public.compressorMaxFileSize as number;
+    let maxConcurrency = 1;
     let pool: TaskPool | null = null;
     if (import.meta.client) {
-      pool = new TaskPool(() => new CompressionWorker(), 5, onWorkerSuccess, onWorkerError);
+      maxConcurrency = (window.navigator.hardwareConcurrency - 1) || 1;
+      pool = new TaskPool(() => new CompressionWorker(), maxConcurrency, onWorkerSuccess, onWorkerError);
     }
 
     const quality: Ref<number> = ref(80);
@@ -148,7 +150,6 @@ export const useCompressorStore = defineStore(
           id: uuidv4(),
           newSize: 0,
           errorMessage: null,
-          requestedMaxSize: 0,
           key: uuidv5(`${file.name}|${file.lastModified}|${file.size}|${file.type}`, NAMESPACE),
           outputImageArray: null,
           outputImageUrl: null,
@@ -183,7 +184,6 @@ export const useCompressorStore = defineStore(
         file.status = FILE_STATUS.WAITING;
         file.newSize = 0;
         file.outputImageArray = null;
-        file.requestedMaxSize = 0;
         file.id = uuidv4();
       }
       startCompress();
@@ -198,7 +198,6 @@ export const useCompressorStore = defineStore(
       const tasks = [];
       for (const cImage of files.values()) {
         cImage.status = FILE_STATUS.COMPRESSING;
-        cImage.requestedMaxSize = compressionMode.value === COMPRESSION_MODE.SIZE ? maxSize.value : 0;
         tasks.push([cImage.file, lossless.value ? 0 : quality.value, keepMetadata.value, maxSize.value, compressionMode.value, cImage.id]);
       }
       Promise.all(tasks.map((task) => pool.runTask(task)))

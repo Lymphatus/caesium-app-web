@@ -1,40 +1,72 @@
-# Caesium Online Compressor
+# Caesium Web Image Compressor
 
-This is the source code of a revised version of the [caesium.app](https://caesium.app), that allows you to compress files directly to your browser, without uploading them anywhere.  
-It's an attempt to improve the existing version using modern technologies.
+An image compressor that runs entirely on your browser, completely offline. Powered by (libcaesium-wasm)[https://github.com/Lymphatus/libcaesium-wasm].
+You can try it at (beta.caesium.app)[https://beta.caesium.app].
 
-###
+## Features
 
-## Setup
+- JPG, PNG and WebP supported
+- Lossy and lossless compression
+- Keeps images metadata
+- Before/after comparison
+- Runs entirely on your browser, no images are uploaded or processed on any external server. Try loading the app and then turn off your internet connection to see the magic.
+
+## Build
+### Setup
 
 Make sure to install the dependencies:
 
 ```bash
-# npm
 npm install
 ```
 
-## Development Server
+### Development Server
 
 Start the development server on `http://localhost:3000`:
 
 ```bash
-# npm
 npm run dev
 ```
 
-## Production
+### Production
 
 Build the application for production:
 
 ```bash
-# npm
 npm run build
 ```
 
 Locally preview production build:
 
 ```bash
-# npm
 npm run preview
 ```
+
+## Run on docker
+### Build
+You can pull the official docker images
+
+```bash
+docker pull lymphatus/caesium-app-web:latest
+```
+
+or build it yourself
+```bash
+docker build -t caesium-web-app .
+```
+
+### Run
+
+```bash
+docker run -d -p 3000:3000 lymphatus/caesium-app-web:latest
+```
+
+Then you can visit (localhost:3000)[http://localhost:3000] to start using the app.
+
+## Configuration
+
+You can set the following `ENV` variables to tweak the compressor to your preferences.
+- `NUXT_SEND_USAGE_REPORT`: (boolean | default: `true`) send usage stats for the compressed images to the `NUXT_API_ENDPOINT`. Set it to `false` if you don't care about it.
+- `NUXT_API_ENDPOINT`: (string | default: `""`) the endpoint where you can send compression stats.
+- `NUXT_COMPRESSOR_MAX_FILES`: (number | default: `5`) how many files are allowed to be added to the list in the same batch.
+- `NUXT_COMPRESSOR_MAX_FILE_SIZE`: (number | default: `20000000`) max limit for each image size, in bytes.

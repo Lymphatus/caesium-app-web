@@ -2,6 +2,7 @@
 import { FolderOpen } from 'lucide-vue-next';
 
 import { useCompressorStore } from '@/stores/compressor';
+const { t } = useI18n();
 
 const compressorStore = useCompressorStore();
 </script>
@@ -13,11 +14,11 @@ const compressorStore = useCompressorStore();
     @dragover.prevent
   >
     <img class="size-36 opacity-30" src="~/assets/images/logo.png" alt="logo" />
-    <h2 class="font-medium text-2xl">{{ $t('compressor.drop_here') }}</h2>
+    <h2 class="font-medium text-2xl">{{ t('compressor.drop_here') }}</h2>
     <div
       class="w-full sm:w-5/6 py-3 flex items-center text-sm text-gray-800 before:flex-1 before:border-t before:border-gray-300 before:me-6 after:flex-1 after:border-t after:border-gray-300 after:ms-6 dark:text-gray-100 dark:before:border-gray-700 dark:after:border-gray-700"
     >
-      {{ $t('compressor.or').toUpperCase() }}
+      {{ t('compressor.or').toUpperCase() }}
     </div>
 
     <button
@@ -26,7 +27,7 @@ const compressorStore = useCompressorStore();
       @click="compressorStore.addFiles()"
     >
       <FolderOpen class="size-5" />
-      {{ $t('compressor.browse_dots') }}
+      {{ t('compressor.browse_dots') }}
     </button>
   </div>
 </template>

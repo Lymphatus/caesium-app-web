@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Languages, Heart } from 'lucide-vue-next';
 
-const { locales, setLocale } = useI18n();
+const { locales, setLocale, t } = useI18n();
 
 function toggleCookieConsentTheme(theme: 'light' | 'dark') {
   if (theme === 'light') {
@@ -65,9 +65,9 @@ function toggleCookieConsentTheme(theme: 'light' | 'dark') {
       <div id="navbar-menu" class="hs-collapse hidden overflow-hidden transition-all duration-300 sm:block">
         <div class="flex flex-col gap-4 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:ps-5">
           <NuxtLink class="font-medium text-gray-600 hover:text-purple-400 dark:text-gray-400 dark:hover:text-purple-500 cursor-pointer flex items-center gap-1" :to="{ name: 'donate' }"
-            ><Heart class="size-4" />{{ $t('compressor.donate') }}</NuxtLink
+            ><Heart class="size-4" />{{ t('compressor.donate') }}</NuxtLink
           >
-          <!--          <NuxtLink class="font-medium text-gray-600 hover:text-purple-400 dark:text-gray-400 dark:hover:text-purple-500 cursor-pointer" :to="{name: 'about'}">{{ $t('compressor.about') }}</NuxtLink>-->
+          <!--          <NuxtLink class="font-medium text-gray-600 hover:text-purple-400 dark:text-gray-400 dark:hover:text-purple-500 cursor-pointer" :to="{name: 'about'}">{{ t('compressor.about') }}</NuxtLink>-->
 
           <div class="hs-dropdown [--strategy:static] sm:[--strategy:fixed] [--adaptive:none]">
             <button id="hs-mega-menu-basic-dr" type="button" class="flex items-center w-full text-gray-600 hover:text-purple-400 font-medium dark:text-gray-400 dark:hover:text-purple-500">

@@ -3,6 +3,7 @@ import { useCompressorStore } from '@/stores/compressor';
 import { CircleHelp } from 'lucide-vue-next';
 import { COMPRESSION_MODE } from '~/utils/utils';
 import prettyBytes from 'pretty-bytes';
+const { t } = useI18n();
 
 const compressorStore = useCompressorStore();
 </script>
@@ -11,20 +12,20 @@ const compressorStore = useCompressorStore();
   <div class="flex flex-col sm:flex-row gap-4 pt-4 border-t-2 border-gray-200 dark:border-gray-700" :class="{ 'opacity-50 pointer-events-none': compressorStore.compressionStatus === COMPRESSION_STATUS.COMPRESSING }">
     <div class="w-full sm:w-1/2 flex flex-col gap-2">
       <div class="flex justify-between items-center border-b border-gray-300 dark:border-gray-700 pb-2">
-        <span>{{ $t('compressor.mode') }}</span>
+        <span>{{ t('compressor.mode') }}</span>
         <select
           v-model="compressorStore.compressionMode"
           class="py-2 px-3 pe-9 block border-2 border-gray-200 rounded-lg text-sm focus:border-purple-500 focus:ring-purple-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:placeholder-gray-500 dark:focus:ring-purple-500 dark:focus:border-purple-500"
         >
-          <option :value="COMPRESSION_MODE.QUALITY">{{ $t('compressor.quality') }}</option>
-          <option :value="COMPRESSION_MODE.SIZE">{{ $t('compressor.size') }}</option>
+          <option :value="COMPRESSION_MODE.QUALITY">{{ t('compressor.quality') }}</option>
+          <option :value="COMPRESSION_MODE.SIZE">{{ t('compressor.size') }}</option>
         </select>
       </div>
 
       <div class="flex flex-col gap-2">
         <div v-if="compressorStore.compressionMode === COMPRESSION_MODE.QUALITY">
           <div class="flex items-center justify-between">
-            <label for="quality-range-slider">{{ $t('compressor.quality') }}</label>
+            <label for="quality-range-slider">{{ t('compressor.quality') }}</label>
             <span>{{ compressorStore.quality }}</span>
           </div>
           <input
@@ -41,7 +42,7 @@ const compressorStore = useCompressorStore();
         <div v-if="compressorStore.compressionMode === COMPRESSION_MODE.SIZE">
           <div class="space-y-3 mt-0.5">
             <div class="flex items-center justify-between gap-4">
-              <label for="hs-inline-leading-pricing-select-label" class="block text-sm">{{ $t('compressor.max_size') }}</label>
+              <label for="hs-inline-leading-pricing-select-label" class="block text-sm">{{ t('compressor.max_size') }}</label>
               <div class="relative flex-1">
                 <input
                   id="hs-inline-leading-pricing-select-label"
@@ -71,14 +72,14 @@ const compressorStore = useCompressorStore();
 
         <div v-if="compressorStore.compressionMode === COMPRESSION_MODE.QUALITY" class="flex items-center justify-between">
           <div class="text-sm flex items-center gap-2">
-            <label for="input-lossless">{{ $t('compressor.lossless_compression') }}</label>
+            <label for="input-lossless">{{ t('compressor.lossless_compression') }}</label>
             <div class="hs-tooltip inline-block">
               <CircleHelp class="size-4 cursor-help" />
               <span
                 class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm dark:bg-gray-700"
                 role="tooltip"
               >
-                {{ $t('compressor.lossless_help') }}
+                {{ t('compressor.lossless_help') }}
               </span>
             </div>
           </div>
@@ -91,7 +92,7 @@ const compressorStore = useCompressorStore();
           />
         </div>
         <div class="flex items-center justify-between">
-          <label for="input-keep-metadata" class="text-sm">{{ $t('compressor.keep_metadata') }}</label>
+          <label for="input-keep-metadata" class="text-sm">{{ t('compressor.keep_metadata') }}</label>
           <input
             id="input-keep-metadata"
             v-model="compressorStore.keepMetadata"
@@ -103,19 +104,19 @@ const compressorStore = useCompressorStore();
     </div>
 
     <div class="w-full sm:w-1/2">
-      <span class="font-medium mb-3">{{ $t('compressor.restriction', 2) }}</span>
+      <span class="font-medium mb-3">{{ t('compressor.restriction', 2) }}</span>
       <ul class="marker:text-purple-500 list-disc ps-5 space-y-1 text-sm">
         <li>
-          {{ $t('compressor.file_types') }}
+          {{ t('compressor.file_types') }}
         </li>
         <li>
-          {{ $t('compressor.max_files', { max_files: compressorStore.FILES_LIMIT }) }}
+          {{ t('compressor.max_files', { max_files: compressorStore.FILES_LIMIT }) }}
         </li>
         <li>
-          {{ $t('compressor.max_file_size', { max_file_size: prettyBytes(compressorStore.MAX_FILE_SIZE) }) }}
+          {{ t('compressor.max_file_size', { max_file_size: prettyBytes(compressorStore.MAX_FILE_SIZE) }) }}
         </li>
         <li>
-          {{ $t('compressor.auto_delete') }}
+          {{ t('compressor.auto_delete') }}
         </li>
       </ul>
     </div>

@@ -30,7 +30,6 @@ export interface CImage {
   status: FILE_STATUS;
   id: string;
   newSize: number;
-  requestedMaxSize: number;
   errorMessage: string | null;
   key: string;
   outputImageArray: Uint8Array | null;
