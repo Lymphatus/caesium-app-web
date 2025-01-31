@@ -12,7 +12,18 @@ onmessage = (e) => {
     const maxSize = e.data[3];
     const compressionMode = e.data[4];
     const uuid = e.data[5];
-    performCompress(file, quality, keepMetadata, maxSize, compressionMode, uuid);
+    try {
+      performCompress(file, quality, keepMetadata, maxSize, compressionMode, uuid);
+    } catch (err) {
+      postMessage({
+        success: false,
+        size: file.size,
+        data: null,
+        errorCode: 100,
+        errorString: err.toString(),
+        uuid,
+      });
+    }
   }
 };
 
@@ -36,6 +47,9 @@ function initLib() {
 }
 
 function performCompress(file, quality, keepMetadata, maxSize, compressionMode, uuid) {
+  if (Math.random() < 0.5) {
+    throw Error('noooo');
+  }
   if (!LibcaesiumWasm) {
     const result = {
       success: false,
@@ -71,7 +85,7 @@ function performCompress(file, quality, keepMetadata, maxSize, compressionMode, 
       const inputPointer = LibcaesiumWasm._malloc(inputArray.length);
       LibcaesiumWasm.HEAP8.set(inputArray, inputPointer);
 
-      let outputVector = null;
+      let outputVector;
       if (compressionMode === COMPRESSION_MODE.QUALITY) {
         const js_wrapped_compress = LibcaesiumWasm.cwrap('w_compress', 'number', ['number', 'number', 'number', 'number']);
         outputVector = js_wrapped_compress(inputPointer, inputArray.length, quality, keepMetadata ? 1 : 0);
@@ -109,8 +123,6 @@ function performCompress(file, quality, keepMetadata, maxSize, compressionMode, 
       const drop_vector_struct = LibcaesiumWasm.cwrap('drop_vector_struct', null, ['number']);
       drop_vector_struct(outputVector);
       LibcaesiumWasm._free(inputPointer);
-      //TODO Causes some errors
-      //LibcaesiumWasm._free(outputPointer)
     })
     .catch((e) => {
       const result = {

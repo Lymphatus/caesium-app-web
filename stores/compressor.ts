@@ -19,7 +19,7 @@ export const useCompressorStore = defineStore(
     let maxConcurrency = 1;
     let pool: TaskPool | null = null;
     if (import.meta.client) {
-      maxConcurrency = (window.navigator.hardwareConcurrency - 1) || 1;
+      maxConcurrency = window.navigator.hardwareConcurrency - 1 || 1;
       pool = new TaskPool(() => new CompressionWorker(), maxConcurrency, onWorkerSuccess, onWorkerError);
     }
 
@@ -201,8 +201,25 @@ export const useCompressorStore = defineStore(
         tasks.push([cImage.file, lossless.value ? 0 : quality.value, keepMetadata.value, maxSize.value, compressionMode.value, cImage.id]);
       }
       Promise.all(tasks.map((task) => pool.runTask(task)))
-        .then(() => {}) //TODO
-        .catch((e) => console.log(e));
+        .then((results) => {
+          results.forEach((r) => {
+            const result = r as CompressionResult;
+            if (!result.success) {
+              onWorkerError(result);
+            }
+          });
+        })
+        .catch((e) => {
+          const compressionResult = {
+            success: false,
+            size: 0,
+            data: null,
+            errorCode: 100,
+            errorString: e.message,
+            uuid: '',
+          } as CompressionResult;
+          onWorkerError(compressionResult);
+        });
       //            .finally(() => pool.terminate());
     }
 
@@ -314,7 +331,6 @@ export const useCompressorStore = defineStore(
       compressionMode,
       generalMessage,
       compressionStatus,
-      groupId,
       filesCompleted,
       filesFailed,
       addFiles,

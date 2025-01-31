@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import type { CImage } from '~/utils/utils';
 import prettyBytes from 'pretty-bytes';
-import { Trash2, Download, CircleAlert, ScanEye } from 'lucide-vue-next';
-
+import { Trash2, Download, CircleAlert, Eye } from 'lucide-vue-next';
 import { useCompressorStore } from '@/stores/compressor';
 import CompareBox from '~/components/CompareBox.vue';
 
@@ -39,9 +38,9 @@ function onPreviewClose() {
       <button
         v-if="compressorStore.compressionStatus === COMPRESSION_STATUS.FINISHED || compressorStore.compressionStatus === COMPRESSION_STATUS.WAITING"
         type="button"
-        class="inline-flex items-center px-1 text-sm font-semibold rounded-lg border border-transparent text-gray-600 hover:text-gray-800 focus:outline-none focus:text-gray-800 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-500 dark:hover:text-gray-400 dark:focus:text-gray-400"
+        class="inline-flex items-center px-1 text-sm font-semibold rounded-lg border border-transparent text-purple-600 hover:text-purple-800 focus:outline-none focus:text-purple-800 disabled:opacity-50 disabled:pointer-events-none dark:text-purple-500 dark:hover:text-purple-400 dark:focus:text-purple-400"
       >
-        <ScanEye class="size-4" @click="showPreview = true" />
+        <Eye class="size-4" @click="showPreview = true" />
       </button>
       <button
         v-if="compressorStore.compressionStatus === COMPRESSION_STATUS.WAITING || compressorStore.compressionStatus === COMPRESSION_STATUS.FINISHED_ALL_ERRORS"

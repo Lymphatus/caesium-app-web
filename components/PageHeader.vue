@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Languages, Heart } from 'lucide-vue-next';
+import { Languages, Heart, ChevronDown, Moon, Sun } from 'lucide-vue-next';
 
 const { locales, setLocale, t } = useI18n();
 
@@ -64,17 +64,14 @@ function toggleCookieConsentTheme(theme: 'light' | 'dark') {
       </div>
       <div id="navbar-menu" class="hs-collapse hidden overflow-hidden transition-all duration-300 sm:block">
         <div class="flex flex-col gap-4 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:ps-5">
-          <NuxtLink class="font-medium text-gray-600 hover:text-purple-400 dark:text-gray-400 dark:hover:text-purple-500 cursor-pointer flex items-center gap-1" :to="{ name: 'donate' }"
-            ><Heart class="size-4" />{{ t('compressor.donate') }}</NuxtLink
-          >
+          <NuxtLink class="group font-medium text-gray-600 hover:text-purple-400 dark:text-gray-400 dark:hover:text-purple-500 cursor-pointer flex items-center gap-1" :to="{ name: 'donate' }">
+            <Heart class="size-4 group-hover:fill-red-500 group-hover:text-red-500" />{{ t('compressor.donate') }}
+          </NuxtLink>
           <!--          <NuxtLink class="font-medium text-gray-600 hover:text-purple-400 dark:text-gray-400 dark:hover:text-purple-500 cursor-pointer" :to="{name: 'about'}">{{ t('compressor.about') }}</NuxtLink>-->
-
           <div class="hs-dropdown [--strategy:static] sm:[--strategy:fixed] [--adaptive:none]">
             <button id="hs-mega-menu-basic-dr" type="button" class="flex items-center w-full text-gray-600 hover:text-purple-400 font-medium dark:text-gray-400 dark:hover:text-purple-500">
               <Languages class="size-4" />
-              <svg class="ms-1 flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m6 9 6 6 6-6" />
-              </svg>
+              <ChevronDown class="size-4" />
             </button>
 
             <div
@@ -94,31 +91,19 @@ function toggleCookieConsentTheme(theme: 'light' | 'dark') {
 
           <button
             type="button"
-            class="hs-dark-mode-active:hidden block hs-dark-mode group items-center text-gray-600 hover:text-purple-600 font-medium dark:text-gray-400 dark:hover:text-purple-500"
+            class="hs-dark-mode-active:hidden block hs-dark-mode group items-center text-gray-600 hover:text-purple-400 font-medium dark:text-gray-400 dark:hover:text-purple-500"
             data-hs-theme-click-value="dark"
             @click="toggleCookieConsentTheme('dark')"
           >
-            <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-            </svg>
+            <Moon class="size-4" />
           </button>
           <button
             type="button"
-            class="hs-dark-mode-active:block hidden hs-dark-mode group items-center text-gray-600 hover:text-purple-600 font-medium dark:text-gray-400 dark:hover:text-purple-500"
+            class="hs-dark-mode-active:block hidden hs-dark-mode group items-center text-gray-600 hover:text-purple-400 font-medium dark:text-gray-400 dark:hover:text-purple-500"
             data-hs-theme-click-value="light"
             @click="toggleCookieConsentTheme('light')"
           >
-            <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="4" />
-              <path d="M12 2v2" />
-              <path d="M12 20v2" />
-              <path d="m4.93 4.93 1.41 1.41" />
-              <path d="m17.66 17.66 1.41 1.41" />
-              <path d="M2 12h2" />
-              <path d="M20 12h2" />
-              <path d="m6.34 17.66-1.41 1.41" />
-              <path d="m19.07 4.93-1.41 1.41" />
-            </svg>
+            <Sun class="size-4" />
           </button>
         </div>
       </div>

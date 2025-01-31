@@ -5,7 +5,6 @@ import prettyBytes from 'pretty-bytes';
 import { ArrowLeftRight, X } from 'lucide-vue-next';
 const { t } = useI18n();
 
-
 const props = defineProps<{
   cImage: CImage;
   onClose: CallableFunction;
@@ -24,7 +23,13 @@ const showOriginal = ref(true);
     </button>
     <div class="size-full flex flex-col items-center justify-center relative" @click.self="() => props.onClose()">
       <img :src="props.cImage.url" class="absolute object-contain max-w-full max-h-full" :class="[showOriginal ? 'opacity-100' : 'opacity-0']" alt="original" />
-      <img v-if="props.cImage.outputImageArray && props.cImage.outputImageUrl" :src="props.cImage.outputImageUrl" class="absolute object-contain max-w-full max-h-full" :class="[!showOriginal ? 'opacity-100' : 'opacity-0']" alt="compressed" />
+      <img
+        v-if="props.cImage.outputImageArray && props.cImage.outputImageUrl"
+        :src="props.cImage.outputImageUrl"
+        class="absolute object-contain max-w-full max-h-full"
+        :class="[!showOriginal ? 'opacity-100' : 'opacity-0']"
+        alt="compressed"
+      />
     </div>
     <div class="flex flex-col gap-2">
       <span v-if="showOriginal" class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-white/10 text-white uppercase">{{ t('compressor.original') }} - {{ prettyBytes(props.cImage.file.size) }}</span>
@@ -37,7 +42,7 @@ const showOriginal = ref(true);
       @click="showOriginal = !showOriginal"
     >
       <ArrowLeftRight class="size-4" />
-      Swap
+      {{ t('compressor.swap') }}
     </button>
   </div>
 </template>
