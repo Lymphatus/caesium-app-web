@@ -47,9 +47,6 @@ function initLib() {
 }
 
 function performCompress(file, quality, keepMetadata, maxSize, compressionMode, uuid) {
-  if (Math.random() < 0.5) {
-    throw Error('noooo');
-  }
   if (!LibcaesiumWasm) {
     const result = {
       success: false,
