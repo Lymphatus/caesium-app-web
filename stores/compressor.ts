@@ -227,7 +227,7 @@ export const useCompressorStore = defineStore(
       const data = d as CompressionResult;
       const newSize = data.size;
       const dataArray = data.data;
-      const cImage = files.values().find((i) => i.id === data.uuid);
+      const cImage = files.find((i) => i.id === data.uuid);
       if (!cImage || !dataArray) {
         return;
       }
@@ -251,7 +251,7 @@ export const useCompressorStore = defineStore(
         maxSize: maxSize.value,
         mode: compressionMode.value,
       };
-      const cImage = files.values().find((i) => i.id === data.uuid);
+      const cImage = files.find((i) => i.id === data.uuid);
       if (!cImage) {
         return;
       }
