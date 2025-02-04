@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { CImage } from '~/utils/utils';
+import { type CImage, COMPRESSION_MODE } from '~/utils/utils';
 import prettyBytes from 'pretty-bytes';
-import { Trash2, Download, CircleAlert, Eye } from 'lucide-vue-next';
+import { CircleAlert, TriangleAlert, Download, Eye, Trash2 } from 'lucide-vue-next';
 import { useCompressorStore } from '@/stores/compressor';
 import CompareBox from '~/components/CompareBox.vue';
 
@@ -25,12 +25,17 @@ function onPreviewClose() {
     </div>
     <div class="flex flex-col py-2 text-sm text-gray-800 dark:text-gray-200 flex-1 gap-1 truncate">
       <span class="font-medium">{{ props.cImage.file.name }}</span>
-      <div>
+      <div class="flex gap-1">
         <span :class="{ 'line-through opacity-50': props.cImage.newSize > 0 }">{{ prettyBytes(props.cImage.file.size) }}</span>
         <span v-if="props.cImage.newSize > 0">
           → {{ prettyBytes(props.cImage.newSize) }}
           <span :class="[cImage.newSize > cImage.file.size ? 'text-red-600 dark:text-red-500' : 'text-emerald-600 dark:text-emerald-500']">[{{ Math.round((cImage.newSize / cImage.file.size) * 100) - 100 }}%]</span></span
         >
+        <span
+          v-if="compressorStore.compressionMode === COMPRESSION_MODE.SIZE && cImage.newSize && cImage.newSize > compressorStore.maxSizeValue * compressorStore.maxSizeUnit"
+          class="text-sm text-amber-600 dark:text-amber-500 flex items-center gap-1"
+          ><TriangleAlert class="size-4"
+        /></span>
       </div>
     </div>
     <div v-if="cImage.errorMessage" class="text-sm text-red-600 dark:text-red-500 flex items-center gap-1"><CircleAlert class="size-3" />{{ cImage.errorMessage }}</div>

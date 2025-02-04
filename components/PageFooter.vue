@@ -8,7 +8,7 @@ const { t } = useI18n();
       <div class="flex flex-col gap-1">
         <NuxtLink target="_blank" class="text-gray-800 hover:text-purple-400 dark:text-gray-200 dark:hover:text-purple-500" :to="{ name: 'cookie-policy' }">{{ t('compressor.cookie_policy') }}</NuxtLink>
         <NuxtLink target="_blank" class="text-gray-800 hover:text-purple-400 dark:text-gray-200 dark:hover:text-purple-500" :to="{ name: 'privacy-policy' }">{{ t('compressor.privacy_policy') }}</NuxtLink>
-        <a data-cc="show-preferencesModal" class="text-gray-800 hover:text-purple-400 dark:text-gray-200 dark:hover:text-purple-500" href="#">{{t('compressor.consent_preferences')}}</a>
+        <a data-cc="show-preferencesModal" class="text-gray-800 hover:text-purple-400 dark:text-gray-200 dark:hover:text-purple-500" href="#">{{ t('compressor.consent_preferences') }}</a>
       </div>
       <div class="flex flex-col gap-2 items-end">
         <a href="//github.com/Lymphatus/caesium-app-web" target="_blank" class="text-gray-800 hover:text-purple-400 dark:text-gray-200 dark:hover:text-purple-500">
