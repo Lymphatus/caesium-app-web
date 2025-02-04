@@ -191,6 +191,7 @@ export const useCompressorStore = defineStore(
 
     function startCompress() {
       resetGeneralMessage();
+      resetErrors();
       if (!pool) {
         return;
       }
@@ -320,6 +321,10 @@ export const useCompressorStore = defineStore(
         visible: false,
         timeout: 0,
       };
+    }
+
+    function resetErrors() {
+      files.forEach((f) => (f.errorMessage = null));
     }
 
     return {
