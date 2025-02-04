@@ -63,8 +63,10 @@ export default defineNuxtConfig({
     public: {
       apiHost: '',
       compressorMaxFileSize: 20000000,
-      compressorMaxFiles: 5,
+      compressorMaxFiles: 10,
       sendUsageReport: true,
+      gtag: '',
+      matomoEndpoint: '',
     },
   },
 });

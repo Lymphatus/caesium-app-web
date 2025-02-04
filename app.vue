@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 
+const gtag = useRuntimeConfig().public.gtag || '';
+const matomoEndpoint = useRuntimeConfig().public.matomoEndpoint || '';
+
 useHead({
   title: 'Caesium Image Compressor - Online',
   meta: [
@@ -11,24 +14,13 @@ useHead({
   ],
   script: [
     {
-      type: 'text/plain',
       'data-cookiecategory': 'analytics',
       async: true,
-      src: 'https://www.googletagmanager.com/gtag/js?id=UA-140154178-1',
+      src: 'https://www.googletagmanager.com/gtag/js?id=' + gtag,
     },
     {
-      type: 'text/plain',
       'data-cookiecategory': 'analytics',
-      innerHTML:
-        ' window.dataLayer = window.dataLayer || [];\n' +
-        '\n' +
-        '            function gtag() {\n' +
-        '                dataLayer.push(arguments);\n' +
-        '            }\n' +
-        '\n' +
-        "            gtag('js', new Date());\n" +
-        '\n' +
-        "            gtag('config', 'UA-140154178-1');",
+      innerHTML: 'window.dataLayer = window.dataLayer || [];\n' + '  function gtag(){dataLayer.push(arguments);}\n' + "  gtag('js', new Date());\n" + '\n' + "  gtag('config', '" + gtag + "');",
     },
     {
       innerHTML:
@@ -37,7 +29,9 @@ useHead({
         "            _paq.push(['trackPageView']);\n" +
         "            _paq.push(['enableLinkTracking']);\n" +
         '            (function () {\n' +
-        '                var u = "//analytics.saerasoft.com/";\n' +
+        '                var u = "' +
+        matomoEndpoint +
+        '/";\n' +
         "                _paq.push(['setTrackerUrl', u + 'matomo.php']);\n" +
         "                _paq.push(['setSiteId', '2']);\n" +
         "                var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];\n" +
