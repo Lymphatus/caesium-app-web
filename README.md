@@ -1,7 +1,7 @@
 # Caesium Web Image Compressor
 
 An image compressor that runs entirely on your browser, completely offline. Powered by [libcaesium-wasm](https://github.com/Lymphatus/libcaesium-wasm).
-You can try it at [beta.caesium.app](https://beta.caesium.app).
+You can try it at [beta.caesium.app](https://caesium.app).
 
 ## Features
 
