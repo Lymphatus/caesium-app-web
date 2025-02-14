@@ -14,12 +14,12 @@ useHead({
   ],
   script: [
     {
-      'data-cookiecategory': 'analytics',
+      'data-category': 'analytics',
       async: true,
       src: 'https://www.googletagmanager.com/gtag/js?id=' + gtag,
     },
     {
-      'data-cookiecategory': 'analytics',
+      'data-category': 'analytics',
       innerHTML: 'window.dataLayer = window.dataLayer || [];\n' + '  function gtag(){dataLayer.push(arguments);}\n' + "  gtag('js', new Date());\n" + '\n' + "  gtag('config', '" + gtag + "');",
     },
     {
