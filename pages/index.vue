@@ -2,6 +2,7 @@
 import DropArea from '~/components/DropArea.vue';
 import CompressionOptions from '~/components/CompressionOptions.vue';
 import FileList from '~/components/FileList.vue';
+import { useCompressorStore } from '~/stores/compressor';
 
 const compressorStore = useCompressorStore();
 </script>

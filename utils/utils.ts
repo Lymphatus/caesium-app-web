@@ -24,6 +24,12 @@ export enum COMPRESSION_MODE {
   SIZE,
 }
 
+export enum APP_THEME {
+  LIGHT = 'light',
+  DARK = 'dark',
+  SYSTEM = 'system',
+}
+
 export interface CImage {
   file: File;
   url: string;

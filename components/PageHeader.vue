@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { Languages, Heart, ChevronDown, Moon, Sun } from 'lucide-vue-next';
+import { ChevronDown, Heart, Languages, Menu, Moon, Sun, SunMoon, X } from 'lucide-vue-next';
+import { useI18n } from 'vue-i18n';
+import { APP_THEME } from '~/utils/utils';
+import { useCompressorStore } from '@/stores/compressor';
 
 const { locales, setLocale, t } = useI18n();
 
-function toggleCookieConsentTheme(theme: 'light' | 'dark') {
-  if (theme === 'light') {
-    document.documentElement.classList.remove('cc--darkmode');
-  } else {
-    document.documentElement.classList.add('cc--darkmode');
-  }
+const compressorStore = useCompressorStore();
+
+function toggleTheme(theme: APP_THEME) {
+  compressorStore.appTheme = theme;
 }
 </script>
 
@@ -28,44 +29,16 @@ function toggleCookieConsentTheme(theme: 'light' | 'dark') {
             aria-controls="navbar-menu"
             aria-label="Toggle navigation"
           >
-            <svg
-              class="hs-collapse-open:hidden flex-shrink-0 size-4"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <line x1="3" x2="21" y1="6" y2="6" />
-              <line x1="3" x2="21" y1="12" y2="12" />
-              <line x1="3" x2="21" y1="18" y2="18" />
-            </svg>
-            <svg
-              class="hs-collapse-open:block hidden flex-shrink-0 size-4"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M18 6 6 18" />
-              <path d="m6 6 12 12" />
-            </svg>
+            <Menu class="hs-collapse-open:hidden flex-shrink-0 size-4" />
+            <X class="hs-collapse-open:block hidden flex-shrink-0 size-4" />
           </button>
         </div>
       </div>
       <div id="navbar-menu" class="hs-collapse hidden overflow-hidden transition-all duration-300 sm:block">
         <div class="flex flex-col gap-4 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:ps-5">
           <NuxtLink class="group font-medium text-gray-600 hover:text-purple-400 dark:text-gray-400 dark:hover:text-purple-500 cursor-pointer flex items-center gap-1" :to="{ name: 'donate' }">
-            <Heart class="size-4 group-hover:fill-red-500 group-hover:text-red-500" />{{ t('compressor.donate') }}
+            <Heart class="size-4 group-hover:fill-red-500 group-hover:text-red-500" />
+            {{ t('compressor.donate') }}
           </NuxtLink>
           <!--          <NuxtLink class="font-medium text-gray-600 hover:text-purple-400 dark:text-gray-400 dark:hover:text-purple-500 cursor-pointer" :to="{name: 'about'}">{{ t('compressor.about') }}</NuxtLink>-->
           <div class="hs-dropdown [--strategy:static] sm:[--strategy:fixed] [--adaptive:none]">
@@ -90,20 +63,28 @@ function toggleCookieConsentTheme(theme: 'light' | 'dark') {
           </div>
 
           <button
+            v-if="compressorStore.appTheme === APP_THEME.LIGHT"
             type="button"
-            class="hs-dark-mode-active:hidden block hs-dark-mode group items-center text-gray-600 hover:text-purple-400 font-medium dark:text-gray-400 dark:hover:text-purple-500"
-            data-hs-theme-click-value="dark"
-            @click="toggleCookieConsentTheme('dark')"
+            class="group items-center text-gray-600 hover:text-purple-400 font-medium dark:text-gray-400 dark:hover:text-purple-500"
+            @click="toggleTheme(APP_THEME.DARK)"
+          >
+            <Sun class="size-4" />
+          </button>
+          <button
+            v-if="compressorStore.appTheme === APP_THEME.DARK"
+            type="button"
+            class="group items-center text-gray-600 hover:text-purple-400 font-medium dark:text-gray-400 dark:hover:text-purple-500"
+            @click="toggleTheme(APP_THEME.SYSTEM)"
           >
             <Moon class="size-4" />
           </button>
           <button
+            v-if="compressorStore.appTheme === APP_THEME.SYSTEM"
             type="button"
-            class="hs-dark-mode-active:block hidden hs-dark-mode group items-center text-gray-600 hover:text-purple-400 font-medium dark:text-gray-400 dark:hover:text-purple-500"
-            data-hs-theme-click-value="light"
-            @click="toggleCookieConsentTheme('light')"
+            class="group items-center text-gray-600 hover:text-purple-400 font-medium dark:text-gray-400 dark:hover:text-purple-500"
+            @click="toggleTheme(APP_THEME.LIGHT)"
           >
-            <Sun class="size-4" />
+            <SunMoon class="size-4" />
           </button>
         </div>
       </div>

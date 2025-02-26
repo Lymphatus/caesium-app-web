@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia';
 import { computed, reactive, type Ref, ref } from 'vue';
-import type { CImage, GeneralMessage } from '@/utils/utils';
-import { COMPRESSION_MODE, COMPRESSION_STATUS, FILE_STATUS, MAX_SIZE_UNIT, MESSAGE_LEVEL } from '@/utils/utils';
+import { APP_THEME, type CImage, COMPRESSION_MODE, COMPRESSION_STATUS, FILE_STATUS, type GeneralMessage, MAX_SIZE_UNIT, MESSAGE_LEVEL } from '@/utils/utils';
 import { v4 as uuidv4, v5 as uuidv5 } from 'uuid';
 import CompressionWorker from 'assets/workers/compression-worker?worker';
 import JSZip from 'jszip';
@@ -31,6 +30,7 @@ export const useCompressorStore = defineStore(
     const maxSizeUnit: Ref<MAX_SIZE_UNIT> = ref(MAX_SIZE_UNIT.KILOBYTE);
     const groupId: Ref<string> = ref(uuidv4());
     const sessionId = uuidv4();
+    const appTheme: Ref<APP_THEME> = ref(APP_THEME.SYSTEM);
 
     const files: CImage[] = reactive([]);
     const generalMessage: Ref<GeneralMessage> = ref({
@@ -93,6 +93,13 @@ export const useCompressorStore = defineStore(
           timeout: 3000,
         };
       }
+    });
+
+    watch(appTheme, (newTheme) => {
+      const forceDark = newTheme === APP_THEME.DARK || (newTheme === APP_THEME.SYSTEM && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      document.documentElement.classList.toggle('cc--darkmode', forceDark);
+      document.documentElement.classList.toggle('dark', forceDark);
+      localStorage.setItem('appTheme', newTheme);
     });
 
     function addFiles() {
@@ -346,13 +353,14 @@ export const useCompressorStore = defineStore(
       downloadAll,
       recompress,
       files,
+      appTheme,
       FILES_LIMIT,
       MAX_FILE_SIZE,
     };
   },
   {
     persist: {
-      pick: ['compressionMode', 'keepMetadata', 'lossless', 'maxSizeValue', 'maxSizeUnit', 'quality'],
+      pick: ['compressionMode', 'keepMetadata', 'lossless', 'maxSizeValue', 'maxSizeUnit', 'quality', 'appTheme'],
     },
   },
 );
