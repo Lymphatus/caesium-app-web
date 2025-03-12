@@ -21,5 +21,5 @@ export default {
       },
     },
   },
-  plugins: [require('@tailwindcss/forms'), require('preline/plugin')],
+  plugins: [require('@tailwindcss/forms'), require('preline/plugin')], // eslint-disable-line
 };
