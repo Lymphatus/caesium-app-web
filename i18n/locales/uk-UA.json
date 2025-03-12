@@ -1,0 +1,43 @@
+{
+  "compressor": {
+    "drop_here": "Перетягни світлини сюди",
+    "or": "Або",
+    "browse_dots": "Переглянути...",
+    "download": "Завантажити",
+    "add_dots": "Добавити...",
+    "clear_list": "Очистити список",
+    "quality": "Якість",
+    "compress": "Стиснути",
+    "compress_again": "Стиснути ще раз",
+    "download_all": "Завантажити все",
+    "option": "Настройка|Настройки",
+    "lossless_compression": "Стиснення без втрати якості",
+    "keep_metadata": "Зберегти metadata",
+    "saved_bytes": "Збережено {size} ({percentage}%)",
+    "restriction": "Обмеження|Обмеження",
+    "file_types": "Можна обрати JPG, PNG і WebP ",
+    "max_files": "Не більше як {max_files} файлів зараз",
+    "max_file_size": "Не більше як 20Mb файл",
+    "auto_delete": "Завантажені світлини будуть автоматично віддалені",
+    "donate": "Підтримайте нас коштами",
+    "contacts": "Контакти",
+    "cookie_policy": "Правила використання cookies",
+    "privacy_policy": "Правила щодо приватності",
+    "consent_preferences": "Consent Preferences",
+    "copyright_note": "© SaeraSoft і Matteo Paonessa, Всі права застережені",
+    "lossless_help": "Якщо вибрали цю опцію, якість світлини буде повністю збережена.Не забувайте, що у форматі PNG не втрачається якість, але інколи його вибір може потягати за собою більший розмір світлини.",
+    "help_translate": "Допоможи перекласти",
+    "back": "Назад",
+    "original": "Оригінал",
+    "compressed": "Стиснений",
+    "swap": "Поміняти місцями"
+  },
+  "errors": {
+    "file_invalid": "Цей файл не підходить.",
+    "generic_error": "Сталась якась помилка.",
+    "bad_request": "Це я не можу зробити :(",
+    "archive_failed": "Не вдалося заархівувати :(",
+    "max_files_reached": "Ви можете стиснути тільки {max_files} світлин зараз.",
+    "files_over_size": "Один або більше файлів мають більший розмір як {max_file_size} мб"
+  }
+}
