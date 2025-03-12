@@ -15,13 +15,13 @@ useHead({
   script: [
     {
       'data-category': 'analytics',
-      type:"text/plain",
+      type: 'text/plain',
       async: true,
       src: 'https://www.googletagmanager.com/gtag/js?id=' + gtag,
     },
     {
       'data-category': 'analytics',
-      type:"text/plain",
+      type: 'text/plain',
       innerHTML: 'window.dataLayer = window.dataLayer || [];\n' + '  function gtag(){dataLayer.push(arguments);}\n' + "  gtag('js', new Date());\n" + '\n' + "  gtag('config', '" + gtag + "');",
     },
     {

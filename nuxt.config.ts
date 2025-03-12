@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
 
   i18n: {
-    vueI18n: './i18n/i18n.ts',
+    //    vueI18n: './i18n/i18n.ts',
     detectBrowserLanguage: {
       useCookie: true,
       alwaysRedirect: false,
@@ -17,26 +17,32 @@ export default defineNuxtConfig({
     locales: [
       {
         code: 'en-US',
+        file: 'en-US.json',
         flag: '/images/flags/us.svg',
       },
       {
         code: 'es-ES',
+        file: 'es-ES.json',
         flag: '/images/flags/es.svg',
       },
       {
         code: 'it-IT',
+        file: 'it-IT.json',
         flag: '/images/flags/it.svg',
       },
       {
         code: 'zh-CN',
+        file: 'zh-CN.json',
         flag: '/images/flags/cn.svg',
       },
       {
         code: 'pl-PL',
+        file: 'pl-PL.json',
         flag: '/images/flags/pl.svg',
       },
       {
         code: 'uk-UA',
+        file: 'uk-UA.json',
         flag: '/images/flags/ua.svg',
       },
     ],
