@@ -3,6 +3,8 @@
 An image compressor that runs entirely on your browser, completely offline. Powered by [libcaesium-wasm](https://github.com/Lymphatus/libcaesium-wasm).
 You can try it at [caesium.app](https://caesium.app).
 
+![Screenshot 2025-05-09 at 11-21-11 Caesium Image Compressor - Online](https://github.com/user-attachments/assets/6f1fecce-d432-46c3-a03f-34fc3016d333)
+
 ## Features
 
 - JPG, PNG and WebP supported
