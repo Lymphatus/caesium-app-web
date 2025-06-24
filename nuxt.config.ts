@@ -45,6 +45,11 @@ export default defineNuxtConfig({
         file: 'uk-UA.json',
         flag: '/images/flags/ua.svg',
       },
+      {
+        code: 'zh-TW',
+        file: 'zh-TW.json',
+        flag: '/images/flags/tw.svg',
+      },
     ],
   },
 
