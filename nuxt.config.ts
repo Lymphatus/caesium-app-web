@@ -1,7 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
+import tailwindcss from '@tailwindcss/vite';
 export default defineNuxtConfig({
   modules: ['@pinia/nuxt', 'pinia-plugin-persistedstate/nuxt', '@nuxtjs/i18n', '@nuxt/eslint'],
 
+  vite: {
+    plugins: [tailwindcss()],
+  },
   css: ['~/assets/css/main.css'],
 
   i18n: {
@@ -57,13 +62,6 @@ export default defineNuxtConfig({
   },
 
   plugins: ['~/plugins/preline.client.ts'],
-
-  postcss: {
-    plugins: {
-      tailwindcss: {},
-      autoprefixer: {},
-    },
-  },
 
   nitro: {
     experimental: {

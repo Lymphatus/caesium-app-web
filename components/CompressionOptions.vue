@@ -3,6 +3,7 @@ import { useCompressorStore } from '@/stores/compressor';
 import { CircleHelp } from 'lucide-vue-next';
 import { COMPRESSION_MODE } from '~/utils/utils';
 import prettyBytes from 'pretty-bytes';
+
 const { t } = useI18n();
 
 const compressorStore = useCompressorStore();
@@ -35,7 +36,7 @@ const compressorStore = useCompressorStore();
             type="range"
             min="1"
             max="100"
-            class="w-full bg-transparent cursor-pointer appearance-none disabled:opacity-50 disabled:pointer-events-none focus:outline-none [&::-webkit-slider-thumb]:w-2.5 [&::-webkit-slider-thumb]:h-2.5 [&::-webkit-slider-thumb]:-mt-0.5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(168,85,247,1)] [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:duration-150 [&::-webkit-slider-thumb]:ease-in-out [&::-webkit-slider-thumb]:dark:bg-gray-800 [&::-moz-range-thumb]:w-2.5 [&::-moz-range-thumb]:h-2.5 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:bg-purple-500 [&::-moz-range-thumb]:border-4 [&::-moz-range-thumb]:border-purple-500 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:transition-all [&::-moz-range-thumb]:duration-150 [&::-moz-range-thumb]:ease-in-out [&::-webkit-slider-runnable-track]:w-full [&::-webkit-slider-runnable-track]:h-2 [&::-webkit-slider-runnable-track]:bg-gray-200 [&::-webkit-slider-runnable-track]:rounded-full [&::-webkit-slider-runnable-track]:dark:bg-gray-800 [&::-moz-range-track]:w-full [&::-moz-range-track]:h-2 [&::-moz-range-track]:bg-gray-200 [&::-moz-range-track]:dark:bg-gray-800 [&::-moz-range-track]:rounded-full [&::-moz-range-progress]:dark:bg-purple-900 [&::-moz-range-progress]:bg-purple-200 [&::-moz-range-progress]:h-2 [&::-moz-range-progress]:rounded-full"
+            class="w-full bg-transparent cursor-pointer appearance-none disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden [&::-webkit-slider-thumb]:w-2.5 [&::-webkit-slider-thumb]:h-2.5 [&::-webkit-slider-thumb]:-mt-0.5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(168,85,247,1)] [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:duration-150 [&::-webkit-slider-thumb]:ease-in-out [&::-webkit-slider-thumb]:dark:bg-gray-800 [&::-moz-range-thumb]:w-2.5 [&::-moz-range-thumb]:h-2.5 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:bg-purple-500 [&::-moz-range-thumb]:border-4 [&::-moz-range-thumb]:border-purple-500 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:transition-all [&::-moz-range-thumb]:duration-150 [&::-moz-range-thumb]:ease-in-out [&::-webkit-slider-runnable-track]:w-full [&::-webkit-slider-runnable-track]:h-2 [&::-webkit-slider-runnable-track]:bg-gray-200 [&::-webkit-slider-runnable-track]:rounded-full [&::-webkit-slider-runnable-track]:dark:bg-gray-800 [&::-moz-range-track]:w-full [&::-moz-range-track]:h-2 [&::-moz-range-track]:bg-gray-200 [&::-moz-range-track]:dark:bg-gray-800 [&::-moz-range-track]:rounded-full [&::-moz-range-progress]:dark:bg-purple-900 [&::-moz-range-progress]:bg-purple-200 [&::-moz-range-progress]:h-2 [&::-moz-range-progress]:rounded-full"
           />
         </div>
 
@@ -49,7 +50,7 @@ const compressorStore = useCompressorStore();
                   v-model.number="compressorStore.maxSizeValue"
                   type="number"
                   name="inline-add-on"
-                  class="py-2 px-3 block w-full border-2 border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-purple-500 focus:ring-purple-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-900 dark:border-gray-700 dark:placeholder-gray-500 dark:focus:ring-purple-500 dark:focus:border-purple-500"
+                  class="py-2 px-3 block w-full border-2 border-gray-200 shadow-xs rounded-lg text-sm focus:z-10 focus:border-purple-500 focus:ring-purple-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-900 dark:border-gray-700 dark:placeholder-gray-500 dark:focus:ring-purple-500 dark:focus:border-purple-500"
                   placeholder="100"
                 />
                 <div class="absolute inset-y-0 end-0 flex items-center pe-0.5">
@@ -58,7 +59,7 @@ const compressorStore = useCompressorStore();
                     id="hs-inline-leading-select-unit"
                     v-model.number="compressorStore.maxSizeUnit"
                     name="hs-inline-leading-select-unit"
-                    class="block w-full border-0 border-transparent rounded-r-md focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-800 text-sm"
+                    class="block w-full border-2 border-r-1 h-full rounded-r-md dark:bg-gray-800 text-sm dark:border-gray-700 border-gray-200 focus:border-purple-500 focus:ring-purple-500 dark:focus:ring-purple-500 dark:focus:border-purple-500"
                   >
                     <option :value="MAX_SIZE_UNIT.BYTE">Bytes</option>
                     <option :value="MAX_SIZE_UNIT.KILOBYTE">kB</option>
@@ -72,33 +73,36 @@ const compressorStore = useCompressorStore();
 
         <div v-if="compressorStore.compressionMode === COMPRESSION_MODE.QUALITY" class="flex items-center justify-between">
           <div class="text-sm flex items-center gap-2">
-            <label for="input-lossless">{{ t('compressor.lossless_compression') }}</label>
-            <div class="hs-tooltip inline-block">
-              <CircleHelp class="size-4 cursor-help" />
-              <span
-                class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm dark:bg-gray-700"
-                role="tooltip"
-              >
-                {{ t('compressor.lossless_help') }}
-              </span>
+            <div class="text-sm flex items-center gap-1">
+              {{ t('compressor.lossless_compression') }}
+              <div class="hs-tooltip inline-block">
+                <CircleHelp class="size-4 cursor-help" />
+                <span
+                  class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-sm shadow-xs dark:bg-gray-700"
+                  role="tooltip"
+                >
+                  {{ t('compressor.lossless_help') }}
+                </span>
+              </div>
             </div>
           </div>
-          <input
-            id="input-lossless"
-            v-model="compressorStore.lossless"
-            :disabled="compressorStore.compressionMode === COMPRESSION_MODE.SIZE"
-            type="checkbox"
-            class="relative w-11 h-6 p-px bg-gray-200 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:ring-purple-500 disabled:opacity-50 disabled:pointer-events-none checked:bg-none checked:text-purple-500 checked:border-purple-500 focus:checked:border-purple-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-purple-500 dark:checked:border-purple-500 dark:focus:ring-offset-gray-600 before:inline-block before:size-5 before:bg-white checked:before:bg-purple-200 before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-gray-400 dark:checked:before:bg-purple-200"
-          />
+          <label for="input-lossless" class="relative inline-block w-11 h-6 cursor-pointer">
+            <input id="input-lossless" v-model="compressorStore.lossless" type="checkbox" class="sr-only peer" />
+            <span
+              class="absolute inset-0 bg-gray-200 rounded-full transition-colors duration-200 ease-in-out peer-checked:bg-purple-500 dark:bg-gray-700 dark:peer-checked:bg-purple-500 peer-disabled:opacity-50 peer-disabled:pointer-events-none"
+            ></span>
+            <span class="absolute top-1/2 start-0.5 -translate-y-1/2 size-5 bg-white rounded-full shadow-xs transition-transform duration-200 ease-in-out peer-checked:translate-x-full dark:bg-gray-400 dark:peer-checked:bg-white"></span>
+          </label>
         </div>
         <div class="flex items-center justify-between">
-          <label for="input-keep-metadata" class="text-sm">{{ t('compressor.keep_metadata') }}</label>
-          <input
-            id="input-keep-metadata"
-            v-model="compressorStore.keepMetadata"
-            type="checkbox"
-            class="relative w-11 h-6 p-px bg-gray-200 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:ring-purple-500 disabled:opacity-50 disabled:pointer-events-none checked:bg-none checked:text-purple-500 checked:border-purple-500 focus:checked:border-purple-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-purple-500 dark:checked:border-purple-500 dark:focus:ring-offset-gray-600 before:inline-block before:size-5 before:bg-white checked:before:bg-purple-200 before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-gray-400 dark:checked:before:bg-purple-200"
-          />
+          <span class="text-sm">{{ t('compressor.keep_metadata') }}</span>
+          <label for="input-keep-metadata" class="relative inline-block w-11 h-6 cursor-pointer">
+            <input id="input-keep-metadata" v-model="compressorStore.keepMetadata" type="checkbox" class="sr-only peer" />
+            <span
+              class="absolute inset-0 bg-gray-200 rounded-full transition-colors duration-200 ease-in-out peer-checked:bg-purple-500 dark:bg-gray-700 dark:peer-checked:bg-purple-500 peer-disabled:opacity-50 peer-disabled:pointer-events-none"
+            ></span>
+            <span class="absolute top-1/2 start-0.5 -translate-y-1/2 size-5 bg-white rounded-full shadow-xs transition-transform duration-200 ease-in-out peer-checked:translate-x-full dark:bg-gray-400 dark:peer-checked:bg-white"></span>
+          </label>
         </div>
       </div>
     </div>

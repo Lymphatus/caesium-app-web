@@ -49,7 +49,7 @@ const colorClasses = computed(() => {
       </div>
       <div class="ps-3 ms-auto">
         <div class="-mx-1.5 -my-1.5">
-          <button type="button" class="inline-flex bg-teal-50 rounded-lg p-1.5 focus:outline-none dark:bg-transparent" @click="visible = false">
+          <button type="button" class="inline-flex bg-teal-50 rounded-lg p-1.5 focus:outline-hidden dark:bg-transparent" @click="visible = false">
             <X class="size-4" />
           </button>
         </div>

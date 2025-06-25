@@ -43,14 +43,14 @@ function onPreviewClose() {
       <button
         v-if="compressorStore.compressionStatus === COMPRESSION_STATUS.FINISHED || compressorStore.compressionStatus === COMPRESSION_STATUS.WAITING"
         type="button"
-        class="inline-flex items-center px-1 text-sm font-semibold rounded-lg border border-transparent text-purple-600 hover:text-purple-800 focus:outline-none focus:text-purple-800 disabled:opacity-50 disabled:pointer-events-none dark:text-purple-500 dark:hover:text-purple-400 dark:focus:text-purple-400"
+        class="inline-flex items-center px-1 text-sm font-semibold rounded-lg border border-transparent text-purple-600 hover:text-purple-800 focus:outline-hidden focus:text-purple-800 disabled:opacity-50 disabled:pointer-events-none dark:text-purple-500 dark:hover:text-purple-400 dark:focus:text-purple-400"
       >
         <Eye class="size-4" @click="showPreview = true" />
       </button>
       <button
         v-if="compressorStore.compressionStatus === COMPRESSION_STATUS.WAITING || compressorStore.compressionStatus === COMPRESSION_STATUS.FINISHED_ALL_ERRORS"
         type="button"
-        class="inline-flex items-center px-1 text-sm font-semibold rounded-lg border border-transparent text-red-600 hover:text-red-800 focus:outline-none focus:text-red-800 disabled:opacity-50 disabled:pointer-events-none dark:text-red-500 dark:hover:text-red-400 dark:focus:text-red-400"
+        class="inline-flex items-center px-1 text-sm font-semibold rounded-lg border border-transparent text-red-600 hover:text-red-800 focus:outline-hidden focus:text-red-800 disabled:opacity-50 disabled:pointer-events-none dark:text-red-500 dark:hover:text-red-400 dark:focus:text-red-400"
         @click="compressorStore.removeFile(cImage.key)"
       >
         <Trash2 class="size-4" />
@@ -63,7 +63,7 @@ function onPreviewClose() {
         :download="cImage.file.name"
         :href="cImage.outputImageUrl || '#'"
         target="_blank"
-        class="inline-flex items-center px-1 text-sm font-semibold rounded-lg border border-transparent text-purple-600 hover:text-purple-800 focus:outline-none focus:text-purple-800 disabled:opacity-50 disabled:pointer-events-none dark:text-purple-500 dark:hover:text-purple-400 dark:focus:text-purple-400"
+        class="inline-flex items-center px-1 text-sm font-semibold rounded-lg border border-transparent text-purple-600 hover:text-purple-800 focus:outline-hidden focus:text-purple-800 disabled:opacity-50 disabled:pointer-events-none dark:text-purple-500 dark:hover:text-purple-400 dark:focus:text-purple-400"
       >
         <Download class="size-4" />
       </a>

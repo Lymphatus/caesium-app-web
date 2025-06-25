@@ -17,7 +17,7 @@ const showOriginal = ref(true);
   <div class="fixed top-0 left-0 size-full bg-gray-800/95 z-10 p-4 flex flex-col items-center justify-center gap-2" @click.self="() => props.onClose()">
     <button
       type="button"
-      class="absolute z-10 right-2 top-2 p-1 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent focus:outline-none disabled:opacity-50 disabled:pointer-events-none text-white hover:bg-gray-700 focus:bg-gray-700"
+      class="absolute z-10 right-2 top-2 p-1 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none text-white hover:bg-gray-700 focus:bg-gray-700"
     >
       <X class="size-4" @click="() => props.onClose()" />
     </button>

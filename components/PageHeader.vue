@@ -24,13 +24,13 @@ function toggleTheme(theme: APP_THEME) {
         <div class="sm:hidden">
           <button
             type="button"
-            class="hs-collapse-toggle p-2 inline-flex justify-center items-center gap-x-2 rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-700 dark:text-gray-100 dark:hover:bg-white/10"
+            class="hs-collapse-toggle p-2 inline-flex justify-center items-center gap-x-2 rounded-lg border border-gray-200 bg-white text-gray-800 shadow-xs hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-700 dark:text-gray-100 dark:hover:bg-white/10"
             data-hs-collapse="#navbar-menu"
             aria-controls="navbar-menu"
             aria-label="Toggle navigation"
           >
-            <Menu class="hs-collapse-open:hidden flex-shrink-0 size-4" />
-            <X class="hs-collapse-open:block hidden flex-shrink-0 size-4" />
+            <Menu class="hs-collapse-open:hidden shrink-0 size-4" />
+            <X class="hs-collapse-open:block hidden shrink-0 size-4" />
           </button>
         </div>
       </div>
