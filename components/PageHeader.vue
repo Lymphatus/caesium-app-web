@@ -36,32 +36,36 @@ function toggleTheme(theme: APP_THEME) {
       </div>
       <div id="navbar-menu" class="hs-collapse hidden overflow-hidden transition-all duration-300 sm:block">
         <div class="flex flex-col gap-4 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:ps-5">
-          <NuxtLink class="group font-medium text-gray-600 hover:text-purple-400 dark:text-gray-400 dark:hover:text-purple-500 cursor-pointer flex items-center gap-1" :to="{ name: 'donate' }">
-            <Heart class="size-4 group-hover:fill-red-500 group-hover:text-red-500" />
+          <NuxtLink class="group font-medium text-gray-600 hover:text-purple-400 dark:text-gray-400 dark:hover:text-purple-500 cursor-pointer flex items-center gap-1 transition-colors" :to="{ name: 'donate' }">
+            <Heart class="size-4 group-hover:fill-red-500 group-hover:text-red-500 transition-colors" />
             {{ t('compressor.donate') }}
           </NuxtLink>
           <!--          <NuxtLink class="font-medium text-gray-600 hover:text-purple-400 dark:text-gray-400 dark:hover:text-purple-500 cursor-pointer" :to="{name: 'about'}">{{ t('compressor.about') }}</NuxtLink>-->
-          <div class="hs-dropdown [--strategy:static] sm:[--strategy:fixed] [--adaptive:none]">
-            <button id="hs-mega-menu-basic-dr" type="button" class="flex items-center w-full text-gray-600 hover:text-purple-400 font-medium dark:text-gray-400 dark:hover:text-purple-500">
+          <div class="hs-dropdown relative inline-flex">
+            <button id="hs-dropdown-custom-trigger" type="button" class="hs-dropdown-toggle flex items-center w-full text-gray-600 hover:text-purple-400 font-medium dark:text-gray-400 dark:hover:text-purple-500">
               <Languages class="size-4" />
               <ChevronDown class="size-4" />
             </button>
 
             <div
-              class="hs-dropdown-menu transition-[opacity,margin] duration-[0.1ms] sm:duration-[150ms] hs-dropdown-open:opacity-100 opacity-0 z-10 bg-white sm:shadow-md rounded-lg p-2 dark:bg-gray-800 sm:dark:border dark:border-gray-700 dark:divide-gray-700 before:absolute top-full sm:border before:-top-5 before:start-0 before:w-full before:h-5 hidden"
+              class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden bg-white sm:shadow-md rounded-lg p-2 dark:bg-gray-800 sm:dark:border dark:border-gray-700 dark:divide-gray-700"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="hs-dropdown-custom-trigger"
             >
-              <a
-                v-for="locale in locales"
-                :key="locale.code"
-                href="#"
-                class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-purple-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-purple-300"
-                @click.prevent.stop="setLocale(locale.code)"
-              >
-                <img class="size-4" :src="locale.flag" alt="logo" /> {{ locale.code }}
-              </a>
+              <div class="p-1 space-y-0.5">
+                <a
+                  v-for="locale in locales"
+                  :key="locale.code"
+                  href="#"
+                  class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-purple-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-purple-300"
+                  @click.prevent.stop="setLocale(locale.code)"
+                >
+                  <img class="size-4" :src="locale.flag as string" alt="logo" /> {{ locale.code }}
+                </a>
+              </div>
             </div>
           </div>
-
           <button
             v-if="compressorStore.appTheme === APP_THEME.LIGHT"
             type="button"

@@ -1,14 +1,27 @@
-import 'preline/preline';
-import type { IStaticMethods } from 'preline/preline';
+import { useRouter } from 'vue-router';
 
-declare global {
-  interface Window {
-    HSStaticMethods: IStaticMethods;
-  }
-}
+// Optional third-party libraries
+import $ from 'jquery';
+import _ from 'lodash';
+import noUiSlider from 'nouislider';
+import 'datatables.net';
+import 'dropzone/dist/dropzone-min.js';
+import * as VanillaCalendarPro from 'vanilla-calendar-pro';
 
-export default defineNuxtPlugin((nuxtApp) => {
-  nuxtApp.hook('page:finish', () => {
-    window.HSStaticMethods.autoInit();
+window._ = _;
+window.$ = $;
+window.jQuery = $;
+window.DataTable = $.fn.dataTable;
+window.noUiSlider = noUiSlider;
+window.VanillaCalendarPro = VanillaCalendarPro;
+
+// Preline UI
+import('preline/dist');
+
+export default defineNuxtPlugin(() => {
+  const router = useRouter();
+
+  router.afterEach(async () => {
+    setTimeout(() => window.HSStaticMethods.autoInit());
   });
 });

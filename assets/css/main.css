@@ -1,6 +1,8 @@
 @import url('https://fonts.bunny.net/css?family=noto-sans:100,300,400,500,700|noto-sans-sc:100,300,400,500,700');
 @import "tailwindcss";
-
+@import "preline/variants.css";
+@source "../../node_modules/preline/dist/*.js";
+@custom-variant dark (&:where(.dark, .dark *));
 @layer base {
   button:not(:disabled),
   [role="button"]:not(:disabled) {
