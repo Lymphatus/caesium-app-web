@@ -2,14 +2,7 @@
 
 import tailwindcss from '@tailwindcss/vite';
 export default defineNuxtConfig({
-  modules: [
-    '@pinia/nuxt',
-    'pinia-plugin-persistedstate/nuxt',
-    '@nuxtjs/i18n',
-    '@nuxt/eslint',
-    '@nuxtjs/sitemap',
-    '@nuxtjs/robots',
-  ],
+  modules: ['@pinia/nuxt', 'pinia-plugin-persistedstate/nuxt', '@nuxtjs/i18n', '@nuxt/eslint', '@nuxtjs/sitemap', '@nuxtjs/robots'],
   srcDir: 'app',
   vite: {
     plugins: [tailwindcss()],
@@ -38,14 +31,14 @@ export default defineNuxtConfig({
         flag: '/images/flags/es.svg',
       },
       {
+        code: 'fr-FR',
+        file: 'fr-FR.json',
+        flag: '/images/flags/fr.svg',
+      },
+      {
         code: 'it-IT',
         file: 'it-IT.json',
         flag: '/images/flags/it.svg',
-      },
-      {
-        code: 'zh-CN',
-        file: 'zh-CN.json',
-        flag: '/images/flags/cn.svg',
       },
       {
         code: 'pl-PL',
@@ -56,6 +49,11 @@ export default defineNuxtConfig({
         code: 'uk-UA',
         file: 'uk-UA.json',
         flag: '/images/flags/ua.svg',
+      },
+      {
+        code: 'zh-CN',
+        file: 'zh-CN.json',
+        flag: '/images/flags/cn.svg',
       },
       {
         code: 'zh-TW',
