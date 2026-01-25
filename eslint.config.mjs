@@ -1,24 +1,47 @@
-import withNuxt from './.nuxt/eslint.config.mjs';
+import { defineConfig, globalIgnores } from 'eslint/config';
+import nextVitals from 'eslint-config-next/core-web-vitals';
+import nextTs from 'eslint-config-next/typescript';
+import prettier from 'eslint-config-prettier/flat';
+import eslintPluginPrettier from 'eslint-plugin-prettier';
 
-export default withNuxt(
+const eslintConfig = defineConfig([
+  ...nextVitals,
+  ...nextTs,
+  prettier,
   {
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
+    plugins: {
+      prettier: eslintPluginPrettier,
+    },
+
     rules: {
-      'vue/html-self-closing': 'off',
+      'react/react-in-jsx-scope': 'off',
+      '@typescript-eslint/explicit-module-boundary-types': 'off',
+      'prettier/prettier': 'error',
+      'react/jsx-sort-props': [
+        2,
+        {
+          callbacksLast: true,
+          shorthandFirst: true,
+          ignoreCase: true,
+          reservedFirst: true,
+          noSortAlphabetically: false,
+        },
+      ],
     },
   },
-  {
-    ignores: ['**/libcaesium-wasm.js'],
-  },
-);
+  // Override default ignores of eslint-config-next.
+  globalIgnores([
+    // Default ignores of eslint-config-next:
+    '.next/**',
+    'out/**',
+    'build/**',
+    'next-env.d.ts',
+  ]),
+]);
 
-// extends: [
-//   'eslint:recommended',
-//   'plugin:vue/vue3-recommended',
-//   '@nuxt/eslint-config', // If you're using Nuxt's ESLint config
-//   'plugin:prettier/recommended',
-// ],
-// plugins: ['prettier'],
-// rules: {
-//   'prettier/prettier': ['error'], // Shows Prettier issues as ESLint errors
-//   // You can customize or disable other rules here
-// },
+export default eslintConfig;

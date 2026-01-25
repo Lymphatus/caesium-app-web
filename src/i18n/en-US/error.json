@@ -1,0 +1,8 @@
+{
+  "file_invalid": "Provided file is invalid.",
+  "generic_error": "An error has occurred.",
+  "bad_request": "Bad request.",
+  "archive_failed": "Failed to create archive.",
+  "max_files_reached": "You can compress only {max_files} files at time.",
+  "files_over_size": "One or more files exceed the max size allowed."
+}
