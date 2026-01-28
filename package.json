@@ -1,5 +1,5 @@
 {
-  "name": "caesium-app-web-next",
+  "name": "caesium-app",
   "version": "3.0.0",
   "private": true,
   "scripts": {
@@ -17,10 +17,11 @@
     "i18next": "^25.8.0",
     "i18next-resources-to-backend": "^1.2.1",
     "lucide-react": "^0.563.0",
-    "next": "16.1.4",
+    "next": "^16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-i18next": "^16.5.3",
+    "uuid": "^13.0.0",
     "zustand": "^5.0.10"
   },
   "devDependencies": {

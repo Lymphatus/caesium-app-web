@@ -3,12 +3,12 @@
 import Image from 'next/image';
 import { Button, Separator } from '@heroui/react';
 import { FolderOpen } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
 import { useCompressorStore } from '@/providers/compressor-store-provider';
+import { useTranslation } from 'react-i18next';
 
 export default function DropArea() {
-  const { t } = useTranslation('compressor');
   const { addFiles } = useCompressorStore((state) => state);
+  const { t } = useTranslation('compressor');
   const triggerFileSelect = () => {
     const input = document.createElement('input');
     input.type = 'file';
@@ -17,7 +17,6 @@ export default function DropArea() {
     input.onchange = (e) => {
       const files = (e.target as HTMLInputElement).files;
       if (files && files.length > 0) {
-        console.log(files);
         addFiles(files);
       }
     };

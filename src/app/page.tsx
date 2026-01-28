@@ -1,13 +1,12 @@
-import { getLang } from '@/lib/i18n/lang-context';
-import { getServerTranslation } from '@/lib/i18n/server';
-import DropAreaContainer from '@/components/DropAreaContainer';
+import Compressor from '@/components/Compressor';
+import { CompressorStoreProvider } from '@/providers/compressor-store-provider';
 
-export default async function Home() {
-  const lang = await getLang();
-  const { t } = await getServerTranslation(lang, 'common');
+export default function Home() {
   return (
     <div className="container mx-auto w-full p-4">
-      <DropAreaContainer></DropAreaContainer>
+      <CompressorStoreProvider>
+        <Compressor></Compressor>
+      </CompressorStoreProvider>
     </div>
   );
 }

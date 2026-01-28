@@ -1,4 +1,3 @@
-// lib/i18n/client.ts
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import resourcesToBackend from 'i18next-resources-to-backend';
