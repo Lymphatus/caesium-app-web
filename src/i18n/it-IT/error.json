@@ -3,6 +3,6 @@
   "generic_error": "Qualcosa è andato storto.",
   "bad_request": "Bad request.",
   "archive_failed": "Creazione archivio fallita.",
-  "max_files_reached": "Puoi comprimere solo {max_files} files alla volta",
+  "max_files_reached": "Puoi comprimere solo {{max_files}} files alla volta",
   "files_over_size": "Uno o più file eccedono la dimensione massima"
 }

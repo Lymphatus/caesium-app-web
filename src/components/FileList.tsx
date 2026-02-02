@@ -5,7 +5,6 @@ import ImageCard from '@/components/ImageCard';
 
 export default function FileList() {
   const { files } = useCompressorStore((store) => store);
-
   return (
     <div className="mb-2 flex flex-col flex-wrap md:flex-row">
       {files?.map((file) => (

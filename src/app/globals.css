@@ -86,3 +86,43 @@ html {
     max-width: 100vw;
     max-height: 100vh;
 }
+
+.toast--default {
+    border: 1px solid var(--default);
+}
+
+.toast--accent {
+    border: 1px solid var(--accent);
+}
+
+.toast--warning {
+    border: 1px solid var(--warning);
+}
+
+.toast--success {
+    border: 1px solid var(--success);
+}
+
+.toast--danger {
+    border: 1px solid var(--danger);
+}
+
+@keyframes spin-gradient {
+    0% {
+        --gradient-angle: 0deg;
+    }
+    100% {
+        --gradient-angle: 360deg;
+    }
+}
+
+@property --gradient-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
+.animate-spin-gradient {
+    background: conic-gradient(from var(--gradient-angle), transparent 0%, transparent 40%, var(--accent) 50%, transparent 60%, transparent 100%);
+    animation: spin-gradient 3s linear infinite;
+}
