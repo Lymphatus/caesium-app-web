@@ -26,7 +26,10 @@ export default function ImageCard({ cImage }: { cImage: CImage }) {
                 <Trash2></Trash2>
               </Button>
             </Card.Title>
-            <Card.Description>{prettyBytes(cImage.file.size)}</Card.Description>
+            <Card.Description>
+              <label className={cImage.newSize > 0 ? 'line-through' : ''}>{prettyBytes(cImage.file.size)}</label>
+              {cImage.newSize > 0 && <label>&nbsp;{prettyBytes(cImage.newSize)}</label>}
+            </Card.Description>
           </Card.Header>
           <Card.Footer className="flex w-full flex-col justify-end gap-1 sm:flex-row">
             <Button className="w-full sm:w-auto" isDisabled={cImage.status === FILE_STATUS.COMPRESSING} size="sm" variant="secondary">

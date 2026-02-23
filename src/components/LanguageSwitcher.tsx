@@ -25,7 +25,7 @@ export default function LanguageSwitcher() {
       <Button isIconOnly aria-label="Menu" variant="ghost">
         <Languages></Languages>
       </Button>
-      <Dropdown.Popover className="min-w-0">
+      <Dropdown.Popover className="min-w-0 w-30">
         <Dropdown.Menu onAction={(id) => changeLanguage(id.toString())}>
           {supportedLangs.sort().map((lang: string) => (
             <Dropdown.Item key={lang} id={lang} textValue={lang}>

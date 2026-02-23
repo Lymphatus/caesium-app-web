@@ -11,32 +11,32 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@heroui/react": "^3.0.0-beta.5",
-    "@heroui/styles": "^3.0.0-beta.5",
+    "@heroui/react": "^3.0.0-beta.7",
+    "@heroui/styles": "^3.0.0-beta.7",
     "@redux-devtools/extension": "^3.3.0",
-    "i18next": "^25.8.0",
+    "i18next": "^25.8.13",
     "i18next-resources-to-backend": "^1.2.1",
-    "lucide-react": "^0.563.0",
+    "lucide-react": "^0.575.0",
     "next": "^16.1.6",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "react-i18next": "^16.5.3",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "react-i18next": "^16.5.4",
     "uuid": "^13.0.0",
-    "zustand": "^5.0.10"
+    "zustand": "^5.0.11"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
+    "@types/node": "^25",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.1.4",
+    "eslint": "^10",
+    "eslint-config-next": "^0.2.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
     "prettier": "^3.8.1",
-    "prettier-plugin-tailwindcss": "^0.6.14",
+    "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "typescript-eslint": "^8.53.1"
+    "typescript-eslint": "^8.56.1"
   }
 }

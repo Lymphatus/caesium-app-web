@@ -29,6 +29,7 @@ export type CompressorActions = {
   setGeneralMessage: (message: GeneralMessage | null) => void;
   removeFile: (id: string) => void;
   triggerFileSelect: () => void;
+  setFileStatus: (id: string, status: FILE_STATUS) => void;
 };
 
 export type CompressorStore = CompressorState & CompressorActions;
@@ -190,6 +191,19 @@ export const createCompressorStore = (initState: CompressorState = defaultInitSt
           }
         };
         input.click();
+      },
+      setFileStatus: (id: string, status: FILE_STATUS) => {
+        const files = get().files;
+        if (!files) return;
+
+        const fileIndex = files.findIndex((f) => f.id === id);
+        if (fileIndex === -1) return;
+
+        const file = files[fileIndex];
+        const updatedFile = { ...file, status };
+        const updatedFiles = [...files];
+        updatedFiles[fileIndex] = updatedFile;
+        set({ files: updatedFiles });
       },
     })),
   );

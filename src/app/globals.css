@@ -87,30 +87,11 @@ html {
     max-height: 100vh;
 }
 
-.toast--default {
-    border: 1px solid var(--default);
-}
-
-.toast--accent {
-    border: 1px solid var(--accent);
-}
-
-.toast--warning {
-    border: 1px solid var(--warning);
-}
-
-.toast--success {
-    border: 1px solid var(--success);
-}
-
-.toast--danger {
-    border: 1px solid var(--danger);
-}
-
 @keyframes spin-gradient {
     0% {
         --gradient-angle: 0deg;
     }
+
     100% {
         --gradient-angle: 360deg;
     }

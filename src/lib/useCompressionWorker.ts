@@ -18,6 +18,11 @@ export interface CompressionWorkerHook {
 export function useCompressionWorker(onMessage: (result: CompressionResult | string) => void): CompressionWorkerHook {
   const workerRef = useRef<Worker | null>(null);
   const [isInitialized, setIsInitialized] = useState(false);
+  const onMessageRef = useRef(onMessage);
+
+  useEffect(() => {
+    onMessageRef.current = onMessage;
+  }, [onMessage]);
 
   useEffect(() => {
     // Only initialize worker in browser
@@ -33,14 +38,14 @@ export function useCompressionWorker(onMessage: (result: CompressionResult | str
       if (e.data === 'initFinished') {
         setIsInitialized(true);
       } else {
-        onMessage(e.data as CompressionResult);
+        onMessageRef.current(e.data);
       }
     };
 
     // Handle worker errors
     worker.onerror = (error) => {
       console.error('Worker error:', error);
-      onMessage({
+      onMessageRef.current({
         success: false,
         size: 0,
         data: null,
@@ -62,7 +67,7 @@ export function useCompressionWorker(onMessage: (result: CompressionResult | str
         workerRef.current = null;
       }
     };
-  }, [onMessage]);
+  }, []);
 
   const compress = (file: File, quality: number, keepMetadata: boolean, maxSize: number, compressionMode: number, uuid: string) => {
     if (!workerRef.current) {

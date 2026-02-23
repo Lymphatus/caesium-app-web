@@ -8,7 +8,7 @@ export default function FileList() {
   return (
     <div className="mb-2 flex flex-col flex-wrap md:flex-row">
       {files?.map((file) => (
-        <div key={file.id} className="w-full p-2 md:w-1/2">
+        <div key={file.id} className="w-full p-2 md:w-1/2 xl:w-1/3">
           <ImageCard cImage={file}></ImageCard>
         </div>
       ))}

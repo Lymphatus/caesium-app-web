@@ -23,7 +23,8 @@ export default function ToastHandler() {
     queue.add(
       {
         variant,
-        title: message,
+        title: generalMessage.level === MESSAGE_LEVEL.ERROR ? t('error:generic_error') : message,
+        description: generalMessage.level === MESSAGE_LEVEL.ERROR ? message : null
       },
       {
         timeout: generalMessage.timeout,
@@ -33,5 +34,5 @@ export default function ToastHandler() {
     setGeneralMessage(null);
   }, [generalMessage, queue, setGeneralMessage, t]);
 
-  return <Toast.Container className="mt-14 mr-8" placement="top end" queue={queue}></Toast.Container>;
+  return <Toast.Provider className="mt-14 mr-8" placement="bottom end" queue={queue}></Toast.Provider>;
 }

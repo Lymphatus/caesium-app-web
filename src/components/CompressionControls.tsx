@@ -11,7 +11,7 @@ import { FILE_STATUS } from '@/types/cimage';
 
 export default function CompressionControls() {
   const { t } = useTranslation('compressor');
-  const { files, quality, keepMetadata, compressionMode, maxSize, clearFiles, triggerFileSelect, setLossless, maxSizeUnit, setMaxSizeUnit, handleCompressionResult, setQuality, setKeepMetadata, setCompressionMode, setMaxSize } =
+  const { files, quality, keepMetadata, compressionMode, maxSize, setFileStatus, clearFiles, triggerFileSelect, setLossless, maxSizeUnit, setMaxSizeUnit, handleCompressionResult, setQuality, setKeepMetadata, setCompressionMode, setMaxSize } =
     useCompressorStore((store) => store);
 
   const { isInitialized, compress } = useCompressionWorker((result) => {
@@ -30,6 +30,7 @@ export default function CompressionControls() {
 
     files.forEach((file) => {
       if (file.status === FILE_STATUS.WAITING) {
+        setFileStatus(file.id, FILE_STATUS.COMPRESSING);
         compress(file.file, quality, keepMetadata, maxSize, compressionMode, file.id);
       }
     });

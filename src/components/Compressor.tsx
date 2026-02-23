@@ -14,7 +14,6 @@ export default function Compressor() {
   const hasFiles = files != null && files?.length > 0;
   return (
     <I18nextProvider i18n={i18n}>
-      <Toast.Container />
       <ToastHandler />
 
       {(hasFiles && (
