@@ -6,7 +6,6 @@ import i18n from '@/lib/i18n/client';
 import { I18nextProvider } from 'react-i18next';
 import FileList from '@/components/FileList';
 import CompressionControls from '@/components/CompressionControls';
-import { Toast } from '@heroui/react';
 import ToastHandler from '@/components/ToastHandler';
 
 export default function Compressor() {

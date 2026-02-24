@@ -33,7 +33,7 @@ export function useCompress() {
 
         filesArray.forEach((file) => {
             // Prevent double-compression
-            if (file.status === FILE_STATUS.WAITING || file.status === FILE_STATUS.ERROR) {
+            if (file.status !== FILE_STATUS.COMPRESSING) {
                 // 1. Set the individual file to 'COMPRESSING'
                 setFileStatus(file.id, FILE_STATUS.COMPRESSING);
 

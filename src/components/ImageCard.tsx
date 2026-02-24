@@ -1,16 +1,27 @@
-import { Button, Card } from '@heroui/react';
+import { Button, Card, Chip } from '@heroui/react';
 import { Trash2 } from 'lucide-react';
 import { CImage, FILE_STATUS } from '@/types/cimage';
 import prettyBytes from 'next/dist/lib/pretty-bytes';
 import { useTranslation } from 'react-i18next';
 import { useCompressorStore } from '@/providers/compressor-store-provider';
 import { useCompress } from '@/lib/useCompress';
+import { getHumanFileType } from '@/lib/utils';
 
 export default function ImageCard({ cImage }: { cImage: CImage }) {
   const { t } = useTranslation('compressor');
 
   const { removeFile } = useCompressorStore((store) => store);
   const { isInitialized, compressFiles } = useCompress();
+
+  const getCompressionRatioLabel = () => {
+    if (cImage.newSize > 0) {
+      const ratio = Math.round((cImage.newSize / cImage.file.size) * 100) - 100;
+      const colorClass = ratio < 0 ? 'text-success' : 'text-danger';
+      const indicator = ratio > 0 ? '↑' : '↓';
+      return (<label className={colorClass}>[{indicator}{ratio}%]</label>);
+    }
+    return (<></>);
+  };
 
   return (
     <div className={`${cImage.status === FILE_STATUS.COMPRESSING ? 'animate-spin-gradient' : ''} rounded-3xl p-0.5`}>
@@ -30,8 +41,14 @@ export default function ImageCard({ cImage }: { cImage: CImage }) {
               </Button>
             </Card.Title>
             <Card.Description>
-              <label className={cImage.newSize > 0 ? 'line-through' : ''}>{prettyBytes(cImage.file.size)}</label>
-              {cImage.newSize > 0 && <label>&nbsp;{prettyBytes(cImage.newSize)}</label>}
+              <div className="flex flex-col gap-2">
+                <Chip variant="primary" size="sm" className="w-fit" color="accent">{getHumanFileType(cImage.file.type)}</Chip>
+                <div>
+                  <label className={cImage.newSize > 0 ? 'line-through' : ''}>{prettyBytes(cImage.file.size)}</label>
+                  {cImage.newSize > 0 && <label> → {prettyBytes(cImage.newSize)}</label>}
+                  &nbsp;{getCompressionRatioLabel()}
+                </div>
+              </div>
             </Card.Description>
           </Card.Header>
           <Card.Footer className="flex w-full flex-col justify-end gap-1 sm:flex-row">
