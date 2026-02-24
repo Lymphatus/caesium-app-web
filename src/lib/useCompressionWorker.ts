@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export interface CompressionResult {
   success: boolean;
@@ -10,82 +10,183 @@ export interface CompressionResult {
 }
 
 export interface CompressionWorkerHook {
-  worker: RefObject<Worker | null>;
   isInitialized: boolean;
-  compress: (file: File, quality: number, keepMetadata: boolean, maxSize: number, compressionMode: number, uuid: string) => void;
+  compress: (
+    file: File,
+    quality: number,
+    keepMetadata: boolean,
+    maxSize: number,
+    compressionMode: number,
+    uuid: string
+  ) => void;
 }
 
-export function useCompressionWorker(onMessage: (result: CompressionResult | string) => void): CompressionWorkerHook {
-  const workerRef = useRef<Worker | null>(null);
-  const [isInitialized, setIsInitialized] = useState(false);
+interface Job {
+  file: File;
+  quality: number;
+  keepMetadata: boolean;
+  maxSize: number;
+  compressionMode: number;
+  uuid: string;
+}
+
+export function useCompressionWorker(
+  onMessage: (result: CompressionResult | string) => void
+): CompressionWorkerHook {
+  // We manage an array of workers
+  const workersRef = useRef<Worker[]>([]);
+  // We keep track of how many workers have finished initializing their WASM module
+  const [initializedCount, setInitializedCount] = useState(0);
+
+  // Determine how many workers we should spawn based on available cores.
+  const poolSize = typeof navigator !== 'undefined' ? Math.max(1, Math.min((navigator.hardwareConcurrency || 2) - 1, 4)) : 1;
+  const isInitialized = initializedCount === poolSize;
+
   const onMessageRef = useRef(onMessage);
+
+  // Queue of worker indices that are currently completely idle
+  const idleWorkersRef = useRef<number[]>([]);
+  // Queue of jobs waiting to be processed when all workers are busy
+  const jobQueueRef = useRef<Job[]>([]);
 
   useEffect(() => {
     onMessageRef.current = onMessage;
   }, [onMessage]);
 
   useEffect(() => {
-    // Only initialize worker in browser
     if (typeof window === 'undefined') {
       return;
     }
 
-    // Create worker as ES module
-    const worker = new Worker('/wasm/compression-worker.js', { type: 'module' });
+    // Spawn the worker pool
+    const pool: Worker[] = [];
+    const initialIdle: number[] = [];
 
-    // Handle worker messages
-    worker.onmessage = (e) => {
-      if (e.data === 'initFinished') {
-        setIsInitialized(true);
-      } else {
-        onMessageRef.current(e.data);
-      }
-    };
+    for (let i = 0; i < poolSize; i++) {
+      const worker = new Worker('/wasm/compression-worker.js', { type: 'module' });
 
-    // Handle worker errors
-    worker.onerror = (error) => {
-      console.error('Worker error:', error);
-      onMessageRef.current({
-        success: false,
-        size: 0,
-        data: null,
-        errorCode: 999,
-        errorString: error.message,
-        uuid: '',
-      });
-    };
+      worker.onmessage = (e) => {
+        if (e.data === 'initFinished') {
+          // Increment our initialized counter
+          setInitializedCount((prev) => prev + 1);
+        } else {
+          // Worker finished a task! Send the result back
+          onMessageRef.current(e.data);
 
-    // Initialize the WASM library
-    worker.postMessage('initLib');
+          // Check if there are ANY pending jobs in the queue
+          if (jobQueueRef.current.length > 0) {
+            const nextJob = jobQueueRef.current.shift();
+            if (nextJob) {
+              // Immediately assign the next pending job to this newly freed worker
+              worker.postMessage([
+                nextJob.file,
+                nextJob.quality,
+                nextJob.keepMetadata,
+                nextJob.maxSize,
+                nextJob.compressionMode,
+                nextJob.uuid,
+              ]);
+            }
+          } else {
+            // No pending jobs, this worker is completely idle now
+            idleWorkersRef.current.push(i);
+          }
+        }
+      };
 
-    workerRef.current = worker;
+      worker.onerror = (error) => {
+        console.error(`Worker ${i} error:`, error);
+        onMessageRef.current({
+          success: false,
+          size: 0,
+          data: null,
+          errorCode: 999,
+          errorString: error.message,
+          uuid: '',
+        });
 
-    // Cleanup on unmount
+        // Even on error, we must free the worker up or assign it the next task
+        // otherwise it stays permanently "busy" in our virtual state
+        if (jobQueueRef.current.length > 0) {
+          const nextJob = jobQueueRef.current.shift();
+          if (nextJob) {
+            worker.postMessage([
+              nextJob.file,
+              nextJob.quality,
+              nextJob.keepMetadata,
+              nextJob.maxSize,
+              nextJob.compressionMode,
+              nextJob.uuid,
+            ]);
+          }
+        } else {
+          idleWorkersRef.current.push(i);
+        }
+      };
+
+      // Initialize the WASM library
+      worker.postMessage('initLib');
+
+      pool.push(worker);
+      initialIdle.push(i); // All workers start idle
+    }
+
+    workersRef.current = pool;
+    idleWorkersRef.current = initialIdle;
+
+    // Cleanup all workers on unmount
     return () => {
-      if (workerRef.current) {
-        workerRef.current.terminate();
-        workerRef.current = null;
-      }
+      pool.forEach((worker) => {
+        worker.terminate();
+      });
+      workersRef.current = [];
+      idleWorkersRef.current = [];
+      jobQueueRef.current = [];
     };
-  }, []);
+  }, [poolSize]);
 
-  const compress = (file: File, quality: number, keepMetadata: boolean, maxSize: number, compressionMode: number, uuid: string) => {
-    if (!workerRef.current) {
-      console.error('Worker not initialized');
+  const compress = (
+    file: File,
+    quality: number,
+    keepMetadata: boolean,
+    maxSize: number,
+    compressionMode: number,
+    uuid: string
+  ) => {
+    if (workersRef.current.length === 0) {
+      console.error('No workers initialized');
       return;
     }
 
     if (!isInitialized) {
-      console.error('WASM not initialized yet');
+      console.error('WASM not fully initialized across the worker pool yet');
       return;
     }
 
-    // Send compression request to worker
-    workerRef.current.postMessage([file, quality, keepMetadata, maxSize, compressionMode, uuid]);
+    const job: Job = { file, quality, keepMetadata, maxSize, compressionMode, uuid };
+
+    // Check if there are any completely idle workers available immediately
+    if (idleWorkersRef.current.length > 0) {
+      // Pull an available idle worker (shift takes from the front of the queue)
+      const workerIndex = idleWorkersRef.current.shift()!;
+      const worker = workersRef.current[workerIndex];
+
+      worker.postMessage([
+        job.file,
+        job.quality,
+        job.keepMetadata,
+        job.maxSize,
+        job.compressionMode,
+        job.uuid,
+      ]);
+    } else {
+      // All workers are currently busy processing other images.
+      // Push this job to the queue where the VERY NEXT freed worker will pick it up.
+      jobQueueRef.current.push(job);
+    }
   };
 
   return {
-    worker: workerRef,
     isInitialized,
     compress,
   };
