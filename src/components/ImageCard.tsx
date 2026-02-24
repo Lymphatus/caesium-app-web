@@ -4,11 +4,14 @@ import { CImage, FILE_STATUS } from '@/types/cimage';
 import prettyBytes from 'next/dist/lib/pretty-bytes';
 import { useTranslation } from 'react-i18next';
 import { useCompressorStore } from '@/providers/compressor-store-provider';
+import { useCompress } from '@/lib/useCompress';
 
 export default function ImageCard({ cImage }: { cImage: CImage }) {
   const { t } = useTranslation('compressor');
 
   const { removeFile } = useCompressorStore((store) => store);
+  const { isInitialized, compressFiles } = useCompress();
+
   return (
     <div className={`${cImage.status === FILE_STATUS.COMPRESSING ? 'animate-spin-gradient' : ''} rounded-3xl p-0.5`}>
       <Card className="w-full items-stretch rounded-3xl md:flex-row">
@@ -32,7 +35,7 @@ export default function ImageCard({ cImage }: { cImage: CImage }) {
             </Card.Description>
           </Card.Header>
           <Card.Footer className="flex w-full flex-col justify-end gap-1 sm:flex-row">
-            <Button className="w-full sm:w-auto" isDisabled={cImage.status === FILE_STATUS.COMPRESSING} size="sm" variant="secondary">
+            <Button className="w-full sm:w-auto" isDisabled={cImage.status === FILE_STATUS.COMPRESSING || !isInitialized} size="sm" variant="secondary" onPress={() => compressFiles(cImage)}>
               {t('compress')}
             </Button>
           </Card.Footer>

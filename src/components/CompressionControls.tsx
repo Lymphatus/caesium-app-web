@@ -8,33 +8,14 @@ import { Play, Plus, Trash2 } from 'lucide-react';
 import { useCompressorStore } from '@/providers/compressor-store-provider';
 import { useCompressionWorker } from '@/lib/useCompressionWorker';
 import { FILE_STATUS } from '@/types/cimage';
+import { useCompress } from '@/lib/useCompress';
 
 export default function CompressionControls() {
   const { t } = useTranslation('compressor');
   const { files, quality, keepMetadata, compressionMode, maxSize, setFileStatus, clearFiles, triggerFileSelect, setLossless, maxSizeUnit, setMaxSizeUnit, handleCompressionResult, setQuality, setKeepMetadata, setCompressionMode, setMaxSize } =
     useCompressorStore((store) => store);
 
-  const { isInitialized, compress } = useCompressionWorker((result) => {
-    if (typeof result === 'string') {
-      console.log('Worker message:', result);
-    } else {
-      handleCompressionResult(result);
-    }
-  });
-
-  const handleCompress = () => {
-    if (!files || !isInitialized) {
-      console.error('No files or worker not initialized');
-      return;
-    }
-
-    files.forEach((file) => {
-      if (file.status === FILE_STATUS.WAITING) {
-        setFileStatus(file.id, FILE_STATUS.COMPRESSING);
-        compress(file.file, quality, keepMetadata, maxSize, compressionMode, file.id);
-      }
-    });
-  };
+  const { isInitialized, compressFiles } = useCompress();
 
   return (
     <div className="flex flex-col gap-4">
@@ -44,7 +25,7 @@ export default function CompressionControls() {
           {t('clear_list')}
         </Button>
 
-        <Button className="w-full md:w-fit" isDisabled={!isInitialized} size="lg" onPress={handleCompress}>
+        <Button className="w-full md:w-fit" isDisabled={!isInitialized} size="lg" onPress={() => { if (files !== null) { compressFiles(files) } else { } }}>
           <Play></Play>
           {t('compress')}
         </Button>
