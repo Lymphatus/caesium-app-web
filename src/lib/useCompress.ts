@@ -5,6 +5,7 @@ import { FILE_STATUS, CImage } from '@/types/cimage';
 export function useCompress() {
     const {
         quality,
+        lossless,
         keepMetadata,
         maxSize,
         compressionMode,
@@ -40,7 +41,7 @@ export function useCompress() {
                 // 2. Send it to the WASM worker
                 workerCompress(
                     file.file,
-                    quality,
+                    lossless ? 0 : quality,
                     keepMetadata,
                     maxSize,
                     compressionMode,

@@ -12,7 +12,7 @@ import { useCompress } from '@/lib/useCompress';
 
 export default function CompressionControls() {
   const { t } = useTranslation('compressor');
-  const { files, quality, keepMetadata, compressionMode, maxSize, setFileStatus, clearFiles, triggerFileSelect, setLossless, maxSizeUnit, setMaxSizeUnit, handleCompressionResult, setQuality, setKeepMetadata, setCompressionMode, setMaxSize } =
+  const { files, quality, keepMetadata, compressionMode, maxSize, clearFiles, triggerFileSelect, setLossless, maxSizeUnit, setMaxSizeUnit, handleCompressionResult, setQuality, setKeepMetadata, setCompressionMode, setMaxSize } =
     useCompressorStore((store) => store);
 
   const { isInitialized, compressFiles } = useCompress();
