@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Toast, ToastQueue } from '@heroui/react';
+import { Toast, ToastContent, ToastContentValue, ToastDescription, ToastQueue, ToastTitle } from '@heroui/react';
 import { useCompressorStore } from '@/providers/compressor-store-provider';
 import { MESSAGE_LEVEL } from '@/types/utils';
 
@@ -24,7 +24,7 @@ export default function ToastHandler() {
       {
         variant,
         title: generalMessage.level === MESSAGE_LEVEL.ERROR ? t('error:generic_error') : message,
-        description: generalMessage.level === MESSAGE_LEVEL.ERROR ? message : null
+        description: generalMessage.level === MESSAGE_LEVEL.ERROR ? message : null,
       },
       {
         timeout: generalMessage.timeout,
@@ -34,5 +34,40 @@ export default function ToastHandler() {
     setGeneralMessage(null);
   }, [generalMessage, queue, setGeneralMessage, t]);
 
-  return <Toast.Provider className="mt-14 mr-8" placement="bottom end" queue={queue}></Toast.Provider>;
+  const backgroundColor = (variant: "danger" | "success" | "warning" | "default" | "accent" | undefined) => {
+    switch (variant) {
+      case 'danger':
+        return 'border border-danger';
+      case 'success':
+        return 'border border-success';
+      case 'warning':
+        return 'border border-warning';
+      case 'accent':
+        return 'border border-accent';
+      default:
+        return '';
+    }
+  };
+  return (
+    <Toast.Provider className="mb-24 mr-8" placement="bottom" queue={queue}>
+      {({ toast: toastItem }) => {
+        const content = toastItem.content as ToastContentValue;
+        return (
+          <Toast
+            toast={toastItem}
+            variant={content.variant}
+            className={backgroundColor(content.variant)}
+          >
+            <Toast.Indicator />
+            <div className='flex flex-col gap-1'>
+              <p className='text-left'>{content.title && <ToastTitle>{content.title}</ToastTitle>}</p>
+              <p className='text-left'>{content.description && <ToastDescription>{content.description}</ToastDescription>}</p>
+            </div>
+
+            <Toast.CloseButton />
+          </Toast >
+        );
+      }}
+    </Toast.Provider >
+  );
 }

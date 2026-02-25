@@ -20,7 +20,7 @@ export default function DropArea() {
           <span className="text-sm uppercase">{t('or')}</span>
           <Separator className="w-1/3"></Separator>
         </div>
-        <Button onPress={triggerFileSelect}>
+        <Button size="lg" onPress={triggerFileSelect}>
           <FolderOpen />
           {t('browse_dots')}
         </Button>

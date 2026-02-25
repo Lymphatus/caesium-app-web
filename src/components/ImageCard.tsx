@@ -1,5 +1,5 @@
 import { Button, Card, Chip } from '@heroui/react';
-import { Trash2 } from 'lucide-react';
+import { Download, Trash2 } from 'lucide-react';
 import { CImage, FILE_STATUS } from '@/types/cimage';
 import prettyBytes from 'next/dist/lib/pretty-bytes';
 import { useTranslation } from 'react-i18next';
@@ -23,9 +23,18 @@ export default function ImageCard({ cImage }: { cImage: CImage }) {
     return (<></>);
   };
 
+  const className = () => {
+    switch (cImage.status) {
+      case FILE_STATUS.ERROR:
+        return 'border-danger';
+      default:
+        return 'border-transparent';
+    }
+  };
+
   return (
     <div className={`${cImage.status === FILE_STATUS.COMPRESSING ? 'animate-spin-gradient' : ''} rounded-3xl p-0.5`}>
-      <Card className="w-full items-stretch rounded-3xl md:flex-row">
+      <Card className={`${className()} w-full items-stretch rounded-3xl md:flex-row border-2`}>
         <div
           className="relative h-30 w-full shrink-0 overflow-hidden rounded-2xl bg-cover bg-center sm:h-30 sm:w-30"
           style={{
@@ -41,23 +50,25 @@ export default function ImageCard({ cImage }: { cImage: CImage }) {
               </Button>
             </Card.Title>
             <Card.Description>
-              <div className="flex flex-col gap-2">
+              <span className="flex flex-col gap-2">
                 <Chip variant="primary" size="sm" className="w-fit" color="accent">{getHumanFileType(cImage.file.type)}</Chip>
-                <div>
+                <span>
                   <label className={cImage.newSize > 0 ? 'line-through' : ''}>{prettyBytes(cImage.file.size)}</label>
                   {cImage.newSize > 0 && <label> → {prettyBytes(cImage.newSize)}</label>}
                   &nbsp;{getCompressionRatioLabel()}
-                </div>
-              </div>
+                </span>
+              </span>
             </Card.Description>
           </Card.Header>
-          <Card.Footer className="flex w-full flex-col justify-end gap-1 sm:flex-row">
+          <Card.Footer className="flex w-full flex-col justify-end gap-2 sm:flex-row">
+            {cImage.status === FILE_STATUS.ERROR && <p className="text-sm text-danger text-left min-w-0 grow truncate">{cImage.errorMessage}</p>}
+            {cImage.status === FILE_STATUS.FINISHED && <Button variant="secondary" size="sm" isIconOnly onPress={() => { /* TODO */ }}><Download></Download></Button>}
             <Button className="w-full sm:w-auto" isDisabled={cImage.status === FILE_STATUS.COMPRESSING || !isInitialized} size="sm" variant="secondary" onPress={() => compressFiles(cImage)}>
               {t('compress')}
             </Button>
           </Card.Footer>
         </div>
       </Card>
-    </div>
+    </div >
   );
 }
