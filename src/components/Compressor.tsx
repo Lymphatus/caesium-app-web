@@ -7,20 +7,22 @@ import { I18nextProvider, useTranslation } from 'react-i18next';
 import FileList from '@/components/FileList';
 import CompressionControls from '@/components/CompressionControls';
 import ToastHandler from '@/components/ToastHandler';
-import { Separator } from './ui/separator';
 import { cn } from '@/lib/utils';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible';
+import { ChevronDown, Settings } from 'lucide-react';
+import { useState } from 'react';
 
 export default function Compressor() {
   const { files } = useCompressorStore((store) => store);
   const hasFiles = files != null && files?.length > 0;
-  const { t } = useTranslation('common');
+  const { t } = useTranslation(['common', 'compressor']);
 
   return (
     <I18nextProvider i18n={i18n}>
       <ToastHandler />
 
       <div className="flex h-full flex-col overflow-hidden px-4 md:px-0">
-        <h1 className="shrink-0 py-8 text-3xl font-semibold">{t('app_name')}</h1>
+        <h1 className="shrink-0 py-8 text-2xl font-semibold md:text-3xl">{t('app_name')}</h1>
 
         <div className={cn('w-full transition-all duration-300', hasFiles ? 'h-40 min-h-40 flex-none' : 'min-h-60 flex-1')}>
           <DropArea className={hasFiles ? 'min-h-40 py-4' : ''} />
@@ -28,8 +30,7 @@ export default function Compressor() {
 
         <div className={cn('flex w-full flex-col justify-between transition-all duration-300', hasFiles ? 'mt-4 overflow-y-auto opacity-100' : 'h-0 flex-none overflow-hidden opacity-0')}>{hasFiles && <FileList />}</div>
 
-        <Separator className="my-4 shrink-0" />
-        <div className="shrink-0">
+        <div className="shrink-0 py-4">
           <CompressionControls />
         </div>
       </div>

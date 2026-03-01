@@ -8,7 +8,7 @@ export default async function Footer() {
 
   return (
     <footer className="bg-background-secondary mt-auto w-full p-4 text-xs">
-      <div className="flex w-full items-center justify-between">
+      <div className="flex w-full flex-wrap items-center justify-between gap-2">
         <div className="flex flex-col gap-1 text-left">
           <Link href="/cookie-policy" target="_blank">
             {t('cookie_policy')}

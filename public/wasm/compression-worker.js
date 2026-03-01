@@ -1,5 +1,4 @@
-// Load the WASM bridge as ES module
-import CaesiumWASM from './libcaesium-wasm.js';
+import { compress, compressToSize, initialize } from './index.js';
 
 // COMPRESSION_MODE enum values
 const COMPRESSION_MODE = {
@@ -7,21 +6,40 @@ const COMPRESSION_MODE = {
   SIZE: 1,
 };
 
-let LibcaesiumWasm = null;
-self.onmessage = (e) => {
+let isInitialized = false;
+
+onmessage = async (e) => {
   if (e.data === 'initLib') {
-    initLib();
+    try {
+      if (!isInitialized) {
+        await initialize();
+        isInitialized = true;
+      }
+      postMessage('initFinished');
+    } catch (err) {
+      postMessage({
+        success: false,
+        size: 0,
+        data: null,
+        errorCode: 3,
+        errorString: err.toString(),
+        uuid: null,
+      });
+    }
   } else {
     const file = e.data[0];
     const quality = e.data[1];
-    const keepMetadata = e.data[2];
-    const maxSize = e.data[3];
-    const compressionMode = e.data[4];
-    const uuid = e.data[5];
+    const lossless = e.data[2];
+    const keepMetadata = e.data[3];
+    const maxSize = e.data[4];
+    const compressionMode = e.data[5];
+    const uuid = e.data[6];
+
+    postMessage(`DEBUG: Starting compression with options: ${JSON.stringify({file, quality, lossless, keepMetadata, maxSize, compressionMode, uuid})}`);
     try {
-      performCompress(file, quality, keepMetadata, maxSize, compressionMode, uuid);
+      await performCompress(file, quality, lossless, keepMetadata, maxSize, compressionMode, uuid);
     } catch (err) {
-      self.postMessage({
+      postMessage({
         success: false,
         size: file.size,
         data: null,
@@ -33,110 +51,69 @@ self.onmessage = (e) => {
   }
 };
 
-function initLib() {
-  CaesiumWASM()
-    .then((lw) => {
-      LibcaesiumWasm = lw;
-      self.postMessage('initFinished');
-    })
-    .catch((e) => {
-      const result = {
-        success: false,
-        size: 0,
-        data: null,
-        errorCode: 3,
-        errorString: e.toString(),
-        uuid: null,
-      };
-      self.postMessage(result);
-    });
-}
-
-function performCompress(file, quality, keepMetadata, maxSize, compressionMode, uuid) {
-  if (!LibcaesiumWasm) {
-    const result = {
+async function performCompress(file, quality, lossless, keepMetadata, maxSize, compressionMode, uuid) {
+  if (!isInitialized) {
+    postMessage({
       success: false,
       size: 0,
       data: null,
       errorCode: 1,
       errorString: 'WASM not initialized',
       uuid,
-    };
-    self.postMessage(result);
+    });
     return;
   }
-  file
-    .arrayBuffer()
-    .then((ab) => {
-      let success = false;
-      const inputArray = new Uint8Array(ab);
 
-      if (compressionMode === COMPRESSION_MODE.SIZE && inputArray.length < maxSize) {
-        const result = {
-          success: true,
-          size: inputArray.length,
-          data: inputArray,
-          errorCode: 0,
-          errorString: '',
-          uuid,
-        };
+  try {
+    const ab = await file.arrayBuffer();
+    const inputArray = new Uint8Array(ab);
 
-        self.postMessage(result);
-        return;
-      }
-
-      const inputPointer = LibcaesiumWasm._malloc(inputArray.length);
-      LibcaesiumWasm.HEAP8.set(inputArray, inputPointer);
-
-      let outputVector;
-      if (compressionMode === COMPRESSION_MODE.QUALITY) {
-        const js_wrapped_compress = LibcaesiumWasm.cwrap('w_compress', 'number', ['number', 'number', 'number', 'number']);
-        outputVector = js_wrapped_compress(inputPointer, inputArray.length, quality, keepMetadata ? 1 : 0);
-      } else {
-        const js_wrapped_compress = LibcaesiumWasm.cwrap('w_compress_to_size', 'number', ['number', 'number', 'number', 'number']);
-        outputVector = js_wrapped_compress(inputPointer, inputArray.length, maxSize, keepMetadata ? 1 : 0);
-      }
-
-      let outputLength = 0;
-      let status = 0;
-      let errorCode = 0;
-      let outputArray = new Uint8Array();
-      if (outputVector) {
-        status = LibcaesiumWasm.getValue(outputVector, 'i32');
-        errorCode = LibcaesiumWasm.getValue(outputVector + 4, 'i32');
-        const outputPointer = LibcaesiumWasm.getValue(outputVector + 8, 'i32');
-        outputLength = LibcaesiumWasm.getValue(outputVector + 12, 'i32');
-
-        if (status === 1) {
-          outputArray = new Uint8Array(LibcaesiumWasm.HEAPU8.buffer, outputPointer, outputLength);
-          success = true;
-        }
-      }
-      const result = {
-        success: success,
-        size: outputLength,
-        data: outputArray,
-        errorCode: errorCode,
+    if (compressionMode === COMPRESSION_MODE.SIZE && inputArray.length < maxSize) {
+      postMessage({
+        success: true,
+        size: inputArray.length,
+        data: inputArray,
+        errorCode: 0,
         errorString: '',
         uuid,
-      };
+      });
+      return;
+    }
 
-      self.postMessage(result);
+    const options = {
+      jpeg: { quality, chromaSubsampling: 0, progressive: true, optimize: lossless },
+      png: { quality, optimizationLevel: 2, forceZopfli: false, optimize: lossless },
+      webp: { quality, lossless },
+      tiff: { compression: 0, deflateLevel: 6 },
+      gif: { quality },
+      keepMetadata,
+      width: 0,
+      height: 0,
+    };
 
-      const drop_vector_struct = LibcaesiumWasm.cwrap('drop_vector_struct', null, ['number']);
-      drop_vector_struct(outputVector);
-      LibcaesiumWasm._free(inputPointer);
-    })
-    .catch((e) => {
-      const result = {
-        success: false,
-        size: 0,
-        data: null,
-        errorCode: 2,
-        errorString: e.toString(),
-        uuid,
-      };
+    let result;
+    if (compressionMode === COMPRESSION_MODE.QUALITY) {
+      result = compress(inputArray, options);
+    } else {
+      result = compressToSize(inputArray, maxSize, options);
+    }
 
-      self.postMessage(result);
+    postMessage({
+      success: result.status,
+      size: result.size,
+      data: result.status ? result.compressedImage : null,
+      errorCode: result.errorCode,
+      errorString: result.status ? '' : `Error: ${result.errorCode}`,
+      uuid,
     });
+  } catch (e) {
+    postMessage({
+      success: false,
+      size: 0,
+      data: null,
+      errorCode: 2,
+      errorString: e.toString(),
+      uuid,
+    });
+  }
 }

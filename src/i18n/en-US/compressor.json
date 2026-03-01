@@ -33,5 +33,6 @@
   "waiting": "Waiting",
   "compressing": "Compressing",
   "finished": "Finished",
-  "error": "Error"
+  "error": "Error",
+  "settings": "Settings"
 }

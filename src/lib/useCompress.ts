@@ -3,7 +3,7 @@ import { useCompressionWorker } from '@/lib/useCompressionWorker';
 import { FILE_STATUS, CImage } from '@/types/cimage';
 
 export function useCompress() {
-  const { quality, lossless, keepMetadata, maxSize, compressionMode, setFileStatus, handleCompressionResult } = useCompressorStore((store) => store);
+  const { quality, lossless, keepMetadata, maxSize, maxSizeUnit, compressionMode, setFileStatus, handleCompressionResult } = useCompressorStore((store) => store);
 
   // Initialize the worker once and route its messages to Zustand
   const { isInitialized, compress: workerCompress } = useCompressionWorker((result) => {
@@ -31,7 +31,7 @@ export function useCompress() {
         setFileStatus(file.id, FILE_STATUS.COMPRESSING);
 
         // 2. Send it to the WASM worker
-        workerCompress(file.file, lossless ? 0 : quality, keepMetadata, maxSize, compressionMode, file.id);
+        workerCompress(file.file, quality, lossless, keepMetadata, maxSize * maxSizeUnit, compressionMode, file.id);
       }
     });
   };

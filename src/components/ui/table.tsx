@@ -21,11 +21,11 @@ function TableBody({ className, ...props }: React.ComponentProps<'tbody'>) {
 }
 
 function TableFooter({ className, ...props }: React.ComponentProps<'tfoot'>) {
-  return <tfoot className={cn('bg-muted/50 border-t font-medium [&>tr]:last:border-b-0', className)} data-slot="table-footer" {...props} />;
+  return <tfoot className={cn('bg-muted/30 border-t font-medium [&>tr]:last:border-b-0', className)} data-slot="table-footer" {...props} />;
 }
 
 function TableRow({ className, ...props }: React.ComponentProps<'tr'>) {
-  return <tr className={cn('hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors', className)} data-slot="table-row" {...props} />;
+  return <tr className={cn('hover:bg-muted/30 data-[state=selected]:bg-muted border-b transition-colors', className)} data-slot="table-row" {...props} />;
 }
 
 function TableHead({ className, ...props }: React.ComponentProps<'th'>) {
