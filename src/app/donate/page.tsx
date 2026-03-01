@@ -1,10 +1,11 @@
 import { Heart } from 'lucide-react';
+import Image from 'next/image';
 
 export default function DonatePage() {
   return (
     <div className="container mx-auto flex h-full max-w-300 flex-col justify-between gap-6 px-2 py-8 text-gray-800 sm:px-4 dark:text-gray-100">
       <div className="flex flex-col items-center gap-4">
-        <img alt="avatar" className="h-20 w-20 rounded-full" src="https://avatars.githubusercontent.com/u/12133996?v=4" />
+        <Image alt="avatar" className="rounded-full" height={80} src="https://avatars.githubusercontent.com/u/12133996?v=4" width={80} />
         <span className="w-full text-center text-lg font-medium sm:w-1/2">I am Matteo, a developer from Italy.</span>
         <p className="w-full text-center sm:w-2/3">
           I am the creator and maintainer of the <span className="font-medium italic">Caesium Image Compressor</span> project, started more than 10 years ago.

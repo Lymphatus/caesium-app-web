@@ -1,7 +1,9 @@
 'use client';
 
 import { Languages } from 'lucide-react';
-import { Button, Dropdown, Label } from '@heroui/react';
+import { Button } from '@/components/ui/button';
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu';
+import { Label } from '@/components/ui/label';
 import { supportedLangs } from '@/proxy';
 import Image from 'next/image';
 import i18n from '@/lib/i18n/client';
@@ -21,22 +23,22 @@ export default function LanguageSwitcher() {
     flagsMap.set(lang, `/images/flags/${code}.svg`);
   });
   return (
-    <Dropdown>
-      <Button isIconOnly aria-label="Menu" variant="ghost">
-        <Languages></Languages>
-      </Button>
-      <Dropdown.Popover className="min-w-0 w-30">
-        <Dropdown.Menu onAction={(id) => changeLanguage(id.toString())}>
-          {supportedLangs.sort().map((lang: string) => (
-            <Dropdown.Item key={lang} id={lang} textValue={lang}>
-              <div className="flex items-center gap-2">
-                <Image alt={lang} height={16} src={flagsMap.get(lang)} width={16}></Image>
-                <Label>{lang}</Label>
-              </div>
-            </Dropdown.Item>
-          ))}
-        </Dropdown.Menu>
-      </Dropdown.Popover>
-    </Dropdown>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button aria-label="Menu" size="icon" variant="ghost">
+          <Languages></Languages>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-30 min-w-0">
+        {supportedLangs.sort().map((lang: string) => (
+          <DropdownMenuItem key={lang} className="cursor-pointer" onClick={() => changeLanguage(lang)}>
+            <div className="flex items-center gap-2">
+              <Image alt={lang} height={16} src={flagsMap.get(lang)} width={16}></Image>
+              <Label className="cursor-pointer">{lang}</Label>
+            </div>
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

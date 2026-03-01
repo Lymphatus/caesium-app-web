@@ -1,4 +1,6 @@
-import { Button, Card, Chip } from '@heroui/react';
+import { Button } from '@/components/ui/button';
+import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { Download, Trash2 } from 'lucide-react';
 import { CImage, FILE_STATUS } from '@/types/cimage';
 import prettyBytes from 'next/dist/lib/pretty-bytes';
@@ -16,17 +18,22 @@ export default function ImageCard({ cImage }: { cImage: CImage }) {
   const getCompressionRatioLabel = () => {
     if (cImage.newSize > 0) {
       const ratio = Math.round((cImage.newSize / cImage.file.size) * 100) - 100;
-      const colorClass = ratio < 0 ? 'text-success' : 'text-danger';
+      const colorClass = ratio < 0 ? 'text-green-500' : 'text-red-500';
       const indicator = ratio > 0 ? '↑' : '↓';
-      return (<label className={colorClass}>[{indicator}{ratio}%]</label>);
+      return (
+        <label className={colorClass}>
+          [{indicator}
+          {ratio}%]
+        </label>
+      );
     }
-    return (<></>);
+    return <></>;
   };
 
   const className = () => {
     switch (cImage.status) {
       case FILE_STATUS.ERROR:
-        return 'border-danger';
+        return 'border-destructive';
       default:
         return 'border-transparent';
     }
@@ -34,41 +41,54 @@ export default function ImageCard({ cImage }: { cImage: CImage }) {
 
   return (
     <div className={`${cImage.status === FILE_STATUS.COMPRESSING ? 'animate-spin-gradient' : ''} rounded-3xl p-0.5`}>
-      <Card className={`${className()} w-full items-stretch rounded-3xl md:flex-row border-2`}>
+      <Card className={`${className()} flex w-full flex-col items-stretch overflow-hidden rounded-3xl border-2 shadow-none md:flex-row`}>
         <div
-          className="relative h-30 w-full shrink-0 overflow-hidden rounded-2xl bg-cover bg-center sm:h-30 sm:w-30"
+          className="relative h-30 w-full shrink-0 overflow-hidden bg-cover bg-center sm:h-30 sm:w-30"
           style={{
             backgroundImage: `url(${cImage.url})`,
           }}
         ></div>
         <div className="flex w-full min-w-0 flex-col justify-between gap-2 md:gap-0">
-          <Card.Header className="gap-1 text-left">
-            <Card.Title className="flex w-full min-w-0 items-center gap-1">
+          <CardHeader className="gap-1 p-4 pb-2 text-left">
+            <CardTitle className="flex w-full min-w-0 items-center justify-between gap-1 text-base">
               <span className="min-w-0 grow truncate">{cImage.id}</span>
-              <Button isIconOnly className="shrink-0" isDisabled={cImage.status === FILE_STATUS.COMPRESSING} size="sm" variant="danger-soft" onPress={() => removeFile(cImage.id)}>
-                <Trash2></Trash2>
+              <Button className="h-8 w-8 shrink-0" disabled={cImage.status === FILE_STATUS.COMPRESSING} size="icon" variant="destructive" onClick={() => removeFile(cImage.id)}>
+                <Trash2 className="h-4 w-4"></Trash2>
               </Button>
-            </Card.Title>
-            <Card.Description>
+            </CardTitle>
+            <CardDescription>
               <span className="flex flex-col gap-2">
-                <Chip variant="primary" size="sm" className="w-fit" color="accent">{getHumanFileType(cImage.file.type)}</Chip>
+                <Badge className="w-fit" variant="default">
+                  {getHumanFileType(cImage.file.type)}
+                </Badge>
                 <span>
                   <label className={cImage.newSize > 0 ? 'line-through' : ''}>{prettyBytes(cImage.file.size)}</label>
                   {cImage.newSize > 0 && <label> → {prettyBytes(cImage.newSize)}</label>}
                   &nbsp;{getCompressionRatioLabel()}
                 </span>
               </span>
-            </Card.Description>
-          </Card.Header>
-          <Card.Footer className="flex w-full flex-col justify-end gap-2 sm:flex-row">
-            {cImage.status === FILE_STATUS.ERROR && <p className="text-sm text-danger text-left min-w-0 grow truncate">{cImage.errorMessage}</p>}
-            {cImage.status === FILE_STATUS.FINISHED && <Button variant="secondary" size="sm" isIconOnly onPress={() => { /* TODO */ }}><Download></Download></Button>}
-            <Button className="w-full sm:w-auto" isDisabled={cImage.status === FILE_STATUS.COMPRESSING || !isInitialized} size="sm" variant="secondary" onPress={() => compressFiles(cImage)}>
+            </CardDescription>
+          </CardHeader>
+          <CardFooter className="flex w-full flex-col justify-end gap-2 p-4 pt-2 sm:flex-row">
+            {cImage.status === FILE_STATUS.ERROR && <p className="text-destructive min-w-0 grow truncate text-left text-sm">{cImage.errorMessage}</p>}
+            {cImage.status === FILE_STATUS.FINISHED && (
+              <Button
+                className="h-8 w-8"
+                size="icon"
+                variant="secondary"
+                onClick={() => {
+                  /* TODO */
+                }}
+              >
+                <Download className="h-4 w-4"></Download>
+              </Button>
+            )}
+            <Button className="h-8 w-full sm:w-auto" disabled={cImage.status === FILE_STATUS.COMPRESSING || !isInitialized} variant="secondary" onClick={() => compressFiles(cImage)}>
               {t('compress')}
             </Button>
-          </Card.Footer>
+          </CardFooter>
         </div>
       </Card>
-    </div >
+    </div>
   );
 }

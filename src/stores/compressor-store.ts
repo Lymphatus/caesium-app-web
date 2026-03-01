@@ -127,7 +127,7 @@ export const createCompressorStore = (initState: CompressorState = defaultInitSt
         const file = files[fileIndex];
 
         if (result.success && result.data) {
-          const blob = new Blob([result.data as any], { type: file.file.type });
+          const blob = new Blob([result.data as BlobPart], { type: file.file.type });
           const outputUrl = URL.createObjectURL(blob);
 
           const updatedFile = {

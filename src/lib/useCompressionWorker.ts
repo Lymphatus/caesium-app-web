@@ -11,14 +11,7 @@ export interface CompressionResult {
 
 export interface CompressionWorkerHook {
   isInitialized: boolean;
-  compress: (
-    file: File,
-    quality: number,
-    keepMetadata: boolean,
-    maxSize: number,
-    compressionMode: number,
-    uuid: string
-  ) => void;
+  compress: (file: File, quality: number, keepMetadata: boolean, maxSize: number, compressionMode: number, uuid: string) => void;
 }
 
 interface Job {
@@ -30,9 +23,7 @@ interface Job {
   uuid: string;
 }
 
-export function useCompressionWorker(
-  onMessage: (result: CompressionResult | string) => void
-): CompressionWorkerHook {
+export function useCompressionWorker(onMessage: (result: CompressionResult | string) => void): CompressionWorkerHook {
   // We manage an array of workers
   const workersRef = useRef<Worker[]>([]);
   // We keep track of how many workers have finished initializing their WASM module
@@ -78,14 +69,7 @@ export function useCompressionWorker(
             const nextJob = jobQueueRef.current.shift();
             if (nextJob) {
               // Immediately assign the next pending job to this newly freed worker
-              worker.postMessage([
-                nextJob.file,
-                nextJob.quality,
-                nextJob.keepMetadata,
-                nextJob.maxSize,
-                nextJob.compressionMode,
-                nextJob.uuid,
-              ]);
+              worker.postMessage([nextJob.file, nextJob.quality, nextJob.keepMetadata, nextJob.maxSize, nextJob.compressionMode, nextJob.uuid]);
             }
           } else {
             // No pending jobs, this worker is completely idle now
@@ -110,14 +94,7 @@ export function useCompressionWorker(
         if (jobQueueRef.current.length > 0) {
           const nextJob = jobQueueRef.current.shift();
           if (nextJob) {
-            worker.postMessage([
-              nextJob.file,
-              nextJob.quality,
-              nextJob.keepMetadata,
-              nextJob.maxSize,
-              nextJob.compressionMode,
-              nextJob.uuid,
-            ]);
+            worker.postMessage([nextJob.file, nextJob.quality, nextJob.keepMetadata, nextJob.maxSize, nextJob.compressionMode, nextJob.uuid]);
           }
         } else {
           idleWorkersRef.current.push(i);
@@ -145,14 +122,7 @@ export function useCompressionWorker(
     };
   }, [poolSize]);
 
-  const compress = (
-    file: File,
-    quality: number,
-    keepMetadata: boolean,
-    maxSize: number,
-    compressionMode: number,
-    uuid: string
-  ) => {
+  const compress = (file: File, quality: number, keepMetadata: boolean, maxSize: number, compressionMode: number, uuid: string) => {
     if (workersRef.current.length === 0) {
       console.error('No workers initialized');
       return;
@@ -171,14 +141,7 @@ export function useCompressionWorker(
       const workerIndex = idleWorkersRef.current.shift()!;
       const worker = workersRef.current[workerIndex];
 
-      worker.postMessage([
-        job.file,
-        job.quality,
-        job.keepMetadata,
-        job.maxSize,
-        job.compressionMode,
-        job.uuid,
-      ]);
+      worker.postMessage([job.file, job.quality, job.keepMetadata, job.maxSize, job.compressionMode, job.uuid]);
     } else {
       // All workers are currently busy processing other images.
       // Push this job to the queue where the VERY NEXT freed worker will pick it up.

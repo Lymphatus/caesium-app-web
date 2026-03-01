@@ -5,6 +5,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { getLang } from '@/lib/i18n/lang-context';
 import { getServerTranslation } from '@/lib/i18n/server';
+import { TooltipProvider } from '@/components/ui/tooltip';
 import type { Metadata } from 'next';
 
 const inter = Inter({
@@ -45,7 +46,9 @@ export default async function RootLayout({
     <html className={`${inter.className} dark`} lang={lang}>
       <body className="text-foreground bg-background flex h-screen w-full flex-col text-center">
         <Header />
-        <main className="flex w-full grow">{children}</main>
+        <TooltipProvider>
+          <main className="flex w-full grow">{children}</main>
+        </TooltipProvider>
         <Footer />
       </body>
     </html>

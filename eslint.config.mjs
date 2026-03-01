@@ -11,7 +11,7 @@ const eslintConfig = defineConfig([
   {
     settings: {
       react: {
-        version: 'detect',
+        version: '19.x',
       },
     },
     plugins: {
@@ -41,6 +41,7 @@ const eslintConfig = defineConfig([
     'out/**',
     'build/**',
     'next-env.d.ts',
+    'public/wasm/**',
   ]),
 ]);
 

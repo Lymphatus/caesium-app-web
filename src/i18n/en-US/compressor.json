@@ -15,8 +15,8 @@
   "saved_bytes": "Saved {size} ({percentage}%)",
   "restriction": "Restriction|Restrictions",
   "file_types": "JPG, PNG and WebP formats are allowed",
-  "max_files": "Max {max_files} files at time",
-  "max_file_size": "Max {max_file_size} per single file",
+  "max_files": "Max {{max_files}} files at time",
+  "max_file_size": "Max {{max_file_size}} per single file",
   "auto_delete": "Images never leave you device",
   "lossless_help": "With this option selected, the image quality will be completely preserved.",
   "help_translate": "Help translate",
@@ -26,5 +26,12 @@
   "back": "Back",
   "original": "Original",
   "compressed": "Compressed",
-  "swap": "Swap"
+  "swap": "Swap",
+  "file_name": "File name",
+  "status": "Status",
+  "action": "Action",
+  "waiting": "Waiting",
+  "compressing": "Compressing",
+  "finished": "Finished",
+  "error": "Error"
 }
