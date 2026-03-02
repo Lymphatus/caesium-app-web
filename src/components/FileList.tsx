@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useCompressorStore } from '@/providers/compressor-store-provider';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableFooter } from '@/components/ui/table';
@@ -12,11 +13,13 @@ import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
 import { useCompress } from '@/lib/useCompress';
 import { cn, downloadAll } from '@/lib/utils';
+import ImageComparisonModal from '@/components/ImageComparisonModal';
 
 export default function FileList() {
   const { files, removeFile, clearFiles } = useCompressorStore((store) => store);
   const { t } = useTranslation('compressor');
   const { compressFiles } = useCompress();
+  const [selectedFile, setSelectedFile] = useState<CImage | null>(null);
 
   const getStatusBadge = (file: CImage) => {
     switch (file.status) {
@@ -114,7 +117,7 @@ export default function FileList() {
           </TableHeader>
           <TableBody>
             {files?.map((file) => (
-              <TableRow key={file.id}>
+              <TableRow key={file.id} className={cn(file.status === FILE_STATUS.FINISHED && 'cursor-pointer')} onClick={() => file.status === FILE_STATUS.FINISHED && setSelectedFile(file)}>
                 <TableCell className="pl-4">
                   <div className="relative h-10 w-10 overflow-hidden rounded-md border">
                     <Image fill alt={file.file.name} className="object-cover" src={file.url} />
@@ -136,7 +139,7 @@ export default function FileList() {
                     )}
                   </div>
                 </TableCell>
-                <TableCell className="pr-4 text-right">
+                <TableCell className="pr-4 text-right" onClick={(e) => e.stopPropagation()}>
                   <Button asChild={file.status === FILE_STATUS.FINISHED} className="text-muted-foreground hover:text-primary" disabled={file.status !== FILE_STATUS.FINISHED} size="icon" variant="ghost">
                     {file.status === FILE_STATUS.FINISHED && file.outputImageUrl ? (
                       <a download={file.file.name} href={file.outputImageUrl} rel="noreferrer" target="_blank">
@@ -169,7 +172,7 @@ export default function FileList() {
       {/* Mobile Card View */}
       <div className="block w-full divide-y md:hidden">
         {files?.map((file) => (
-          <div key={file.id} className="flex flex-col gap-3 p-4">
+          <div key={file.id} className={cn('flex flex-col gap-3 p-4', file.status === FILE_STATUS.FINISHED && 'cursor-pointer')} onClick={() => file.status === FILE_STATUS.FINISHED && setSelectedFile(file)}>
             <div className="flex w-full items-center gap-3">
               <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-md border">
                 <Image fill alt={file.file.name} className="object-cover" src={file.url} />
@@ -195,7 +198,7 @@ export default function FileList() {
               {getStatusBadge(file)}
             </div>
 
-            <div className="flex items-center justify-end gap-2 pt-1">
+            <div className="flex items-center justify-end gap-2 pt-1" onClick={(e) => e.stopPropagation()}>
               <Button asChild={file.status === FILE_STATUS.FINISHED} className="text-primary hover:bg-primary/10 hover:text-primary" disabled={file.status !== FILE_STATUS.FINISHED} size="sm" variant="outline">
                 {file.status === FILE_STATUS.FINISHED && file.outputImageUrl ? (
                   <a download={file.file.name} href={file.outputImageUrl} rel="noreferrer" target="_blank">
@@ -219,6 +222,8 @@ export default function FileList() {
         {/* Mobile Footer Actions */}
         <div className="bg-muted/20 flex flex-col gap-2 p-4">{footerButtons}</div>
       </div>
+
+      <ImageComparisonModal file={selectedFile} open={selectedFile !== null} onOpenChange={(open) => !open && setSelectedFile(null)} />
     </div>
   );
 }

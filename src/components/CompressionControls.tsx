@@ -50,7 +50,7 @@ export default function CompressionControls() {
                   setCompressionMode(value === 'quality' ? COMPRESSION_MODE.QUALITY : COMPRESSION_MODE.SIZE);
                 }}
               >
-                <TabsList className="grid w-full grid-cols-2">
+                <TabsList className="grid grid-cols-2 self-end">
                   <TabsTrigger value="quality">{t('quality')}</TabsTrigger>
                   <TabsTrigger value="size">{t('size')}</TabsTrigger>
                 </TabsList>
