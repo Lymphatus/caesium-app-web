@@ -3,7 +3,7 @@
 import { useTranslation } from 'react-i18next';
 import prettyBytes from 'next/dist/lib/pretty-bytes';
 import { COMPRESSION_MODE, FILES_LIMIT, MAX_FILE_SIZE } from '@/types/utils';
-import { ChevronDown, Play, Plus, Settings, Trash2 } from 'lucide-react';
+import { Play, Plus, Settings, Trash2 } from 'lucide-react';
 import { useCompressorStore } from '@/providers/compressor-store-provider';
 import { FILE_STATUS } from '@/types/cimage';
 import { useCompress } from '@/lib/useCompress';
@@ -16,9 +16,7 @@ import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible';
-import { cn } from '@/lib/utils';
-import { useState } from 'react';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function CompressionControls() {
   const { t } = useTranslation('compressor');
@@ -27,21 +25,17 @@ export default function CompressionControls() {
   );
 
   const { isInitialized, compressFiles } = useCompress();
-  const [settingsOpen, setSettingsOpen] = useState(true);
 
   return (
-    <Collapsible className="w-full rounded-xl border transition-all" open={settingsOpen} onOpenChange={setSettingsOpen}>
-      <CollapsibleTrigger className={cn('w-full overflow-hidden', settingsOpen ? 'rounded-t-xl' : 'rounded-xl')}>
-        <div className="hover:bg-secondary flex w-full items-center justify-between p-4 transition-all">
-          <span className="flex items-center gap-2">
-            <Settings className="size-5" /> {t('settings', { ns: 'compressor' })}
-          </span>
-          <ChevronDown className={cn('size-5 transition-all', settingsOpen ? 'rotate-180' : '')} />
-        </div>
-      </CollapsibleTrigger>
-      <CollapsibleContent className="w-full border-t">
+    <Card className="flex w-full flex-col">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2 text-lg font-medium">
+          <Settings className="size-5" /> {t('settings', { ns: 'compressor' })}
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="flex-1 px-4 pb-4">
         <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-1 rounded-xl p-4">
+          <div className="flex flex-col gap-1">
             <div className="flex w-full flex-col gap-2 md:flex-row">
               <Tabs
                 className="w-full pr-2"
@@ -96,7 +90,23 @@ export default function CompressionControls() {
             </div>
           </div>
         </div>
-      </CollapsibleContent>
-    </Collapsible>
+      </CardContent>
+      <CardFooter className="px-4">
+        <Button
+          className="hidden w-full lg:flex"
+          disabled={!isInitialized || files?.length === 0 || files === null}
+          variant="default"
+          onClick={() => {
+            if (files === null) {
+              return;
+            }
+            compressFiles(files);
+          }}
+        >
+          <Play></Play>
+          {t('compress', { ns: 'compressor' })}
+        </Button>
+      </CardFooter>
+    </Card>
   );
 }

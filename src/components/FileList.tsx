@@ -90,6 +90,7 @@ export default function FileList() {
       <Button
         disabled={canDownload()}
         size="sm"
+        variant="secondary"
         onClick={() => {
           if (files === null) return;
           downloadAll(files);
