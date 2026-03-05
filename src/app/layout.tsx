@@ -6,6 +6,7 @@ import Footer from '@/components/layout/Footer';
 import { getLang } from '@/lib/i18n/lang-context';
 import { getServerTranslation, getTranslationsResources } from '@/lib/i18n/server';
 import TranslationsProvider from '@/components/TranslationsProvider';
+import { ThemeProvider } from '@/components/ThemeProvider';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import type { Metadata } from 'next';
 
@@ -47,15 +48,17 @@ export default async function RootLayout({
   const resources = await getTranslationsResources(lang, namespaces);
 
   return (
-    <html className={`${inter.className} dark`} lang={lang}>
+    <html suppressHydrationWarning className={inter.className} lang={lang}>
       <body className="bg-background text-foreground flex h-screen w-full flex-col text-center">
-        <TranslationsProvider locale={lang} namespaces={namespaces} resources={resources}>
-          <Header />
-          <TooltipProvider>
-            <main className="flex w-full grow">{children}</main>
-          </TooltipProvider>
-          <Footer />
-        </TranslationsProvider>
+        <ThemeProvider disableTransitionOnChange enableSystem attribute="class" defaultTheme="system">
+          <TranslationsProvider locale={lang} namespaces={namespaces} resources={resources}>
+            <Header />
+            <TooltipProvider>
+              <main className="flex w-full grow">{children}</main>
+            </TooltipProvider>
+            <Footer />
+          </TranslationsProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

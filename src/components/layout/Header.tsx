@@ -5,6 +5,7 @@ import { SunMoon } from 'lucide-react';
 import { getLang } from '@/lib/i18n/lang-context';
 import { getServerTranslation } from '@/lib/i18n/server';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import { ThemeSwitcher } from '@/components/ThemeSwitcher';
 
 export default async function Header() {
   const lang = await getLang();
@@ -29,9 +30,7 @@ export default async function Header() {
           </Button>
         </Link>
         <LanguageSwitcher></LanguageSwitcher>
-        <Button size="icon" variant="ghost">
-          <SunMoon></SunMoon>
-        </Button>
+        <ThemeSwitcher></ThemeSwitcher>
       </div>
     </header>
   );

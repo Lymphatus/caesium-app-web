@@ -7,5 +7,8 @@
   "privacy_policy": "Privacy Policy",
   "consent_preferences": "Consent Preferences",
   "about": "About",
-  "donate": "Donate"
+  "donate": "Donate",
+  "theme_light": "Light",
+  "theme_dark": "Dark",
+  "theme_system": "System"
 }
