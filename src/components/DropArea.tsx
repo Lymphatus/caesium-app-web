@@ -14,6 +14,7 @@ import { COMPRESSION_MODE, FILES_LIMIT, MAX_FILE_SIZE } from '@/types/utils';
 export default function DropArea({ className }: { className?: string }) {
   const { triggerFileSelect, addFiles } = useCompressorStore((state) => state);
   const { t } = useTranslation('compressor');
+
   const [isDragOver, setIsDragOver] = useState(false);
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {

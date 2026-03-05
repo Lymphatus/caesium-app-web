@@ -35,7 +35,6 @@ onmessage = async (e) => {
     const compressionMode = e.data[5];
     const uuid = e.data[6];
 
-    postMessage(`DEBUG: Starting compression with options: ${JSON.stringify({file, quality, lossless, keepMetadata, maxSize, compressionMode, uuid})}`);
     try {
       await performCompress(file, quality, lossless, keepMetadata, maxSize, compressionMode, uuid);
     } catch (err) {

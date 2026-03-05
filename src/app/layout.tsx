@@ -4,7 +4,8 @@ import { Inter } from 'next/font/google';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { getLang } from '@/lib/i18n/lang-context';
-import { getServerTranslation } from '@/lib/i18n/server';
+import { getServerTranslation, getTranslationsResources } from '@/lib/i18n/server';
+import TranslationsProvider from '@/components/TranslationsProvider';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import type { Metadata } from 'next';
 
@@ -42,14 +43,19 @@ export default async function RootLayout({
 }>) {
   const lang = await getLang();
 
+  const namespaces = ['common', 'compressor', 'error', 'about'];
+  const resources = await getTranslationsResources(lang, namespaces);
+
   return (
     <html className={`${inter.className} dark`} lang={lang}>
-      <body className="text-foreground bg-background flex h-screen w-full flex-col text-center">
-        <Header />
-        <TooltipProvider>
-          <main className="flex w-full grow">{children}</main>
-        </TooltipProvider>
-        <Footer />
+      <body className="bg-background text-foreground flex h-screen w-full flex-col text-center">
+        <TranslationsProvider locale={lang} namespaces={namespaces} resources={resources}>
+          <Header />
+          <TooltipProvider>
+            <main className="flex w-full grow">{children}</main>
+          </TooltipProvider>
+          <Footer />
+        </TranslationsProvider>
       </body>
     </html>
   );

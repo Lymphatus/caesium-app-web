@@ -1,0 +1,8 @@
+{
+  "file_invalid": "提供的檔案無效。",
+  "generic_error": "發生錯誤。",
+  "bad_request": "錯誤請求。",
+  "archive_failed": "建立壓縮檔失敗。",
+  "max_files_reached": "您一次最多只能壓縮 {max_files} 個檔案。",
+  "files_over_size": "一個或多個檔案超過允許的大小上限。"
+}

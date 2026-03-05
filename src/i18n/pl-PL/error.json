@@ -1,0 +1,8 @@
+{
+  "file_invalid": "Plik nie spełnia wymagań",
+  "generic_error": "Wystąpił błąd.",
+  "bad_request": "Błędne żądanie.",
+  "archive_failed": "Nie udało się utworzyć archiwum.",
+  "max_files_reached": "Jednocześnie można kompresować maksymalnie {max_files} plików.",
+  "files_over_size": "Jeden lub więcej plików przekroczyło dopuszczalny rozmiar."
+}

@@ -6,9 +6,11 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 import { Label } from '@/components/ui/label';
 import { supportedLangs } from '@/proxy';
 import Image from 'next/image';
-import i18n from '@/lib/i18n/client';
+import { useTranslation } from 'react-i18next';
 
 export default function LanguageSwitcher() {
+  const { i18n } = useTranslation();
+
   const changeLanguage = async (lang: string) => {
     await i18n.changeLanguage(lang, () => {
       document.cookie = `lang=${lang}; path=/; max-age=${365 * 24 * 60 * 60}; SameSite=Lax`;
@@ -29,11 +31,13 @@ export default function LanguageSwitcher() {
           <Languages></Languages>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-30 min-w-0">
+      <DropdownMenuContent className="w-32 min-w-0">
         {supportedLangs.sort().map((lang: string) => (
-          <DropdownMenuItem key={lang} className="cursor-pointer" onClick={() => changeLanguage(lang)}>
+          <DropdownMenuItem key={lang} className="cursor-pointer py-2" onClick={() => changeLanguage(lang)}>
             <div className="flex items-center gap-2">
-              <Image alt={lang} height={16} src={flagsMap.get(lang)} width={16}></Image>
+              <div className="relative h-4 w-4">
+                <Image alt={lang} fill={true} src={flagsMap.get(lang)}></Image>
+              </div>
               <Label className="cursor-pointer">{lang}</Label>
             </div>
           </DropdownMenuItem>

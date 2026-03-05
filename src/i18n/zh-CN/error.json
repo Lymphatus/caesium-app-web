@@ -1,0 +1,8 @@
+{
+  "file_invalid": "提供的文件无效。",
+  "generic_error": "发生了错误。",
+  "bad_request": "错误的请求。",
+  "archive_failed": "未能创建档案。",
+  "max_files_reached": "您一次只能压缩 {max_files} 个文件。",
+  "files_over_size": "一个或多个文件超过了允许的最大大小。"
+}

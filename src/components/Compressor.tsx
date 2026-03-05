@@ -2,8 +2,7 @@
 
 import { useCompressorStore } from '@/providers/compressor-store-provider';
 import DropArea from '@/components/DropArea';
-import i18n from '@/lib/i18n/client';
-import { I18nextProvider, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import FileList from '@/components/FileList';
 import CompressionControls from '@/components/CompressionControls';
 import ToastHandler from '@/components/ToastHandler';
@@ -18,7 +17,7 @@ export default function Compressor() {
   const { t } = useTranslation(['common', 'compressor']);
   const { isInitialized, compressFiles } = useCompress();
   return (
-    <I18nextProvider i18n={i18n}>
+    <>
       <ToastHandler />
 
       <div className="flex h-full flex-col px-4">
@@ -51,6 +50,6 @@ export default function Compressor() {
           </div>
         </div>
       </div>
-    </I18nextProvider>
+    </>
   );
 }
