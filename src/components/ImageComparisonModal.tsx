@@ -44,7 +44,7 @@ export default function ImageComparisonModal({ file, open, onOpenChange }: Image
 
           <ResizablePanelGroup className="absolute inset-0 z-10" orientation="horizontal" onLayoutChange={handleLayoutChange}>
             <ResizablePanel defaultSize={50} minSize={5} />
-            <ResizableHandle withHandle className="bg-foreground/80 [&>div]:bg-foreground w-0.5 shadow-[0_0_6px_rgba(0,0,0,0.5)] after:w-3! [&>div]:h-6 [&>div]:w-5 [&>div]:rounded-md [&>div]:shadow-md" />
+            <ResizableHandle withHandle className="w-0.5 bg-white/80 shadow-[0_0_6px_rgba(0,0,0,0.5)] after:w-3! [&>div]:h-6 [&>div]:w-5 [&>div]:rounded-md [&>div]:bg-white [&>div]:shadow-sm" />
             <ResizablePanel defaultSize={50} minSize={5} />
           </ResizablePanelGroup>
 

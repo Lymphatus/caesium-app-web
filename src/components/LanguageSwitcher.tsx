@@ -33,12 +33,12 @@ export default function LanguageSwitcher() {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-32 min-w-0">
         {supportedLangs.sort().map((lang: string) => (
-          <DropdownMenuItem key={lang} className="cursor-pointer py-2" onClick={() => changeLanguage(lang)}>
+          <DropdownMenuItem key={lang} className="py-2" onClick={() => changeLanguage(lang)}>
             <div className="flex items-center gap-2">
               <div className="relative h-4 w-4">
                 <Image alt={lang} fill={true} src={flagsMap.get(lang)}></Image>
               </div>
-              <Label className="cursor-pointer">{lang}</Label>
+              <Label>{lang}</Label>
             </div>
           </DropdownMenuItem>
         ))}
