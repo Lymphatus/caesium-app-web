@@ -17,14 +17,28 @@ import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
+import { Skeleton } from './ui/skeleton';
 
 export default function CompressionControls() {
   const { t } = useTranslation('compressor');
-  const { files, quality, keepMetadata, lossless, compressionMode, maxSize, clearFiles, triggerFileSelect, setLossless, maxSizeUnit, setMaxSizeUnit, setQuality, setKeepMetadata, setCompressionMode, setMaxSize } = useCompressorStore(
-    (store) => store,
-  );
+  const { files, quality, keepMetadata, lossless, compressionMode, maxSize, clearFiles, triggerFileSelect, setLossless, maxSizeUnit, setMaxSizeUnit, setQuality, setKeepMetadata, setCompressionMode, setMaxSize, _hasHydrated } =
+    useCompressorStore((store) => store);
 
   const { isInitialized, compressFiles } = useCompress();
+
+  if (!_hasHydrated)
+    return (
+      <Card className="w-full">
+        <CardHeader>
+          <Skeleton className="h-4 w-2/3" />
+          <Skeleton className="h-4 w-1/2" />
+        </CardHeader>
+        <CardContent>
+          <Skeleton className="aspect-video w-full" />
+        </CardContent>
+      </Card>
+    );
 
   return (
     <Card className="flex w-full flex-col">
@@ -51,10 +65,10 @@ export default function CompressionControls() {
                 <TabsContent className="space-y-4 pt-4" value="quality">
                   <div className="space-y-4">
                     <div className="flex justify-between">
-                      <Label>{t('quality')}</Label>
-                      <span className="text-sm font-medium">{quality}</span>
+                      <Label className={cn(lossless ? 'text-foreground/50' : '')}>{t('quality')}</Label>
+                      <span className={cn('text-sm font-medium', lossless ? 'text-foreground/50' : '')}>{quality}</span>
                     </div>
-                    <Slider className="w-full" max={100} min={1} step={1} value={[quality]} onValueChange={(value) => setQuality(value[0])} />
+                    <Slider className="w-full" disabled={lossless} max={100} min={1} step={1} value={[quality]} onValueChange={(value) => setQuality(value[0])} />
 
                     <div className="flex items-center justify-between space-x-2 pt-2">
                       <Label htmlFor="lossless">{t('lossless_compression')}</Label>
