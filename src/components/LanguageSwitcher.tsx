@@ -2,21 +2,23 @@
 
 import { Languages } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
 import { Label } from '@/components/ui/label';
 import { supportedLangs } from '@/proxy';
 import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 
+function applyLanguage(lang: string) {
+  document.cookie = `lang=${lang}; path=/; max-age=${365 * 24 * 60 * 60}; SameSite=Lax`;
+  document.documentElement.lang = lang;
+  window.location.reload();
+}
+
 export default function LanguageSwitcher() {
   const { i18n } = useTranslation();
 
   const changeLanguage = async (lang: string) => {
-    await i18n.changeLanguage(lang, () => {
-      document.cookie = `lang=${lang}; path=/; max-age=${365 * 24 * 60 * 60}; SameSite=Lax`;
-      document.documentElement.lang = lang;
-      window.location.reload();
-    });
+    applyLanguage(lang);
   };
 
   const flagsMap = new Map();

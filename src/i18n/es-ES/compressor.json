@@ -16,7 +16,7 @@
   "restriction": "Restricción|Restricciones",
   "file_types": "Los formatos JPG, PNG y WebP son admitidos.",
   "max_files": "Máximo {max_files} archivos al mismo tiempo",
-  "max_file_size": "Máximo {max_file_size} por cada archivo",
+  "max_file_size": "Máximo {{max_file_size}} por cada archivo",
   "auto_delete": "Las imágenes nunca salen de tu dispositivo",
   "lossless_help": "Con esta opción seleccionada, la calidad de la imagen se conservará completamente.",
   "help_translate": "Ayúdanos a traducir",

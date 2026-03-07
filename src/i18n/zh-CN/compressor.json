@@ -16,7 +16,7 @@
   "restriction": "限制",
   "file_types": "允许使用 JPG、PNG 或 WebP 格式",
   "max_files": "一次最多 {max_files} 个文件",
-  "max_file_size": "每个文件最大 {max_file_size}",
+  "max_file_size": "每个文件最大 {{max_file_size}}",
   "auto_delete": "图片永远不会离开您的设备",
   "lossless_help": "选择此选项后，将完全保留图像质量。",
   "help_translate": "帮助翻译",
