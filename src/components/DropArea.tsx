@@ -1,15 +1,13 @@
 'use client';
 
-import { useState } from 'react';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { FolderOpen, Plus, PlusCircle, PlusSquare } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
-import { useCompressorStore } from '@/providers/compressor-store-provider';
 import { cn } from '@/lib/utils';
-import { Separator } from './ui/separator';
+import { useCompressorStore } from '@/providers/compressor-store-provider';
+import { MAX_FILE_SIZE } from '@/types/utils';
+import { PlusCircle } from 'lucide-react';
 import prettyBytes from 'next/dist/lib/pretty-bytes';
-import { COMPRESSION_MODE, FILES_LIMIT, MAX_FILE_SIZE } from '@/types/utils';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function DropArea({ className }: { className?: string }) {
   const { triggerFileSelect, addFiles } = useCompressorStore((state) => state);

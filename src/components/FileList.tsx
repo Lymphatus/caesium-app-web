@@ -1,19 +1,19 @@
 'use client';
 
-import { useState } from 'react';
-import { useCompressorStore } from '@/providers/compressor-store-provider';
-import { Button } from '@/components/ui/button';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableFooter } from '@/components/ui/table';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import { useTranslation } from 'react-i18next';
-import prettyBytes from 'next/dist/lib/pretty-bytes';
-import { Trash2, ArrowRight, Play, Download, LoaderCircle, ListX, ArrowDown, ArrowUp } from 'lucide-react';
-import { FILE_STATUS, CImage } from '@/types/cimage';
+import ImageComparisonModal from '@/components/ImageComparisonModal';
 import { Badge } from '@/components/ui/badge';
-import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { useCompress } from '@/lib/useCompress';
 import { cn } from '@/lib/utils';
-import ImageComparisonModal from '@/components/ImageComparisonModal';
+import { useCompressorStore } from '@/providers/compressor-store-provider';
+import { CImage, FILE_STATUS } from '@/types/cimage';
+import { ArrowDown, ArrowRight, ArrowUp, Download, ListX, LoaderCircle, Play, Trash2 } from 'lucide-react';
+import prettyBytes from 'next/dist/lib/pretty-bytes';
+import Image from 'next/image';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function FileList() {
   const { files, removeFile, clearFiles, downloadAll } = useCompressorStore((store) => store);

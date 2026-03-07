@@ -1,12 +1,10 @@
 'use client';
 
-import { useCallback, useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
-import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '@/components/ui/resizable';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
 import { CImage } from '@/types/cimage';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import prettyBytes from 'next/dist/lib/pretty-bytes';
-import { ArrowDown, ArrowUp } from 'lucide-react';
 
 interface ImageComparisonModalProps {
   file: CImage | null;

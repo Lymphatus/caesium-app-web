@@ -7,7 +7,7 @@ export default async function Footer() {
   const { t } = await getServerTranslation(lang, 'common');
 
   return (
-    <footer className="bg-muted mt-auto w-full p-4 text-xs">
+    <footer className="bg-background mt-auto w-full border-t p-4 text-xs">
       <div className="flex w-full flex-wrap items-center justify-between gap-2">
         <div className="flex flex-col gap-1 text-left">
           <Link href="/cookie-policy" target="_blank">

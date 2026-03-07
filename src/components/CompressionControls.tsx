@@ -1,29 +1,25 @@
 'use client';
 
-import { useTranslation } from 'react-i18next';
-import prettyBytes from 'next/dist/lib/pretty-bytes';
-import { COMPRESSION_MODE, FILES_LIMIT, MAX_FILE_SIZE } from '@/types/utils';
-import { Play, Plus, Settings, Trash2 } from 'lucide-react';
-import { useCompressorStore } from '@/providers/compressor-store-provider';
-import { FILE_STATUS } from '@/types/cimage';
 import { useCompress } from '@/lib/useCompress';
+import { useCompressorStore } from '@/providers/compressor-store-provider';
+import { COMPRESSION_MODE } from '@/types/utils';
+import { Play, Settings } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Separator } from '@/components/ui/separator';
 import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Skeleton } from './ui/skeleton';
 
 export default function CompressionControls() {
   const { t } = useTranslation('compressor');
-  const { files, quality, keepMetadata, lossless, compressionMode, maxSize, clearFiles, triggerFileSelect, setLossless, maxSizeUnit, setMaxSizeUnit, setQuality, setKeepMetadata, setCompressionMode, setMaxSize, _hasHydrated } =
-    useCompressorStore((store) => store);
+  const { files, quality, keepMetadata, lossless, compressionMode, maxSize, setLossless, maxSizeUnit, setMaxSizeUnit, setQuality, setKeepMetadata, setCompressionMode, setMaxSize, _hasHydrated } = useCompressorStore((store) => store);
 
   const { isInitialized, compressFiles } = useCompress();
 
@@ -34,6 +30,7 @@ export default function CompressionControls() {
           <Skeleton className="h-4 w-2/3" />
           <Skeleton className="h-4 w-1/2" />
         </CardHeader>
+
         <CardContent>
           <Skeleton className="aspect-video w-full" />
         </CardContent>
