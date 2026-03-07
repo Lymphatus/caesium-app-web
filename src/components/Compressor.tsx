@@ -15,7 +15,7 @@ import { useEffect } from 'react';
 import prettyBytes from 'next/dist/lib/pretty-bytes';
 
 export default function Compressor() {
-  const { files } = useCompressorStore((store) => store);
+  const { files, downloadAll } = useCompressorStore((store) => store);
   const hasFiles = files != null && files?.length > 0;
   const { t } = useTranslation(['common', 'compressor']);
   const { isInitialized, compressFiles, compressionReport } = useCompress();
@@ -26,8 +26,10 @@ export default function Compressor() {
         position: 'top-center',
         duration: 5000,
       });
+
+      downloadAll();
     }
-  }, [compressionReport, t]);
+  }, [compressionReport, t, downloadAll]);
 
   return (
     <>

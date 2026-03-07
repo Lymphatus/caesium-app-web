@@ -12,11 +12,11 @@ import { FILE_STATUS, CImage } from '@/types/cimage';
 import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
 import { useCompress } from '@/lib/useCompress';
-import { cn, downloadAll } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import ImageComparisonModal from '@/components/ImageComparisonModal';
 
 export default function FileList() {
-  const { files, removeFile, clearFiles } = useCompressorStore((store) => store);
+  const { files, removeFile, clearFiles, downloadAll } = useCompressorStore((store) => store);
   const { t } = useTranslation('compressor');
   const { compressFiles } = useCompress();
   const [selectedFile, setSelectedFile] = useState<CImage | null>(null);
@@ -93,7 +93,7 @@ export default function FileList() {
         variant="secondary"
         onClick={() => {
           if (files === null) return;
-          downloadAll(files);
+          downloadAll();
         }}
       >
         <Download></Download>

@@ -4,6 +4,9 @@ import { CImage, FILE_STATUS } from '@/types/cimage';
 import { v4 as uuidv4, v5 as uuidv5 } from 'uuid';
 import { COMPRESSION_MODE, FILES_LIMIT, GeneralMessage, MAX_FILE_SIZE, MESSAGE_LEVEL } from '@/types/utils';
 import { CompressionResult } from '@/lib/useCompressionWorker';
+import JSZip from 'jszip';
+import FileSaver from 'file-saver';
+import dayjs from 'dayjs';
 
 export type CompressorState = {
   files: CImage[] | null;
@@ -32,6 +35,7 @@ export type CompressorActions = {
   triggerFileSelect: () => void;
   setFileStatus: (id: string, status: FILE_STATUS) => void;
   setHasHydrated: (hasHydrated: boolean) => void;
+  downloadAll: () => void;
 };
 
 export type CompressorStore = CompressorState & CompressorActions;
@@ -211,6 +215,24 @@ export const createCompressorStore = (initState: CompressorState = defaultInitSt
             set({ files: updatedFiles });
           },
           setHasHydrated: (hasHydrated: boolean) => set({ _hasHydrated: hasHydrated }),
+          downloadAll: () => {
+            const files = get().files;
+            if (!files) {
+              return null;
+            }
+            const finishedFiles = files.filter((f) => f.status === FILE_STATUS.FINISHED);
+            const zip = new JSZip();
+            finishedFiles.forEach((cImage) => {
+              if (cImage.outputImageArray) {
+                zip.file(cImage.file.name, cImage.outputImageArray);
+              }
+            });
+
+            zip.generateAsync({ type: 'blob' }).then(function (content) {
+              const timestamp = dayjs().format('YYYYMMDD_HHmmss');
+              FileSaver.saveAs(content, `caesium_${timestamp}.zip`);
+            });
+          },
         }),
         {
           name: 'compressor-store',

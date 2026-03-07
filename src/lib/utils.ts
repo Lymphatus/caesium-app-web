@@ -23,18 +23,3 @@ export function getHumanFileType(fileType: string) {
       return fileType;
   }
 }
-
-export function downloadAll(files: CImage[]) {
-  const finishedFiles = files.filter((f) => f.status === FILE_STATUS.FINISHED);
-  const zip = new JSZip();
-  finishedFiles.forEach((cImage) => {
-    if (cImage.outputImageArray) {
-      zip.file(cImage.file.name, cImage.outputImageArray);
-    }
-  });
-
-  zip.generateAsync({ type: 'blob' }).then(function (content) {
-    const timestamp = dayjs().format('YYYYMMDD_HHmmss');
-    FileSaver.saveAs(content, `caesium_${timestamp}.zip`);
-  });
-}
