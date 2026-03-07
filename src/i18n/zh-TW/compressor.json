@@ -12,7 +12,7 @@
   "option": "選項",
   "lossless_compression": "無損壓縮",
   "keep_metadata": "保留詮釋資料",
-  "saved_bytes": "已縮減{size} ({percentage}%)",
+  "saved_bytes": "已縮減{{size}} ({{percentage}}%)",
   "restriction": "限制",
   "file_types": "允許使用 JPG、PNG 或 WebP 格式",
   "max_files": "一次最多 {max_files} 個檔案",

@@ -12,7 +12,7 @@
   "option": "Настройка|Настройки",
   "lossless_compression": "Стиснення без втрати якості",
   "keep_metadata": "Зберегти metadata",
-  "saved_bytes": "Збережено {size} ({percentage}%)",
+  "saved_bytes": "Збережено {{size}} ({{percentage}}%)",
   "restriction": "Обмеження|Обмеження",
   "file_types": "Можна обрати JPG, PNG і WebP ",
   "max_files": "Не більше як {max_files} файлів зараз",

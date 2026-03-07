@@ -12,7 +12,7 @@
   "option": "Option|Options",
   "lossless_compression": "Lossless compression",
   "keep_metadata": "Keep metadata",
-  "saved_bytes": "Saved {size} ({percentage}%)",
+  "saved_bytes": "Saved {{size}} ({{percentage}}%)",
   "restriction": "Restriction|Restrictions",
   "file_types": "JPG, PNG and WebP formats are allowed",
   "max_files": "Max {{max_files}} files at time",

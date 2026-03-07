@@ -2,7 +2,7 @@
 
 import { Languages } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
 import { Label } from '@/components/ui/label';
 import { supportedLangs } from '@/proxy';
 import Image from 'next/image';
@@ -31,16 +31,16 @@ export default function LanguageSwitcher() {
           <Languages></Languages>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-32 min-w-0">
+      <DropdownMenuContent>
         {supportedLangs.sort().map((lang: string) => (
-          <DropdownMenuItem key={lang} className="py-2" onClick={() => changeLanguage(lang)}>
+          <DropdownMenuCheckboxItem key={lang} checked={lang === i18n.language} className="py-2" onCheckedChange={() => changeLanguage(lang)}>
             <div className="flex items-center gap-2">
               <div className="relative h-4 w-4">
                 <Image alt={lang} fill={true} src={flagsMap.get(lang)}></Image>
               </div>
               <Label>{lang}</Label>
             </div>
-          </DropdownMenuItem>
+          </DropdownMenuCheckboxItem>
         ))}
       </DropdownMenuContent>
     </DropdownMenu>

@@ -1,11 +1,11 @@
 import { useCompressorStore } from '@/providers/compressor-store-provider';
 import { useCompressionWorker } from '@/lib/useCompressionWorker';
 import { FILE_STATUS, CImage } from '@/types/cimage';
+import { useMemo } from 'react';
 
 export function useCompress() {
-  const { quality, lossless, keepMetadata, maxSize, maxSizeUnit, compressionMode, setFileStatus, handleCompressionResult } = useCompressorStore((store) => store);
+  const { files, quality, lossless, keepMetadata, maxSize, maxSizeUnit, compressionMode, setFileStatus, handleCompressionResult } = useCompressorStore((store) => store);
 
-  // Initialize the worker once and route its messages to Zustand
   const { isInitialized, compress: workerCompress } = useCompressionWorker((result) => {
     if (typeof result === 'string') {
       console.log('Worker message:', result);
@@ -14,7 +14,6 @@ export function useCompress() {
     }
   });
 
-  // Reusable function to compress an array of files or a single file
   const compressFiles = (filesToCompress: CImage | CImage[]) => {
     if (!isInitialized) {
       console.error('Worker not initialized');
@@ -36,8 +35,26 @@ export function useCompress() {
     });
   };
 
+  const isCompressionDone = files !== null && files.length > 0 && files.every((f) => f.status === FILE_STATUS.FINISHED || f.status === FILE_STATUS.ERROR);
+
+  const compressionReport = useMemo(() => {
+    if (!isCompressionDone) return null;
+    const totalOriginalSize = files.reduce((acc, file) => acc + file.file.size, 0);
+    const totalNewSize = files.reduce((acc, file) => acc + file.newSize, 0);
+    const totalSavedSize = totalOriginalSize - totalNewSize;
+    const totalSavedPercentage = (totalSavedSize / totalOriginalSize) * 100;
+    return {
+      totalOriginalSize,
+      totalNewSize,
+      totalSavedSize,
+      totalSavedPercentage,
+    };
+  }, [files, isCompressionDone]);
+
   return {
     isInitialized,
     compressFiles,
+    isCompressionDone,
+    compressionReport,
   };
 }

@@ -10,18 +10,34 @@ import { cn } from '@/lib/utils';
 import { useCompress } from '@/lib/useCompress';
 import { Button } from './ui/button';
 import { Play } from 'lucide-react';
+import { toast } from 'sonner';
+import { useEffect } from 'react';
+import prettyBytes from 'next/dist/lib/pretty-bytes';
 
 export default function Compressor() {
   const { files } = useCompressorStore((store) => store);
   const hasFiles = files != null && files?.length > 0;
   const { t } = useTranslation(['common', 'compressor']);
-  const { isInitialized, compressFiles } = useCompress();
+  const { isInitialized, compressFiles, compressionReport } = useCompress();
+
+  useEffect(() => {
+    if (compressionReport) {
+      toast.success(t('saved_bytes', { size: prettyBytes(compressionReport.totalSavedSize), percentage: Math.round(compressionReport.totalSavedPercentage), ns: 'compressor' }), {
+        position: 'top-center',
+        duration: 5000,
+      });
+    }
+  }, [compressionReport, t]);
+
   return (
     <>
       <ToastHandler />
 
       <div className="flex h-full flex-col px-4">
-        {/* <h1 className="shrink-0 py-8 text-2xl font-semibold md:text-3xl">{t('app_name')}</h1> */}
+        <div className="shrink-0 py-8">
+          <h1 className="text-primary text-3xl font-semibold md:text-4xl">CAESIUM</h1>
+          <h2 className="text-2xl font-semibold md:text-3xl">Image Compressor</h2>
+        </div>
 
         <div className="flex h-full w-full flex-wrap gap-4 lg:flex-nowrap">
           <div className="flex w-full flex-col gap-2 lg:w-2/3">

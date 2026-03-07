@@ -80,7 +80,7 @@ async function performCompress(file, quality, lossless, keepMetadata, maxSize, c
     }
 
     const options = {
-      jpeg: { quality, chromaSubsampling: 0, progressive: true, optimize: lossless },
+      jpeg: { quality, chromaSubsampling: 0, progressive: true, optimize: lossless, preserveIcc: true },
       png: { quality, optimizationLevel: 2, forceZopfli: false, optimize: lossless },
       webp: { quality, lossless },
       tiff: { compression: 0, deflateLevel: 6 },

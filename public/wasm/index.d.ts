@@ -31,6 +31,7 @@ export interface CompressionOptions {
         chromaSubsampling: number;
         progressive: boolean;
         optimize: boolean;
+        preserveIcc: boolean;
     };
     png: {
         quality: number;

@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { SunMoon } from 'lucide-react';
 import { getLang } from '@/lib/i18n/lang-context';
 import { getServerTranslation } from '@/lib/i18n/server';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
@@ -11,7 +10,7 @@ export default async function Header() {
   const lang = await getLang();
   const { t } = await getServerTranslation(lang, 'common');
   return (
-    <header className="bg-muted flex h-16 w-full items-center justify-between p-2 px-4 text-sm">
+    <header className="bg-background flex h-16 w-full items-center justify-between p-2 px-4 text-sm">
       <Link href="/">
         <div className="flex items-center gap-2">
           <Image alt="logo" height={40} src="/images/logo.png" width={40}></Image>
