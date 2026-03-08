@@ -1,18 +1,18 @@
 'use client';
 
-import { useCompressorStore } from '@/providers/compressor-store-provider';
-import DropArea from '@/components/DropArea';
-import { useTranslation } from 'react-i18next';
-import FileList from '@/components/FileList';
 import CompressionControls from '@/components/CompressionControls';
+import DropArea from '@/components/DropArea';
+import FileList from '@/components/FileList';
 import ToastHandler from '@/components/ToastHandler';
-import { cn } from '@/lib/utils';
 import { useCompress } from '@/lib/useCompress';
-import { Button } from './ui/button';
+import { cn } from '@/lib/utils';
+import { useCompressorStore } from '@/providers/compressor-store-provider';
 import { Play } from 'lucide-react';
-import { toast } from 'sonner';
-import { useEffect } from 'react';
 import prettyBytes from 'next/dist/lib/pretty-bytes';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'sonner';
+import { Button } from './ui/button';
 
 export default function Compressor() {
   const { files, downloadAll } = useCompressorStore((store) => store);
@@ -27,7 +27,7 @@ export default function Compressor() {
         duration: 5000,
       });
 
-      downloadAll();
+      //downloadAll();
     }
   }, [compressionReport, t, downloadAll]);
 

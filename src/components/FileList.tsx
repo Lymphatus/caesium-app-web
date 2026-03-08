@@ -104,15 +104,14 @@ export default function FileList() {
 
   return (
     <div className="bg-card/50 w-full overflow-hidden rounded-md border">
-      {/* Desktop Table View */}
       <div className="hidden w-full overflow-x-auto md:block">
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead className="w-15"></TableHead>
               <TableHead className="w-full">{t('file_name')}</TableHead>
-              <TableHead className="min-w-36 whitespace-nowrap">{t('status')}</TableHead>
               <TableHead className="w-[1%] whitespace-nowrap">{t('size')}</TableHead>
+              <TableHead className="min-w-36 whitespace-nowrap">{t('status')}</TableHead>
               <TableHead className="w-[1%] pr-4 text-right whitespace-nowrap"></TableHead>
             </TableRow>
           </TableHeader>
@@ -127,7 +126,6 @@ export default function FileList() {
                 <TableCell className="max-w-50 truncate text-left font-medium" title={file.file.name}>
                   {file.file.name}
                 </TableCell>
-                <TableCell className="text-left">{getStatusBadge(file)}</TableCell>
                 <TableCell>
                   <div className="flex items-center gap-1 text-sm">
                     <span className={cn('text-muted-foreground', file.status === FILE_STATUS.FINISHED && 'line-through')}>{prettyBytes(file.file.size)}</span>
@@ -140,6 +138,7 @@ export default function FileList() {
                     )}
                   </div>
                 </TableCell>
+                <TableCell className="text-left">{getStatusBadge(file)}</TableCell>
                 <TableCell className="pr-4 text-right" onClick={(e) => e.stopPropagation()}>
                   <Button asChild={file.status === FILE_STATUS.FINISHED} className="text-muted-foreground hover:text-primary" disabled={file.status !== FILE_STATUS.FINISHED} size="icon" variant="ghost">
                     {file.status === FILE_STATUS.FINISHED && file.outputImageUrl ? (
