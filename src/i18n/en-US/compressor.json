@@ -34,5 +34,7 @@
   "compressing": "Compressing",
   "finished": "Finished",
   "error": "Error",
-  "settings": "Settings"
+  "settings": "Settings",
+  "privacy_notice_title": "100% Private",
+  "privacy_notice_text": "All images are processed locally on your device. Nothing is ever uploaded to any external server."
 }

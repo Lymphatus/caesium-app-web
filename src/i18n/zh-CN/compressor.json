@@ -26,5 +26,7 @@
   "back": "返回",
   "original": "原始",
   "compressed": "压缩",
-  "swap": "交换"
+  "swap": "交换",
+  "privacy_notice_title": "100% 保护隐私",
+  "privacy_notice_text": "所有图片都在您的设备上进行本地处理。不会上传到任何外部服务器。"
 }

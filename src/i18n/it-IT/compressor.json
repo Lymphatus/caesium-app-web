@@ -26,5 +26,7 @@
   "back": "Indietro",
   "original": "Originale",
   "compressed": "Compressa",
-  "swap": "Scambia"
+  "swap": "Scambia",
+  "privacy_notice_title": "100% Privato",
+  "privacy_notice_text": "Tutte le immagini vengono elaborate localmente sul tuo dispositivo. Nessun file viene mai caricato su server esterni."
 }

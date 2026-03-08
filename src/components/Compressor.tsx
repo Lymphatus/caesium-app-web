@@ -7,12 +7,13 @@ import ToastHandler from '@/components/ToastHandler';
 import { useCompress } from '@/lib/useCompress';
 import { cn } from '@/lib/utils';
 import { useCompressorStore } from '@/providers/compressor-store-provider';
-import { Play } from 'lucide-react';
+import { Play, ShieldCheck } from 'lucide-react';
 import prettyBytes from 'next/dist/lib/pretty-bytes';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { Button } from './ui/button';
+import { Card, CardContent, CardTitle } from './ui/card';
 
 export default function Compressor() {
   const { files, downloadAll } = useCompressorStore((store) => store);
@@ -63,8 +64,19 @@ export default function Compressor() {
             )}
           </div>
 
-          <div className="w-full shrink-0 lg:w-1/3">
+          <div className="flex w-full shrink-0 flex-col gap-4 lg:w-1/3">
             <CompressionControls />
+            <Card className="bg-muted/50 gap-2 px-4 py-6">
+              <CardTitle className="flex items-center justify-center">
+                <h3 className="flex items-center justify-center gap-2 text-lg">
+                  <ShieldCheck className="text-primary shrink-0" />
+                  {t('privacy_notice_title', { ns: 'compressor' })}
+                </h3>
+              </CardTitle>
+              <CardContent className="text-muted-foreground flex items-start gap-3 text-sm">
+                <p>{t('privacy_notice_text', { ns: 'compressor' })}</p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>
