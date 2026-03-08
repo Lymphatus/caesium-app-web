@@ -59,38 +59,48 @@ export default function CompressionControls() {
                   <TabsTrigger value="quality">{t('quality')}</TabsTrigger>
                   <TabsTrigger value="size">{t('size')}</TabsTrigger>
                 </TabsList>
-                <TabsContent className="space-y-4 pt-4" value="quality">
-                  <div className="space-y-4">
-                    <div className="flex justify-between">
-                      <Label className={cn(lossless ? 'text-foreground/50' : '')}>{t('quality')}</Label>
-                      <span className={cn('text-sm font-medium', lossless ? 'text-foreground/50' : '')}>{quality}</span>
-                    </div>
-                    <Slider className="w-full" disabled={lossless} max={100} min={1} step={1} value={[quality]} onValueChange={(value) => setQuality(value[0])} />
+                <div className="relative w-full">
+                  <TabsContent
+                    forceMount
+                    className="space-y-4 pt-4 data-[state=inactive]:pointer-events-none data-[state=inactive]:invisible data-[state=inactive]:absolute data-[state=inactive]:top-0 data-[state=inactive]:left-0 data-[state=inactive]:w-full data-[state=inactive]:opacity-0"
+                    value="quality"
+                  >
+                    <div className="space-y-4">
+                      <div className="flex justify-between">
+                        <Label className={cn(lossless ? 'text-foreground/50' : '')}>{t('quality')}</Label>
+                        <span className={cn('text-sm font-medium', lossless ? 'text-foreground/50' : '')}>{quality}</span>
+                      </div>
+                      <Slider className="w-full" disabled={lossless} max={100} min={1} step={1} value={[quality]} onValueChange={(value) => setQuality(value[0])} />
 
-                    <div className="flex items-center justify-between space-x-2 pt-2">
-                      <Label htmlFor="lossless">{t('lossless_compression')}</Label>
-                      <Switch checked={lossless} id="lossless" onCheckedChange={setLossless} />
+                      <div className="flex items-center justify-between space-x-2 pt-2">
+                        <Label htmlFor="lossless">{t('lossless_compression')}</Label>
+                        <Switch checked={lossless} id="lossless" onCheckedChange={setLossless} />
+                      </div>
                     </div>
-                  </div>
-                </TabsContent>
-                <TabsContent className="space-y-4 pt-4" value="size">
-                  <div className="space-y-2">
-                    <Label className="text-left">{t('max_size')}</Label>
-                    <div className="flex w-full items-center space-x-2">
-                      <Input className="flex-1" type="number" value={maxSize} onChange={(e) => setMaxSize(Number(e.target.value))} />
-                      <Select defaultValue={maxSizeUnit.toString()} onValueChange={(val) => setMaxSizeUnit(Number(val))}>
-                        <SelectTrigger className="w-25">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="1">Bytes</SelectItem>
-                          <SelectItem value="1000">Kb</SelectItem>
-                          <SelectItem value="1000000">Mb</SelectItem>
-                        </SelectContent>
-                      </Select>
+                  </TabsContent>
+                  <TabsContent
+                    forceMount
+                    className="space-y-4 pt-4 data-[state=inactive]:pointer-events-none data-[state=inactive]:invisible data-[state=inactive]:absolute data-[state=inactive]:top-0 data-[state=inactive]:left-0 data-[state=inactive]:w-full data-[state=inactive]:opacity-0"
+                    value="size"
+                  >
+                    <div className="space-y-2">
+                      <Label className="text-left">{t('max_size')}</Label>
+                      <div className="flex w-full items-center space-x-2">
+                        <Input className="flex-1" type="number" value={maxSize} onChange={(e) => setMaxSize(Number(e.target.value))} />
+                        <Select defaultValue={maxSizeUnit.toString()} onValueChange={(val) => setMaxSizeUnit(Number(val))}>
+                          <SelectTrigger className="w-25">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="1">Bytes</SelectItem>
+                            <SelectItem value="1000">Kb</SelectItem>
+                            <SelectItem value="1000000">Mb</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
                     </div>
-                  </div>
-                </TabsContent>
+                  </TabsContent>
+                </div>
                 <div className="mt-4 w-full border-t pt-4">
                   <div className="flex items-center justify-between space-x-2">
                     <Label htmlFor="keepMetadata">{t('keep_metadata')}</Label>

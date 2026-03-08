@@ -83,14 +83,14 @@ export default function FileList() {
 
   const footerButtons = (
     <>
-      <Button className="text-destructive hover:text-destructive hover:bg-destructive/10" size="sm" variant="ghost" onClick={clearFiles}>
+      <Button className="text-destructive hover:text-destructive hover:bg-destructive/10 dark:hover:bg-destructive/10" size="sm" variant="ghost" onClick={clearFiles}>
         <ListX></ListX>
         {t('clear_list')}
       </Button>
       <Button
         disabled={canDownload()}
         size="sm"
-        variant="secondary"
+        variant="ghost"
         onClick={() => {
           if (files === null) return;
           downloadAll();

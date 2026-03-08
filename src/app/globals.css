@@ -101,7 +101,7 @@ html[lang='zh-TW'] {
 }
 
 :root {
-  --radius: 1rem;
+  --radius: 1.5rem;
   
   --background: oklch(0.985 0.015 293);
   --foreground: oklch(0.20 0.02 293);
