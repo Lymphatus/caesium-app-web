@@ -28,5 +28,13 @@
   "compressed": "Comprimido",
   "swap": "Intercambiar",
   "privacy_notice_title": "100% Privado",
-  "privacy_notice_text": "Todas las imágenes se procesan localmente en tu dispositivo. Ningún archivo se sube a servidores externos."
+  "privacy_notice_text": "Todas las imágenes se procesan localmente en tu dispositivo. Ningún archivo se sube a servidores externos.",
+  "file_name": "Nombre del archivo",
+  "status": "Estado",
+  "action": "Acción",
+  "waiting": "Esperando",
+  "compressing": "Comprimiendo",
+  "finished": "Finalizado",
+  "error": "Error",
+  "settings": "Ajustes"
 }

@@ -4,5 +4,12 @@
   "cookie_policy": "Правила використання cookies",
   "privacy_policy": "Правила щодо приватності",
   "consent_preferences": "Consent Preferences",
-  "copyright_note": "© SaeraSoft і Matteo Paonessa, Всі права застережені"
+  "copyright_note": "© SaeraSoft і Matteo Paonessa, Всі права застережені",
+  "app_name": "Caesium Image Compressor",
+  "meta_title": "Caesium Image Compressor - Online",
+  "meta_description": "Caesium - це безкоштовний онлайн-інструмент з відкритим вихідним кодом для стиснення фотографій і зображень (JPG, PNG, WebP, GIF) з підтримкою пакетної обробки, попереднього перегляду та багатьом іншим. Caesium економить місце і прискорює завантаження.",
+  "about": "Про нас",
+  "theme_light": "Світла",
+  "theme_dark": "Темна",
+  "theme_system": "Системна"
 }

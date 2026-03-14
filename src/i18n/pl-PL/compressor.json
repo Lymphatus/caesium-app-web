@@ -28,5 +28,13 @@
   "compressed": "Skompresowany",
   "swap": "Zamień",
   "privacy_notice_title": "W 100% prywatne",
-  "privacy_notice_text": "Wszystkie obrazy są przetwarzane lokalnie na Twoim urządzeniu. Nic nie jest nigdy wysyłane na żaden zewnętrzny serwer."
+  "privacy_notice_text": "Wszystkie obrazy są przetwarzane lokalnie na Twoim urządzeniu. Nic nie jest nigdy wysyłane na żaden zewnętrzny serwer.",
+  "file_name": "Nazwa pliku",
+  "status": "Status",
+  "action": "Akcja",
+  "waiting": "Oczekuje",
+  "compressing": "Kompresja",
+  "finished": "Zakończono",
+  "error": "Błąd",
+  "settings": "Ustawienia"
 }

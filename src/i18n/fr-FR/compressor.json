@@ -28,5 +28,13 @@
   "compressed": "Compressé",
   "swap": "Echanger",
   "privacy_notice_title": "100 % Privé",
-  "privacy_notice_text": "Toutes les images sont traitées localement sur votre appareil. Rien n'est jamais transféré vers un serveur externe."
+  "privacy_notice_text": "Toutes les images sont traitées localement sur votre appareil. Rien n'est jamais transféré vers un serveur externe.",
+  "file_name": "Nom du fichier",
+  "status": "Statut",
+  "action": "Action",
+  "waiting": "En attente",
+  "compressing": "Compression",
+  "finished": "Terminé",
+  "error": "Erreur",
+  "settings": "Paramètres"
 }

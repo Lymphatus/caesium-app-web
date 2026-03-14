@@ -28,5 +28,13 @@
   "compressed": "壓縮",
   "swap": "交換",
   "privacy_notice_title": "100% 私密",
-  "privacy_notice_text": "所有圖片都在您的裝置上本地處理。任何內容都不會上傳到任何外部伺服器。"
+  "privacy_notice_text": "所有圖片都在您的裝置上本地處理。任何內容都不會上傳到任何外部伺服器。",
+  "file_name": "檔案名稱",
+  "status": "狀態",
+  "action": "動作",
+  "waiting": "等待中",
+  "compressing": "壓縮中",
+  "finished": "已完成",
+  "error": "錯誤",
+  "settings": "設定"
 }

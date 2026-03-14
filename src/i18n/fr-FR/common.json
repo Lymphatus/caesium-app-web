@@ -4,5 +4,12 @@
   "cookie_policy": "Politique des Cookies",
   "privacy_policy": "Politique de confidentialité",
   "consent_preferences": "Préférence de consentement",
-  "copyright_note": "© SaeraSoft et Matteo Paonessa, tout droits réservés"
+  "copyright_note": "© SaeraSoft et Matteo Paonessa, tout droits réservés",
+  "app_name": "Caesium Image Compressor",
+  "meta_title": "Caesium Image Compressor - Online",
+  "meta_description": "Caesium est un outil en ligne gratuit et open source pour compresser des photos et des images (JPG, PNG, WebP, GIF), avec support du traitement par lots, de l'aperçu et bien plus. Caesium économise de l'espace et accélère les transferts.",
+  "about": "À propos",
+  "theme_light": "Clair",
+  "theme_dark": "Sombre",
+  "theme_system": "Système"
 }

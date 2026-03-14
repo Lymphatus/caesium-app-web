@@ -4,5 +4,12 @@
   "cookie_policy": "Cookie 政策",
   "privacy_policy": "隱私權政策",
   "consent_preferences": "同意偏好設定",
-  "copyright_note": "© SaeraSoft 和 Matteo Paonessa 版權所有"
+  "copyright_note": "© SaeraSoft 和 Matteo Paonessa 版權所有",
+  "app_name": "Caesium Image Compressor",
+  "meta_title": "Caesium Image Compressor - Online",
+  "meta_description": "Caesium 是一款免費、開源的線上照片和影像（JPG、PNG、WebP、GIF）壓縮工具，支援批次處理、預覽等眾多功能。Caesium 節省空間並加快上傳速度。",
+  "about": "關於",
+  "theme_light": "淺色",
+  "theme_dark": "深色",
+  "theme_system": "系統跟隨"
 }
