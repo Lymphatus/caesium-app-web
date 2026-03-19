@@ -10,5 +10,19 @@
   "donate": "Dona",
   "theme_light": "Chiaro",
   "theme_dark": "Scuro",
-  "theme_system": "Sistema"
+  "theme_system": "Sistema",
+  "features_heading": "Perché Caesium?",
+  "features_secure_title": "100% sicuro e privato",
+  "features_secure_desc": "Le immagini vengono elaborate direttamente nel tuo browser. Nessun dato viene inviato ai nostri server.",
+  "features_fast_title": "Veloce ed efficiente",
+  "features_fast_desc": "Utilizza algoritmi di compressione avanzati per ottenere la massima riduzione delle dimensioni con una perdita minima di qualità.",
+  "features_free_title": "Gratuito e open source",
+  "features_free_desc": "Gratuito e open source, creato per rimanere accessibile, trasparente e guidato dalla comunità.",
+  "how_it_works_heading": "Come funziona",
+  "how_step1_title": "1. Carica",
+  "how_step1_desc": "Trascina e rilascia o seleziona le tue immagini.",
+  "how_step2_title": "2. Regola",
+  "how_step2_desc": "Scegli le impostazioni di qualità e formato desiderate.",
+  "how_step3_title": "3. Comprimi e scarica",
+  "how_step3_desc": "Fai clic su comprimi e ottieni subito le tue immagini ottimizzate."
 }

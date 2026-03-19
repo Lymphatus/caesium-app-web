@@ -1,6 +1,5 @@
 {
   "donate": "Donner",
-  "contacts": "Contacts",
   "cookie_policy": "Politique des Cookies",
   "privacy_policy": "Politique de confidentialité",
   "consent_preferences": "Préférence de consentement",
@@ -11,5 +10,19 @@
   "about": "À propos",
   "theme_light": "Clair",
   "theme_dark": "Sombre",
-  "theme_system": "Système"
+  "theme_system": "Système",
+  "features_heading": "Pourquoi Caesium ?",
+  "features_secure_title": "100 % sécurisé et privé",
+  "features_secure_desc": "Les images sont traitées directement dans votre navigateur. Aucune donnée n'est envoyée à nos serveurs.",
+  "features_fast_title": "Rapide et efficace",
+  "features_fast_desc": "Utilise des algorithmes de compression avancés pour une réduction maximale de la taille avec une perte de qualité minimale.",
+  "features_free_title": "Gratuit et open source",
+  "features_free_desc": "Gratuit et open source, conçu pour rester accessible, transparent et porté par la communauté.",
+  "how_it_works_heading": "Comment ça marche",
+  "how_step1_title": "1. Téléversez",
+  "how_step1_desc": "Glissez-déposez vos images ou sélectionnez-les.",
+  "how_step2_title": "2. Réglez",
+  "how_step2_desc": "Choisissez les paramètres de qualité et de format souhaités.",
+  "how_step3_title": "3. Compressez et téléchargez",
+  "how_step3_desc": "Cliquez sur compresser et récupérez instantanément vos images optimisées."
 }

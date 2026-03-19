@@ -1,6 +1,5 @@
 {
   "donate": "Dotacje",
-  "contacts": "Kontakt",
   "cookie_policy": "Polityka plików cookie",
   "privacy_policy": "Polityka prywatności",
   "consent_preferences": "Consent Preferences",
@@ -11,5 +10,19 @@
   "about": "O nas",
   "theme_light": "Jasny",
   "theme_dark": "Ciemny",
-  "theme_system": "Systemowy"
+  "theme_system": "Systemowy",
+  "features_heading": "Dlaczego Caesium?",
+  "features_secure_title": "W 100% bezpieczny i prywatny",
+  "features_secure_desc": "Obrazy są przetwarzane bezpośrednio w Twojej przeglądarce. Żadne dane nie są wysyłane na nasze serwery.",
+  "features_fast_title": "Szybki i wydajny",
+  "features_fast_desc": "Wykorzystuje zaawansowane algorytmy kompresji, aby maksymalnie zmniejszyć rozmiar przy minimalnej utracie jakości.",
+  "features_free_title": "Darmowy i otwartoźródłowy",
+  "features_free_desc": "Darmowy i otwartoźródłowy, stworzony tak, aby pozostać dostępnym, przejrzystym i rozwijanym przez społeczność.",
+  "how_it_works_heading": "Jak to działa",
+  "how_step1_title": "1. Prześlij",
+  "how_step1_desc": "Przeciągnij i upuść lub wybierz swoje obrazy.",
+  "how_step2_title": "2. Dostosuj",
+  "how_step2_desc": "Wybierz preferowane ustawienia jakości i formatu.",
+  "how_step3_title": "3. Kompresuj i pobierz",
+  "how_step3_desc": "Kliknij kompresuj i od razu pobierz zoptymalizowane obrazy."
 }

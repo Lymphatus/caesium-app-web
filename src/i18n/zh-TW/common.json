@@ -1,6 +1,5 @@
 {
   "donate": "捐贈",
-  "contacts": "聯絡我們",
   "cookie_policy": "Cookie 政策",
   "privacy_policy": "隱私權政策",
   "consent_preferences": "同意偏好設定",
@@ -11,5 +10,19 @@
   "about": "關於",
   "theme_light": "淺色",
   "theme_dark": "深色",
-  "theme_system": "系統跟隨"
+  "theme_system": "系統跟隨",
+  "features_heading": "為什麼選擇 Caesium？",
+  "features_secure_title": "100% 安全且私密",
+  "features_secure_desc": "圖片會直接在你的瀏覽器中處理。不會有任何資料傳送到我們的伺服器。",
+  "features_fast_title": "快速又高效",
+  "features_fast_desc": "採用先進的壓縮演算法，在盡量降低畫質損失的同時大幅縮小檔案大小。",
+  "features_free_title": "免費且開源",
+  "features_free_desc": "免費且開源，致力於維持易用、透明，並由社群共同推動。",
+  "how_it_works_heading": "運作方式",
+  "how_step1_title": "1. 上傳",
+  "how_step1_desc": "拖放或選取你的圖片。",
+  "how_step2_title": "2. 調整",
+  "how_step2_desc": "選擇你需要的品質與格式設定。",
+  "how_step3_title": "3. 壓縮並下載",
+  "how_step3_desc": "點擊壓縮，立即取得最佳化後的圖片。"
 }

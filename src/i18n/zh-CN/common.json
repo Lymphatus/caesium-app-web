@@ -1,6 +1,5 @@
 {
   "donate": "捐赠",
-  "contacts": "联系",
   "cookie_policy": "Cookie 政策",
   "privacy_policy": "隐私政策",
   "consent_preferences": "Consent Preferences",
@@ -11,5 +10,19 @@
   "about": "关于",
   "theme_light": "浅色",
   "theme_dark": "深色",
-  "theme_system": "系统跟随"
+  "theme_system": "系统跟随",
+  "features_heading": "为什么选择 Caesium？",
+  "features_secure_title": "100% 安全私密",
+  "features_secure_desc": "图片会直接在你的浏览器中处理。不会有任何数据发送到我们的服务器。",
+  "features_fast_title": "快速高效",
+  "features_fast_desc": "采用先进的压缩算法，在尽可能减少画质损失的同时最大幅度缩小文件体积。",
+  "features_free_title": "免费且开源",
+  "features_free_desc": "免费且开源，致力于保持易用、透明，并由社区共同推动。",
+  "how_it_works_heading": "工作原理",
+  "how_step1_title": "1. 上传",
+  "how_step1_desc": "拖放或选择你的图片。",
+  "how_step2_title": "2. 调整",
+  "how_step2_desc": "选择你需要的质量和格式设置。",
+  "how_step3_title": "3. 压缩并下载",
+  "how_step3_desc": "点击压缩，即可立即获取优化后的图片。"
 }

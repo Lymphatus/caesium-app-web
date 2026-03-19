@@ -38,7 +38,7 @@ export default function CompressionControls() {
     );
 
   return (
-    <Card className="flex w-full flex-col">
+    <Card className="bg-muted/30 flex w-full flex-col shadow-none">
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-lg font-medium">
           <Settings className="size-5" /> {t('settings', { ns: 'compressor' })}

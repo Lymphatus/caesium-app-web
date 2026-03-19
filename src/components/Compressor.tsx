@@ -43,7 +43,7 @@ export default function Compressor() {
         </div>
 
         <div className="flex h-full w-full flex-wrap gap-4 lg:flex-nowrap">
-          <div className="flex w-full flex-col gap-2 lg:w-2/3">
+          <div className="flex w-full flex-col lg:w-2/3">
             <div className={cn('transition-all duration-300', hasFiles ? 'min-h-60 flex-none' : 'h-full min-h-60 flex-1')}>
               <DropArea className={hasFiles ? 'min-h-40 py-4' : ''} />
             </div>
@@ -66,17 +66,6 @@ export default function Compressor() {
 
           <div className="flex w-full shrink-0 flex-col gap-4 lg:w-1/3">
             <CompressionControls />
-            <Card className="bg-muted/50 gap-2 px-4 py-6">
-              <CardTitle className="flex items-center justify-center">
-                <h3 className="flex items-center justify-center gap-2 text-lg">
-                  <ShieldCheck className="text-primary shrink-0" />
-                  {t('privacy_notice_title', { ns: 'compressor' })}
-                </h3>
-              </CardTitle>
-              <CardContent className="text-muted-foreground flex items-start gap-3 text-sm">
-                <p>{t('privacy_notice_text', { ns: 'compressor' })}</p>
-              </CardContent>
-            </Card>
           </div>
         </div>
       </div>
