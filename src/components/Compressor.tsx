@@ -48,7 +48,7 @@ export default function Compressor() {
               <DropArea className={hasFiles ? 'min-h-40 py-4' : ''} />
             </div>
 
-            <div className={cn('flex w-full flex-col justify-between', hasFiles ? 'mt-4 overflow-y-auto opacity-100' : 'h-0 w-0 flex-none overflow-hidden opacity-0')}>{hasFiles && <FileList />}</div>
+            <div className={cn('flex w-full flex-col justify-between pb-4 md:pb-0', hasFiles ? 'mt-4 overflow-y-auto opacity-100' : 'h-0 w-0 flex-none overflow-hidden opacity-0')}>{hasFiles && <FileList />}</div>
             {files !== null && files.length > 0 && (
               <Button
                 className="w-full lg:hidden"

@@ -9,6 +9,12 @@ html {
   max-height: 100vh;
 }
 
+html body[data-scroll-locked] {
+  margin-right: 0px !important; /* For LTR layout */
+  margin-left: 0px !important; /* For RTL layout */
+  overflow: visible !important;
+}
+
 html[lang='zh-CN'],
 html[lang='zh-TW'] {
   font-family: var(--font-cjk), 'Inter', sans-serif;
@@ -214,7 +220,7 @@ html[lang='zh-TW'] {
   }
 
   a:hover {
-    @apply text-primary underline decoration-2 underline-offset-4;
+    @apply text-primary decoration-2 underline-offset-4;
   }
 
   button:not([disabled]),

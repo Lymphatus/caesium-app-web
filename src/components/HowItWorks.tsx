@@ -25,7 +25,7 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section className="bg-muted/20 mt-8 mb-8 w-full rounded-2xl py-12">
+    <section className="bg-muted/20 mt-8 mb-8 w-full rounded-2xl border py-12">
       <h2 className="mb-12 text-center text-3xl font-semibold">{t('how_it_works_heading')}</h2>
       <div className="grid grid-cols-1 gap-12 px-6 md:grid-cols-3">
         {steps.map((step, idx) => (

@@ -89,6 +89,7 @@ export default function FileList() {
       </Button>
       <Button
         disabled={canDownload()}
+        className="hover:text-primary hover:bg-primary/10"
         size="sm"
         variant="ghost"
         onClick={() => {
@@ -140,7 +141,7 @@ export default function FileList() {
                 </TableCell>
                 <TableCell className="text-left">{getStatusBadge(file)}</TableCell>
                 <TableCell className="pr-4 text-right" onClick={(e) => e.stopPropagation()}>
-                  <Button asChild={file.status === FILE_STATUS.FINISHED} className="text-muted-foreground hover:text-primary" disabled={file.status !== FILE_STATUS.FINISHED} size="icon" variant="ghost">
+                  <Button asChild={file.status === FILE_STATUS.FINISHED} className="hover:text-primary hover:bg-primary/10" disabled={file.status !== FILE_STATUS.FINISHED} size="icon" variant="ghost">
                     {file.status === FILE_STATUS.FINISHED && file.outputImageUrl ? (
                       <a download={file.file.name} href={file.outputImageUrl} rel="noreferrer" target="_blank">
                         <Download className="size-4" />
@@ -149,10 +150,10 @@ export default function FileList() {
                       <Download className="size-4" />
                     )}
                   </Button>
-                  <Button className="text-muted-foreground hover:text-primary" size="icon" variant="ghost" onClick={() => compressFiles(file)}>
+                  <Button className="hover:text-primary hover:bg-primary/10" size="icon" variant="ghost" onClick={() => compressFiles(file)}>
                     <Play className="size-4" />
                   </Button>
-                  <Button className="text-muted-foreground hover:text-destructive" size="icon" variant="ghost" onClick={() => removeFile(file.id)}>
+                  <Button className="hover:text-destructive hover:bg-destructive/10" size="icon" variant="ghost" onClick={() => removeFile(file.id)}>
                     <Trash2 className="size-4" />
                   </Button>
                 </TableCell>

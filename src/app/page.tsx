@@ -5,7 +5,7 @@ import HowItWorks from '@/components/HowItWorks';
 
 export default function Home() {
   return (
-    <div className="container mx-auto flex min-h-[calc(100vh-140px)] w-full flex-col py-8">
+    <div className="container mx-auto flex w-full flex-col py-8">
       <CompressorStoreProvider>
         <Compressor></Compressor>
       </CompressorStoreProvider>
