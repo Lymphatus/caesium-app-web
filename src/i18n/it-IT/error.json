@@ -4,5 +4,10 @@
   "bad_request": "Richiesta fallita",
   "archive_failed": "Creazione archivio fallita",
   "max_files_reached": "Puoi comprimere solo {{max_files}} files alla volta",
-  "files_over_size": "Uno o più file eccedono la dimensione massima"
+  "files_over_size": "Uno o più file eccedono la dimensione massima",
+  "not_found_title": "Pagina non trovata",
+  "not_found_description": "La pagina che stai cercando non esiste o è stata spostata.",
+  "back_home": "Torna alla home",
+  "error_title": "Qualcosa è andato storto",
+  "error_description": "Si è verificato un errore imprevisto. Riprova."
 }

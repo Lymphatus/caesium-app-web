@@ -4,5 +4,10 @@
   "bad_request": "錯誤請求。",
   "archive_failed": "建立壓縮檔失敗。",
   "max_files_reached": "您一次最多只能壓縮 {max_files} 個檔案。",
-  "files_over_size": "一個或多個檔案超過允許的大小上限。"
+  "files_over_size": "一個或多個檔案超過允許的大小上限。",
+  "not_found_title": "找不到頁面",
+  "not_found_description": "您要尋找的頁面不存在或已被移動。",
+  "back_home": "返回首頁",
+  "error_title": "發生錯誤",
+  "error_description": "發生了未預期的錯誤。請重試。"
 }

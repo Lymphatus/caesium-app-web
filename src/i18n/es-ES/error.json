@@ -4,5 +4,10 @@
   "bad_request": "Mala solicitud.",
   "archive_failed": "Error al crear el archivo.",
   "max_files_reached": "Solo puedes comprimir {max_files} archivos al mismo tiempo.",
-  "files_over_size": "Uno o más archivos han excedido el tamaño máximo permitido."
+  "files_over_size": "Uno o más archivos han excedido el tamaño máximo permitido.",
+  "not_found_title": "Página no encontrada",
+  "not_found_description": "La página que buscas no existe o ha sido movida.",
+  "back_home": "Volver al inicio",
+  "error_title": "Algo salió mal",
+  "error_description": "Ocurrió un error inesperado. Inténtalo de nuevo."
 }

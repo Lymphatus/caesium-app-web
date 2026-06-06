@@ -4,5 +4,10 @@
   "bad_request": "Błędne żądanie.",
   "archive_failed": "Nie udało się utworzyć archiwum.",
   "max_files_reached": "Jednocześnie można kompresować maksymalnie {max_files} plików.",
-  "files_over_size": "Jeden lub więcej plików przekroczyło dopuszczalny rozmiar."
+  "files_over_size": "Jeden lub więcej plików przekroczyło dopuszczalny rozmiar.",
+  "not_found_title": "Nie znaleziono strony",
+  "not_found_description": "Strona, której szukasz, nie istnieje lub została przeniesiona.",
+  "back_home": "Powrót do strony głównej",
+  "error_title": "Coś poszło nie tak",
+  "error_description": "Wystąpił nieoczekiwany błąd. Spróbuj ponownie."
 }

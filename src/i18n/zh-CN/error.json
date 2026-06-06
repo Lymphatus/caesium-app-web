@@ -4,5 +4,10 @@
   "bad_request": "错误的请求。",
   "archive_failed": "未能创建档案。",
   "max_files_reached": "您一次只能压缩 {max_files} 个文件。",
-  "files_over_size": "一个或多个文件超过了允许的最大大小。"
+  "files_over_size": "一个或多个文件超过了允许的最大大小。",
+  "not_found_title": "找不到页面",
+  "not_found_description": "您要查找的页面不存在或已被移动。",
+  "back_home": "返回首页",
+  "error_title": "出错了",
+  "error_description": "发生了意外错误。请重试。"
 }

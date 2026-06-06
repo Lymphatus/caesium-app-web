@@ -4,5 +4,10 @@
   "bad_request": "Requête invalide.",
   "archive_failed": "Création de l'archive échouée.",
   "max_files_reached": "Vous pouvez compresser seulement {max_files} fichiers à la fois.",
-  "files_over_size": "Un ou plusieurs fichiers dépassent la taille maximale autorisée."
+  "files_over_size": "Un ou plusieurs fichiers dépassent la taille maximale autorisée.",
+  "not_found_title": "Page introuvable",
+  "not_found_description": "La page que vous recherchez n'existe pas ou a été déplacée.",
+  "back_home": "Retour à l'accueil",
+  "error_title": "Une erreur est survenue",
+  "error_description": "Une erreur inattendue s'est produite. Veuillez réessayer."
 }
