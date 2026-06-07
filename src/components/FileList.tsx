@@ -12,7 +12,7 @@ import { CImage, FILE_STATUS } from '@/types/cimage';
 import { ArrowDown, ArrowRight, ArrowUp, Download, ListX, LoaderCircle, Play, Trash2 } from 'lucide-react';
 import prettyBytes from 'next/dist/lib/pretty-bytes';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, type KeyboardEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export default function FileList() {
@@ -20,6 +20,23 @@ export default function FileList() {
   const { t } = useTranslation('compressor');
   const { compressFiles } = useCompress();
   const [selectedFile, setSelectedFile] = useState<CImage | null>(null);
+
+  // Only finished files open the comparison modal; mirror the click behaviour for keyboard users.
+  const isComparable = (file: CImage) => file.status === FILE_STATUS.FINISHED;
+
+  const openComparison = (file: CImage) => {
+    if (isComparable(file)) {
+      setSelectedFile(file);
+    }
+  };
+
+  const handleRowKeyDown = (e: KeyboardEvent<HTMLElement>, file: CImage) => {
+    if (!isComparable(file)) return;
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      setSelectedFile(file);
+    }
+  };
 
   const getStatusBadge = (file: CImage) => {
     switch (file.status) {
@@ -118,7 +135,14 @@ export default function FileList() {
           </TableHeader>
           <TableBody>
             {files?.map((file) => (
-              <TableRow key={file.id} className={cn(file.status === FILE_STATUS.FINISHED && 'cursor-pointer')} onClick={() => file.status === FILE_STATUS.FINISHED && setSelectedFile(file)}>
+              <TableRow
+                key={file.id}
+                className={cn(file.status === FILE_STATUS.FINISHED && 'cursor-pointer')}
+                role={isComparable(file) ? 'button' : undefined}
+                tabIndex={isComparable(file) ? 0 : undefined}
+                onClick={() => openComparison(file)}
+                onKeyDown={(e) => handleRowKeyDown(e, file)}
+              >
                 <TableCell className="pl-4">
                   <div className="relative h-10 w-10 overflow-hidden rounded-md border">
                     <Image fill alt={file.file.name} className="object-cover" src={file.url} />
@@ -173,7 +197,14 @@ export default function FileList() {
       {/* Mobile Card View */}
       <div className="block w-full divide-y md:hidden">
         {files?.map((file) => (
-          <div key={file.id} className={cn('flex flex-col gap-3 p-4', file.status === FILE_STATUS.FINISHED && 'cursor-pointer')} onClick={() => file.status === FILE_STATUS.FINISHED && setSelectedFile(file)}>
+          <div
+            key={file.id}
+            className={cn('flex flex-col gap-3 p-4', file.status === FILE_STATUS.FINISHED && 'cursor-pointer')}
+            role={isComparable(file) ? 'button' : undefined}
+            tabIndex={isComparable(file) ? 0 : undefined}
+            onClick={() => openComparison(file)}
+            onKeyDown={(e) => handleRowKeyDown(e, file)}
+          >
             <div className="flex w-full items-center gap-3">
               <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-md border">
                 <Image fill alt={file.file.name} className="object-cover" src={file.url} />

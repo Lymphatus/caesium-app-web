@@ -14,7 +14,7 @@ export function ThemeSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="hover:text-primary hover:bg-primary/10" size="icon" variant="ghost">
+        <Button aria-label={t('theme_toggle', 'Toggle theme')} className="hover:text-primary hover:bg-primary/10" size="icon" variant="ghost">
           <Sun className="size-4 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
           <Moon className="absolute size-4 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
         </Button>

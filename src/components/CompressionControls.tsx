@@ -70,7 +70,7 @@ export default function CompressionControls() {
                         <Label className={cn(lossless ? 'text-foreground/50' : '')}>{t('quality')}</Label>
                         <span className={cn('text-sm font-medium', lossless ? 'text-foreground/50' : '')}>{quality}</span>
                       </div>
-                      <Slider className="w-full" disabled={lossless} max={100} min={1} step={1} value={[quality]} onValueChange={(value) => setQuality(value[0])} />
+                      <Slider aria-label={t('quality')} className="w-full" disabled={lossless} max={100} min={1} step={1} value={[quality]} onValueChange={(value) => setQuality(value[0])} />
 
                       <div className="flex items-center justify-between space-x-2 pt-2">
                         <Label htmlFor="lossless">{t('lossless_compression')}</Label>

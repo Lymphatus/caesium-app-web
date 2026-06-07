@@ -5,7 +5,7 @@ import * as React from 'react';
 
 import { cn } from '@/lib/utils';
 
-function Slider({ className, defaultValue, value, min = 0, max = 100, ...props }: React.ComponentProps<typeof SliderPrimitive.Root>) {
+function Slider({ className, defaultValue, value, min = 0, max = 100, 'aria-label': ariaLabel, ...props }: React.ComponentProps<typeof SliderPrimitive.Root>) {
   const _values = React.useMemo(() => (Array.isArray(value) ? value : Array.isArray(defaultValue) ? defaultValue : [min, max]), [value, defaultValue, min, max]);
 
   return (
@@ -30,6 +30,7 @@ function Slider({ className, defaultValue, value, min = 0, max = 100, ...props }
       {Array.from({ length: _values.length }, (_, index) => (
         <SliderPrimitive.Thumb
           key={index}
+          aria-label={ariaLabel}
           className="border-primary ring-ring/50 bg-foreground block size-5 shrink-0 rounded-full border transition-[color,box-shadow] hover:ring-5 focus-visible:ring-5 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50"
           data-slot="slider-thumb"
         />

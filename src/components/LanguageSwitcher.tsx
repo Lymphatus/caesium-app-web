@@ -3,7 +3,6 @@
 import { Languages } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
-import { Label } from '@/components/ui/label';
 import { supportedLangs } from '@/lib/i18n/config';
 import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
@@ -40,7 +39,7 @@ export default function LanguageSwitcher() {
               <div className="relative h-4 w-4">
                 <Image alt={lang} fill={true} src={flagsMap.get(lang)}></Image>
               </div>
-              <Label>{lang}</Label>
+              <span>{lang}</span>
             </div>
           </DropdownMenuCheckboxItem>
         ))}
