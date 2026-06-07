@@ -13,7 +13,6 @@ const initI18next = async (lang: string, ns: string | string[]) => {
       fallbackLng: 'en-US',
       ns: ns,
       defaultNS: Array.isArray(ns) ? ns[0] : ns,
-      initImmediate: false,
     });
   return i18nInstance;
 };

@@ -13,7 +13,6 @@ function createI18nInstance(locale: string, namespaces: string[], resources: Res
     ns: namespaces,
     defaultNS: namespaces[0],
     resources,
-    initImmediate: false,
     interpolation: {
       escapeValue: false,
     },

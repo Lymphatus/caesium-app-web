@@ -4,7 +4,7 @@ import { CImage, FILE_STATUS } from '@/types/cimage';
 import { v4 as uuidv4, v5 as uuidv5 } from 'uuid';
 import { COMPRESSION_MODE, FILES_LIMIT, GeneralMessage, MAX_FILE_SIZE, MESSAGE_LEVEL } from '@/types/utils';
 import { CompressionResult } from '@/lib/useCompressionWorker';
-import JSZip from 'jszip';
+import type { ZipWorkerRequest, ZipWorkerResponse } from '@/workers/zip-worker';
 import FileSaver from 'file-saver';
 import dayjs from 'dayjs';
 
@@ -218,20 +218,35 @@ export const createCompressorStore = (initState: CompressorState = defaultInitSt
           downloadAll: () => {
             const files = get().files;
             if (!files) {
-              return null;
+              return;
             }
-            const finishedFiles = files.filter((f) => f.status === FILE_STATUS.FINISHED);
-            const zip = new JSZip();
-            finishedFiles.forEach((cImage) => {
-              if (cImage.outputImageArray) {
-                zip.file(cImage.file.name, cImage.outputImageArray);
-              }
-            });
 
-            zip.generateAsync({ type: 'blob' }).then(function (content) {
-              const timestamp = dayjs().format('YYYYMMDD_HHmmss');
-              FileSaver.saveAs(content, `caesium_${timestamp}.zip`);
-            });
+            const payload = files.filter((f) => f.status === FILE_STATUS.FINISHED && f.outputImageArray).map((cImage) => ({ name: cImage.file.name, data: cImage.outputImageArray as Uint8Array }));
+
+            if (payload.length === 0) {
+              return;
+            }
+
+            // Offload the ZIP/DEFLATE work to a worker so large batches don't freeze the UI thread.
+            const worker = new Worker(new URL('../workers/zip-worker.ts', import.meta.url));
+
+            worker.onmessage = (e: MessageEvent<ZipWorkerResponse>) => {
+              const { success, blob, error } = e.data;
+              if (success && blob) {
+                const timestamp = dayjs().format('YYYYMMDD_HHmmss');
+                FileSaver.saveAs(blob, `caesium_${timestamp}.zip`);
+              } else {
+                console.error('ZIP generation failed:', error);
+              }
+              worker.terminate();
+            };
+
+            worker.onerror = (err) => {
+              console.error('ZIP worker error:', err.message);
+              worker.terminate();
+            };
+
+            worker.postMessage({ files: payload } satisfies ZipWorkerRequest);
           },
         }),
         {
