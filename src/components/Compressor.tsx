@@ -27,7 +27,10 @@ export default function Compressor() {
         duration: 5000,
       });
 
-      //downloadAll();
+      // Auto-download the results in production only; in dev it's just noise.
+      if (process.env.NODE_ENV === 'production') {
+        downloadAll();
+      }
     }
   }, [compressionReport, t, downloadAll]);
 
