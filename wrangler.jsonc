@@ -1,0 +1,18 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "caesium-app",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2024-12-30",
+  "compatibility_flags": ["nodejs_compat"],
+  // Serves the app at https://caesium-app.<your-account>.workers.dev.
+  // A custom domain (e.g. caesium.app) can be added later via the Cloudflare
+  // dashboard with no code change.
+  "workers_dev": true,
+  "assets": {
+    "binding": "ASSETS",
+    "directory": ".open-next/assets"
+  },
+  "observability": {
+    "enabled": true
+  }
+}
