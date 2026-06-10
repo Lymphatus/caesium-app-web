@@ -8,6 +8,7 @@ import { getServerTranslation, getTranslationsResources } from '@/lib/i18n/serve
 import TranslationsProvider from '@/components/TranslationsProvider';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import { SITE_URL } from '@/lib/site';
 import type { Metadata } from 'next';
 
 const inter = Inter({
@@ -33,20 +34,48 @@ export async function generateMetadata(): Promise<Metadata> {
   const lang = await getLang();
   const { t } = await getServerTranslation(lang, 'common');
 
+  const title = t('meta_title');
+  const description = t('meta_description');
+  const appName = t('app_name');
+  const ogImage = {
+    url: '/images/logo.png',
+    width: 512,
+    height: 512,
+    alt: appName,
+  };
+
   return {
-    title: t('meta_title'),
-    description: t('meta_description'),
+    metadataBase: new URL(SITE_URL),
+    title,
+    description,
+    applicationName: appName,
     alternates: {
+      canonical: '/',
       languages: {
-        'en-US': process.env.NEXT_PUBLIC_SITE_URL || '',
-        'it-IT': process.env.NEXT_PUBLIC_SITE_URL || '',
-        'es-ES': process.env.NEXT_PUBLIC_SITE_URL || '',
-        'fr-FR': process.env.NEXT_PUBLIC_SITE_URL || '',
-        'pl-PL': process.env.NEXT_PUBLIC_SITE_URL || '',
-        'uk-UA': process.env.NEXT_PUBLIC_SITE_URL || '',
-        'zh-CN': process.env.NEXT_PUBLIC_SITE_URL || '',
-        'zh-TW': process.env.NEXT_PUBLIC_SITE_URL || '',
+        'en-US': '/',
+        'it-IT': '/',
+        'es-ES': '/',
+        'fr-FR': '/',
+        'pl-PL': '/',
+        'uk-UA': '/',
+        'zh-CN': '/',
+        'zh-TW': '/',
       },
+    },
+    openGraph: {
+      type: 'website',
+      siteName: appName,
+      title,
+      description,
+      url: '/',
+      locale: lang.replace('-', '_'),
+      images: [ogImage],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [ogImage],
     },
   };
 }
