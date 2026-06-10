@@ -7,13 +7,12 @@ import ToastHandler from '@/components/ToastHandler';
 import { useCompress } from '@/lib/useCompress';
 import { cn } from '@/lib/utils';
 import { useCompressorStore } from '@/providers/compressor-store-provider';
-import { Play, ShieldCheck } from 'lucide-react';
+import { Play } from 'lucide-react';
 import prettyBytes from 'next/dist/lib/pretty-bytes';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { Button } from './ui/button';
-import { Card, CardContent, CardTitle } from './ui/card';
 
 export default function Compressor() {
   const { files, downloadAll } = useCompressorStore((store) => store);

@@ -88,8 +88,8 @@ export default function FileList() {
         {t('clear_list')}
       </Button>
       <Button
-        disabled={canDownload()}
         className="hover:text-primary hover:bg-primary/10"
+        disabled={canDownload()}
         size="sm"
         variant="ghost"
         onClick={() => {

@@ -1,6 +1,3 @@
-export const FILES_LIMIT: number = 10; // TODO conf
-export const MAX_FILE_SIZE: number = 20_000_000; // TODO conf
-
 export enum COMPRESSION_MODE {
   QUALITY,
   SIZE,

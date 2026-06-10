@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-export const supportedLangs = ['en-US', 'it-IT', 'es-ES', 'fr-FR', 'pl-PL', 'uk-UA', 'zh-CN', 'zh-TW'];
+import { defaultLang, supportedLangs } from '@/lib/i18n/config';
 
 const langToRegion: Record<string, string> = {
   en: 'en-US',
@@ -17,21 +16,22 @@ function normalizeLang(acceptLang: string): string {
 
   if (parts.length === 2) {
     const normalized = `${parts[0]}-${parts[1].toUpperCase()}`;
-    if (supportedLangs.includes(normalized)) {
+    if ((supportedLangs as readonly string[]).includes(normalized)) {
       return normalized;
     }
   }
 
   const langCode = parts[0].toLowerCase();
-  return langToRegion[langCode] || 'en-US';
+  return langToRegion[langCode] || defaultLang;
 }
 
 export function proxy(request: NextRequest) {
   const cookieLang = request.cookies.get('lang')?.value;
 
-  if (!cookieLang) {
+  // Re-detect when the cookie is missing or has been tampered with (not a supported locale).
+  if (!cookieLang || !(supportedLangs as readonly string[]).includes(cookieLang)) {
     const acceptLanguage = request.headers.get('accept-language');
-    const detectedLang = acceptLanguage?.split(',')[0]?.trim() || 'en-US';
+    const detectedLang = acceptLanguage?.split(',')[0]?.trim() || defaultLang;
 
     const lang = normalizeLang(detectedLang);
 

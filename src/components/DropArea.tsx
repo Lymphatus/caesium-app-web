@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useCompressorStore } from '@/providers/compressor-store-provider';
-import { MAX_FILE_SIZE } from '@/types/utils';
+import { MAX_FILE_SIZE } from '@/lib/config';
 import { PlusCircle } from 'lucide-react';
 import prettyBytes from 'next/dist/lib/pretty-bytes';
 import { useState } from 'react';
