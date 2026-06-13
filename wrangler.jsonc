@@ -4,6 +4,10 @@
   "main": ".open-next/worker.js",
   "compatibility_date": "2024-12-30",
   "compatibility_flags": ["nodejs_compat"],
+  // Disable esbuild's keep-names so the helper it injects (__name) doesn't leak
+  // into inline scripts that libraries (e.g. next-themes) serialize via toString().
+  // Fixes "Uncaught ReferenceError: __name is not defined". Needs Wrangler >= 4.13.0.
+  "keep_names": false,
   "workers_dev": true,
   "assets": {
     "binding": "ASSETS",
