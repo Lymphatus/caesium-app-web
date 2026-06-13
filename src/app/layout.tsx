@@ -1,6 +1,7 @@
 import './globals.css';
 import React from 'react';
 import { Inter, Noto_Sans_SC, Noto_Sans_TC } from 'next/font/google';
+import Analytics from '@/components/Analytics';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { getLang } from '@/lib/i18n/lang-context';
@@ -104,6 +105,7 @@ export default async function RootLayout({
             <Footer />
           </TranslationsProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
