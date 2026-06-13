@@ -1,0 +1,20 @@
+# Enforce LF line endings for all text files on every OS.
+# This overrides each developer's core.autocrlf, so Windows checkouts also
+# get LF in the working tree — keeping it consistent with CI (Linux).
+* text=auto eol=lf
+
+# Binary assets: never apply line-ending conversion or text diffing.
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.webp  binary
+*.ico   binary
+*.wasm  binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.eot   binary
+*.otf   binary
+*.zip   binary
+*.pdf   binary
