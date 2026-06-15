@@ -210,6 +210,86 @@ html[lang='zh-TW'] {
   --warning-foreground: oklch(0.15 0.05 75);
 }
 
+/* vanilla-cookieconsent — map the plugin's tokens onto the app's design system.
+   Selector `html #cc-main` (specificity 1,0,1) always wins over the plugin's own
+   `#cc-main` defaults regardless of stylesheet order. The app's theme tokens already
+   swap on the `.dark` class, so this single mapping adapts to light and dark. */
+html #cc-main {
+  --cc-font-family: inherit;
+
+  /* The app sets `text-align: center` on <body>; cookieconsent inherits it.
+     Force start alignment to match the app's left-aligned dialogs. */
+  text-align: start;
+
+  --cc-bg: var(--popover);
+  --cc-primary-color: var(--popover-foreground);
+  --cc-secondary-color: var(--muted-foreground);
+  --cc-link-color: var(--primary);
+
+  --cc-modal-border-radius: var(--radius);
+  --cc-btn-border-radius: calc(var(--radius) - 2px);
+
+  /* Primary buttons — mirror the default Button (bg-primary, hover:bg-primary/90) */
+  --cc-btn-primary-bg: var(--primary);
+  --cc-btn-primary-color: var(--primary-foreground);
+  --cc-btn-primary-border-color: var(--primary);
+  --cc-btn-primary-hover-bg: color-mix(in oklab, var(--primary) 90%, var(--popover));
+  --cc-btn-primary-hover-color: var(--primary-foreground);
+  --cc-btn-primary-hover-border-color: color-mix(in oklab, var(--primary) 90%, var(--popover));
+
+  /* Secondary buttons — mirror the secondary/ghost Button (bg-secondary, hover:bg-accent) */
+  --cc-btn-secondary-bg: var(--secondary);
+  --cc-btn-secondary-color: var(--secondary-foreground);
+  --cc-btn-secondary-border-color: var(--secondary);
+  --cc-btn-secondary-hover-bg: var(--accent);
+  --cc-btn-secondary-hover-color: var(--accent-foreground);
+  --cc-btn-secondary-hover-border-color: var(--accent);
+
+  --cc-separator-border-color: var(--border);
+
+  /* Toggles — mirror the Switch component (on: primary track, off: input track,
+     readonly: dimmed primary). Knobs stay light for contrast; the plugin's
+     check/cross marks are hidden below to match the app's icon-less Switch. */
+  --cc-toggle-on-bg: var(--primary);
+  --cc-toggle-on-knob-bg: var(--primary-foreground);
+  --cc-toggle-off-bg: var(--input);
+  --cc-toggle-off-knob-bg: var(--background);
+  --cc-toggle-readonly-bg: color-mix(in oklab, var(--primary) 50%, var(--muted));
+  --cc-toggle-readonly-knob-bg: var(--primary-foreground);
+
+  /* Category blocks */
+  --cc-section-category-border: var(--border);
+  --cc-cookie-category-block-bg: var(--muted);
+  --cc-cookie-category-block-border: var(--border);
+  --cc-cookie-category-block-hover-bg: var(--accent);
+  --cc-cookie-category-block-hover-border: var(--border);
+  --cc-cookie-category-expanded-block-bg: var(--secondary);
+  --cc-cookie-category-expanded-block-hover-bg: var(--accent);
+
+  /* Overlay — mirror the Dialog overlay (bg-black/50) */
+  --cc-overlay-bg: rgba(0, 0, 0, 0.5);
+
+  --cc-webkit-scrollbar-bg: var(--border);
+  --cc-webkit-scrollbar-hover-bg: var(--muted-foreground);
+
+  --cc-footer-bg: var(--muted);
+  --cc-footer-color: var(--muted-foreground);
+  --cc-footer-border-color: var(--border);
+}
+
+/* Off-state toggle knob stays light in both themes, mirroring the Switch
+   (bg-background in light, bg-foreground in dark). */
+html.dark #cc-main {
+  --cc-toggle-off-knob-bg: var(--foreground);
+}
+
+/* Hide the plugin's check/cross marks so toggles read as plain knobs, like the
+   app's icon-less Switch. */
+html #cc-main .toggle__icon-on,
+html #cc-main .toggle__icon-off {
+  display: none;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
