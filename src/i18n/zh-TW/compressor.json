@@ -27,6 +27,7 @@
   "original": "原始",
   "compressed": "壓縮",
   "swap": "交換",
+  "compare_description": "拖曳滑桿以比較原始影像與壓縮後的影像。",
   "privacy_notice_title": "100% 私密",
   "privacy_notice_text": "所有圖片都在您的裝置上本地處理。任何內容都不會上傳到任何外部伺服器。",
   "file_name": "檔案名稱",

@@ -1,6 +1,6 @@
 'use client';
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
 import { CImage } from '@/types/cimage';
 import { useCallback, useState } from 'react';
@@ -30,6 +30,7 @@ export default function ImageComparisonModal({ file, open, onOpenChange }: Image
       <DialogContent showCloseButton className="flex h-screen w-screen max-w-screen flex-col gap-0 overflow-hidden rounded-none p-0 md:h-[95vh] md:w-[95vw] md:min-w-[95vw] md:rounded-xl" onInteractOutside={(e) => e.preventDefault()}>
         <DialogHeader className="shrink-0 p-4">
           <DialogTitle className="truncate">{file.file.name}</DialogTitle>
+          <DialogDescription className="sr-only">{t('compare_description')}</DialogDescription>
         </DialogHeader>
 
         <div className="relative min-h-0 flex-1 overflow-hidden">

@@ -27,6 +27,7 @@
   "original": "Originale",
   "compressed": "Compressa",
   "swap": "Scambia",
+  "compare_description": "Trascina il cursore per confrontare l'immagine originale e quella compressa.",
   "privacy_notice_title": "100% Privato",
   "privacy_notice_text": "Tutte le immagini vengono elaborate localmente sul tuo dispositivo. Nessun file viene mai caricato su server esterni.",
   "file_name": "Nome file",

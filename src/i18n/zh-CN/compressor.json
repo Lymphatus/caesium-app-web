@@ -27,6 +27,7 @@
   "original": "原始",
   "compressed": "压缩",
   "swap": "交换",
+  "compare_description": "拖动滑块以比较原始图像和压缩后的图像。",
   "privacy_notice_title": "100% 保护隐私",
   "privacy_notice_text": "所有图片都在您的设备上进行本地处理。不会上传到任何外部服务器。",
   "file_name": "文件名",

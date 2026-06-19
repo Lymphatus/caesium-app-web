@@ -15,7 +15,7 @@ import { toast } from 'sonner';
 import { Button } from './ui/button';
 
 export default function Compressor() {
-  const { files, downloadAll } = useCompressorStore((store) => store);
+  const { files } = useCompressorStore((store) => store);
   const hasFiles = files != null && files?.length > 0;
   const { t } = useTranslation(['common', 'compressor']);
   const { isInitialized, compressFiles, compressionReport } = useCompress();
@@ -27,12 +27,11 @@ export default function Compressor() {
         duration: 5000,
       });
 
-      // Auto-download the results in production only; in dev it's just noise.
-      if (process.env.NODE_ENV === 'production') {
-        downloadAll();
-      }
+      // if (process.env.NODE_ENV === 'production') {
+      //   downloadAll();
+      // }
     }
-  }, [compressionReport, t, downloadAll]);
+  }, [compressionReport, t]);
 
   return (
     <>

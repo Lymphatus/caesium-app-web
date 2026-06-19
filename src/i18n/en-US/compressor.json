@@ -27,6 +27,7 @@
   "original": "Original",
   "compressed": "Compressed",
   "swap": "Swap",
+  "compare_description": "Drag the slider to compare the original and compressed image.",
   "file_name": "File name",
   "status": "Status",
   "action": "Action",
